@@ -3,5 +3,5 @@
 
 int main(int argc, char **argv)
 {
-    std::cout << "Hello, C++ " << __cplusplus << "!\n";
+    std::cout << "Hello, C++ " << __cplusplus << "!\n";  // declaration of cout.
 }

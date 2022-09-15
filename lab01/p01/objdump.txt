@@ -1,0 +1,77 @@
+
+main.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <main>:
+#include <iostream>
+
+int main(int argc, char **argv)
+{
+#ifdef AUCA_DEBUG
+   0:	f3 0f 1e fa          	endbr64 
+   4:	55                   	push   %rbp
+   5:	48 89 e5             	mov    %rsp,%rbp
+   8:	48 83 ec 10          	sub    $0x10,%rsp
+   c:	89 7d fc             	mov    %edi,-0x4(%rbp)
+   f:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    std::cout << "author: Yiman Altynbek uulu\n"; 
+  13:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 1a <main+0x1a>
+  1a:	48 89 c6             	mov    %rax,%rsi
+  1d:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 24 <main+0x24>
+  24:	48 89 c7             	mov    %rax,%rdi
+  27:	e8 00 00 00 00       	call   2c <main+0x2c>
+  2c:	be e7 13 03 00       	mov    $0x313e7,%esi
+  31:	48 89 c7             	mov    %rax,%rdi
+  34:	e8 00 00 00 00       	call   39 <main+0x39>
+  39:	48 89 c2             	mov    %rax,%rdx
+  3c:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 43 <main+0x43>
+  43:	48 89 c6             	mov    %rax,%rsi
+  46:	48 89 d7             	mov    %rdx,%rdi
+  49:	e8 00 00 00 00       	call   4e <main+0x4e>
+#endif
+  4e:	b8 00 00 00 00       	mov    $0x0,%eax
+  53:	c9                   	leave  
+  54:	c3                   	ret    
+
+0000000000000055 <_Z41__static_initialization_and_destruction_0ii>:
+  55:	f3 0f 1e fa          	endbr64 
+  59:	55                   	push   %rbp
+  5a:	48 89 e5             	mov    %rsp,%rbp
+  5d:	48 83 ec 10          	sub    $0x10,%rsp
+  61:	89 7d fc             	mov    %edi,-0x4(%rbp)
+  64:	89 75 f8             	mov    %esi,-0x8(%rbp)
+  67:	83 7d fc 01          	cmpl   $0x1,-0x4(%rbp)
+  6b:	75 3b                	jne    a8 <_Z41__static_initialization_and_destruction_0ii+0x53>
+  6d:	81 7d f8 ff ff 00 00 	cmpl   $0xffff,-0x8(%rbp)
+  74:	75 32                	jne    a8 <_Z41__static_initialization_and_destruction_0ii+0x53>
+  extern wostream wclog;	/// Linked to standard error (buffered)
+#endif
+  ///@}
+
+  // For construction of filebuffers for cout, cin, cerr, clog et. al.
+  static ios_base::Init __ioinit;
+  76:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 7d <_Z41__static_initialization_and_destruction_0ii+0x28>
+  7d:	48 89 c7             	mov    %rax,%rdi
+  80:	e8 00 00 00 00       	call   85 <_Z41__static_initialization_and_destruction_0ii+0x30>
+  85:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 8c <_Z41__static_initialization_and_destruction_0ii+0x37>
+  8c:	48 89 c2             	mov    %rax,%rdx
+  8f:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 96 <_Z41__static_initialization_and_destruction_0ii+0x41>
+  96:	48 89 c6             	mov    %rax,%rsi
+  99:	48 8b 05 00 00 00 00 	mov    0x0(%rip),%rax        # a0 <_Z41__static_initialization_and_destruction_0ii+0x4b>
+  a0:	48 89 c7             	mov    %rax,%rdi
+  a3:	e8 00 00 00 00       	call   a8 <_Z41__static_initialization_and_destruction_0ii+0x53>
+  a8:	90                   	nop
+  a9:	c9                   	leave  
+  aa:	c3                   	ret    
+
+00000000000000ab <_GLOBAL__sub_I_main>:
+  ab:	f3 0f 1e fa          	endbr64 
+  af:	55                   	push   %rbp
+  b0:	48 89 e5             	mov    %rsp,%rbp
+  b3:	be ff ff 00 00       	mov    $0xffff,%esi
+  b8:	bf 01 00 00 00       	mov    $0x1,%edi
+  bd:	e8 93 ff ff ff       	call   55 <_Z41__static_initialization_and_destruction_0ii>
+  c2:	5d                   	pop    %rbp
+  c3:	c3                   	ret    

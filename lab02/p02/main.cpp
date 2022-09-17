@@ -9,24 +9,16 @@ int main()
 {
     iostream::sync_with_stdio(false);
 
-    long long i, t, n, res;
+    long long int i, t, n, res, mx;
 
     cin >> t;
 
     while (t--)
     {
         cin >> n;
-        res = 0;
 
-        for (i = 1; i <= (long long)10e19; i++)
-        {
-            n -= i;
+        res = (-1 + sqrt(1 + 8 * n)) / 2;
 
-            if (n >= 0)
-                ++res;
-            else
-                break;
-        }
         cout << res << "\n";
     }
 }

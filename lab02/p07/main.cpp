@@ -13,7 +13,7 @@ int main()
 
     while (cin >> a >> b && a + b >= 0)
     {
-        cout << min(100 - b, abs(b - a));
+        cout << min(100 - abs(b - a), abs(b - a));
 
         cout << "\n";
     }

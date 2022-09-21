@@ -9,7 +9,7 @@ int main()
 {
     iostream::sync_with_stdio(false);
 
-    int t, n, m, i, hi, lo, test = 1;
+    int t, n, m, x, i, hi, lo, prev, test = 1;
 
     cin >> t;
 
@@ -17,19 +17,20 @@ int main()
     {
         cin >> n;
 
-        vector<int> v(n);
-
         hi = lo = 0;
 
-        for (auto &x : v)
+        cin >> prev;
+
+        for (i = 1; i < n; ++i)
+        {
             cin >> x;
 
-        for (i = 1; i < n; i++)
-        {
-            if (v[i - 1] < v[i])
+            if (prev < x)
                 hi++;
-            else if (v[i - 1] > v[i])
+            else if (prev > x)
                 lo++;
+
+            prev = x;
         }
 
         cout << "Case " << test << ": " << hi << " " << lo << "\n";

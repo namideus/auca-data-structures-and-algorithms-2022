@@ -9,28 +9,23 @@ int main()
 {
     iostream::sync_with_stdio(false);
 
-    int i, cnt, f;
-    string s, t;
-    char c;
-
-    t = "";
-
+    int f;
+    string s;
     f = 0;
 
     while (getline(cin, s))
     {
-        for (i = 0; i < sz(s); i++)
+        for (auto c : s)
         {
-            c = s[i];
-
             if (c == '\"' && !f)
             {
-                cout << "``";
+                cout.put('`');
+                cout.put('`');
                 f ^= 1;
-            }
-            else if (c == '\"' && f)
+            } else if (c == '\"' && f)
             {
-                cout << "''";
+                cout.put('\'');
+                cout.put('\'');
                 f ^= 1;
             }
             else

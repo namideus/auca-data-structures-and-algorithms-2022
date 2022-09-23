@@ -1,3 +1,3 @@
 # auca-ds-2022
 
-yiman_a
+Yiman Altynbek uulu (yiman_a)

@@ -6,5 +6,5 @@ using namespace std;
 // definition
 void hello()
 {
-    cout << "Hello, " << __cplusplus << "!\n";
+    cout << "Hello, C++ " << __cplusplus << "!\n";
 }

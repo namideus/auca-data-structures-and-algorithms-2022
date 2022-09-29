@@ -8,12 +8,20 @@ using namespace std;
 int main()
 {
     iostream::sync_with_stdio(false);
+    cin.tie(0);
 
-    int n, i, j, m, amnt;
+    int n, i, j, m, amnt, f;
     string name, giftee;
+
+    f = 0;
 
     while (cin >> n)
     {
+        if (f > 0)
+            cout << "\n";
+
+        f = 1;
+
         unordered_map<string, int> mp;
         vector<string> v(n);
 
@@ -42,7 +50,5 @@ int main()
             for (auto b : mp)
                 if (a == b.first)
                     cout << b.first << " " << b.second << "\n";
-
-        cout << "\n";
     }
 }

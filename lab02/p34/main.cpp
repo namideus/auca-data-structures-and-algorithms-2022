@@ -27,16 +27,12 @@ int main()
             while (j > 0)
             {
                 cnt[j % 10]++;
-                j /= 10;
-            }
-
-            for (j = 0; j <= 9; ++j)
-            {
-                if (cnt[j] > 1)
+                if (cnt[j % 10] > 1)
                 {
                     f = 0;
                     break;
                 }
+                j /= 10;
             }
 
             if (f)

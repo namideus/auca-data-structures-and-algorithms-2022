@@ -1,38 +1,46 @@
 #include <bits/stdc++.h>
 
-typedef long long int lli;
-
 template <typename C>
 int sz(const C &c) { return static_cast<int>(c.size()); }
 
 using namespace std;
 
-lli sumOfDigits(lli n)
+void computeDigits(int n, int& sum, int& count) 
 {
-    int num = 0;
-
     while (n > 0)
     {
-        num += n % 10;
+        sum += n % 10;
+        count++;
         n /= 10;
     }
+}
 
-    return num;
+int sumOfDigits(int n)
+{
+    int sum = 0;
+    int newSum = 0;
+    int count = 0;
+
+    computeDigits(n, sum, count);
+
+    newSum = sum;
+
+    while (newSum / 10 > 0)
+    {
+        newSum = 0;
+        computeDigits(sum, newSum, count);
+        sum = newSum;
+    }
+
+    return sum;
 }
 
 int main()
 {
     iostream::sync_with_stdio(false);
 
-    long long int n, ans;
+    int n, ans;
 
     while (cin >> n && n)
-    {
-        ans = sumOfDigits(n);
-
-        while (ans / 10 > 0)
-            ans = sumOfDigits(ans);
-
-        cout << ans << "\n";
-    }
+        cout << sumOfDigits(n) << "\n";
 }

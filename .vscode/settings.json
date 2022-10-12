@@ -4,6 +4,7 @@
         "iostream": "cpp",
         "iomanip": "cpp",
         "sstream": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "ostream": "cpp"
     }
 }

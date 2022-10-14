@@ -12,7 +12,7 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
-    int i, j, k, n, f, ans, c, min_cnt;
+    int i, j, k, l, n, f, ans, c, min_cnt;
     string str;
 
     vector<string> v;
@@ -28,18 +28,15 @@ int main()
                 c = 0;
 
                 for (j = 0; j < sz(v); ++j)
-                {
                     if (i != j)
                     {
                         for (k = 1; k <= 17; k += 4)
-                            if (v[i][k - 1] != v[j][k - 1] || v[i][k + 1] != v[j][k + 1])
-                                c++;
+                            for (l = 1; l <= 17; l += 4)
+                                if (v[i][k - 1] == v[j][l - 1] && v[i][k + 1] != v[j][l + 1])
+                                    c++;
                     }
-                }
 
-                // cout << "cnt = " << c <<"\n";
-
-                if (c <= min_cnt)
+                if (c < min_cnt)
                 {
                     min_cnt = c;
                     ans = i + 1;

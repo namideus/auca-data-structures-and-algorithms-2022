@@ -28,16 +28,8 @@ int main()
         cmb[5].first = c2 + c3 + g1 + g3 + b1 + b2;
 
         for (auto &x : cmb)
-            if (x.first < ans)
-            {
-                ans = x.first;
-                res = x.second;
-            }
-            else if (x.first == ans && res > x.second)
-            {
-                ans = x.first;
-                res = x.second;
-            }
+            if (x.first < ans || x.first == ans && res > x.second)
+                ans = x.first, res = x.second;
 
         cout << res << " " << ans << "\n";
     }

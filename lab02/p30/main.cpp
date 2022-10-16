@@ -24,7 +24,6 @@ int main()
         cmb[1].first = b2 + b3 + c1 + c3 + g1 + g2;
         cmb[2].first = c2 + c3 + b1 + b3 + g1 + g2;
         cmb[3].first = g2 + g3 + b1 + b3 + c1 + c2;
-
         cmb[4].first = g2 + g3 + c1 + c3 + b1 + b2;
         cmb[5].first = c2 + c3 + g1 + g3 + b1 + b2;
 

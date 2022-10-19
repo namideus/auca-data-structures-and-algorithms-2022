@@ -17,25 +17,26 @@ main()
     while (cin >> n && n)
     {
         cin >> c;
-        vector<int> v(n);
 
+        vector<int> v(n);
+        int cnt[10001];
+
+        id = 0;
         for (auto &x : v)
-            cin >> x;
+            cin >> x, cnt[x] = id++;
 
         f = 1;
         for (i = 0; i < n && f; ++i)
             for (j = i + 1; j < n; ++j)
             {
-                auto it = find(v.begin(), v.end(), 2 * v[j] - v[i]);
+                d = 2 * v[j] - v[i];
 
-                if (it != v.end())
-                {
-                    if (it - v.begin() > j)
+                if (d >= 0 && d < n)
+                    if (cnt[d] > j)
                     {
                         f = 0;
                         break;
                     }
-                }
             }
 
         cout << (f ? "yes" : "no") << "\n";

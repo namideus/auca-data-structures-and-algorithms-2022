@@ -76,13 +76,22 @@ TEST_CASE("assignment operator")
     REQUIRE(v[0] == 100);
 }
 
+TEST_CASE("move constructor")
+{
+    vector<int> v = {1, 2, 3, 4, 5};
+    vector<int> v1(move(v));
+
+    REQUIRE(containerToStr(v) == "{}");
+    REQUIRE(containerToStr(v1) == "{1, 2, 3, 4, 5}");
+}
+
 TEST_CASE("move assignment")
 {
     vector<int> v = {1, 2, 3, 4, 5};
-    vector<int> v2 = move(v);
+    vector<int> v1 = move(v);
 
-    REQUIRE(containerToStr(v)=="{}");
-    REQUIRE(containerToStr(v2)=="{1, 2, 3, 4, 5}");
+    REQUIRE(containerToStr(v) == "{}");
+    REQUIRE(containerToStr(v1) == "{1, 2, 3, 4, 5}");
 }
 
 TEST_CASE("subscript operator")

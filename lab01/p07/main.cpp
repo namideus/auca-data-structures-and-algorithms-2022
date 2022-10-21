@@ -124,142 +124,150 @@ TEST_CASE("==, !=, < and other comparison operators, method compare")
     REQUIRE(s == "test");
 }
 
-// TEST_CASE("the work of for (auto element : container) statement with std::vector")
-// {
-//     vector<int> v = {1, 2, 3, 4, 5};
+TEST_CASE("the work of for (auto &c : str) statement with std::string")
+{
+    string s("test");
+    string copy = "";
 
-//     int sum = 0;
+    for (auto &c : s)
+    {
+        copy += c;
+    }
 
-//     for (auto x : v)
-//     {
-//         sum += x;
-//     }
+    REQUIRE(copy == "test");
+}
 
-//     REQUIRE(sum == 15);
-// }
+TEST_CASE("methods front(), back()")
+{
+    string s("test");
 
-// TEST_CASE("methods front(), back()")
-// {
-//     vector<int> v = {1, 2, 3, 4, 5};
+    REQUIRE(s.front() == 't');
 
-//     REQUIRE(v.front() == 1);
+    s.front() = 'l';
 
-//     v.front() = 66;
+    REQUIRE(s.front() == 'l');
 
-//     REQUIRE(v.front() == 66);
+    REQUIRE(s.back() == 't');
 
-//     REQUIRE(v.back() == 5);
+    s.back() = 'm';
 
-//     v.back() = 100;
+    REQUIRE(s.back() == 'm');
+}
 
-//     REQUIRE(v.back() == 100);
-// }
+TEST_CASE("methods substr(index, length), find(char ch)")
+{
+    string s1("test");
 
-// TEST_CASE("type std::vector<int>::iterator, operators: *it, it->field , ++it, --it, it += n, it-=n, it2 – it1;")
-// {
-//     vector<int> v = {1, 2, 3, 4, 5};
-//     vector<string> v2 = {"aaa", "bbb", "ccc"};
+    string s2 = s1.substr(0, 2);
 
-//     vector<int>::iterator it1 = v.begin();
-//     REQUIRE(*it1 == 1);
+    REQUIRE(s2 == "te");
 
-//     vector<string>::iterator it = v2.begin();
-//     REQUIRE(it->size() == 3);
+    int pos = s1.find('e');
 
-//     ++it1;
-//     REQUIRE(*it1 == 2);
+    REQUIRE(pos == 1);
 
-//     --it1;
-//     REQUIRE(*it1 == 1);
+    pos = s1.find('l');
 
-//     it1 += 4;
-//     REQUIRE(*it1 == 5);
+    REQUIRE(pos == string::npos);
+}
 
-//     it1 -= 4;
-//     REQUIRE(*it1 == 1);
+TEST_CASE("type std::string::iterator, operators: *it, it->field , ++it, --it, it += n, it-=n, it2 – it1")
+{
+    string s1("test");
 
-//     vector<int>::iterator it2 = v.end();
-//     it2--;
-//     REQUIRE(it2 - it1 == 4);
-// }
+    string::iterator it1 = s1.begin();
+    REQUIRE(*it1 == 't');
 
-// TEST_CASE("methods insert(it, value), insert(it, beg, end)")
-// {
-//     vector<int> v = {1, 2, 3, 4, 5};
-//     vector<int> v2 = {6, 7, 8};
+    // REQUIRE(it1->size() == 1);
 
-//     v.insert(v.begin() + 1, 7);
+    ++it1;
+    REQUIRE(*it1 == 'e');
 
-//     REQUIRE(containerToStr(v) == "{1, 7, 2, 3, 4, 5}");
+    --it1;
+    REQUIRE(*it1 == 't');
 
-//     v.insert(v.begin(), v2.begin(), v2.end());
+    it1 += 3;
+    REQUIRE(*it1 == 't');
 
-//     REQUIRE(containerToStr(v) == "{6, 7, 8, 1, 7, 2, 3, 4, 5}");
-// }
+    it1 -= 3;
+    REQUIRE(*it1 == 't');
 
-// TEST_CASE("methods erase(it), erase(beg, end)")
-// {
-//     vector<int> v = {1, 2, 3, 4, 5};
+    string::iterator it2 = s1.end();
+    REQUIRE(it2 - it1 == 4);
+}
 
-//     v.erase(v.begin());
+TEST_CASE("method insert(index, length, char)")
+{
+    string s("test");
 
-//     REQUIRE(containerToStr(v) == "{2, 3, 4, 5}");
+    s.insert(0, 2, 'h');
 
-//     v.erase(v.begin(), v.end());
+    REQUIRE(s == "hhtest");
+}
 
-//     REQUIRE(containerToStr(v) == "{}");
-// }
+TEST_CASE("methods erase(index, length)")
+{
+    string s("test");
 
-// TEST_CASE("constructor vector(beg, end)")
-// {
-//     vector<int> v1 = {1, 2, 3, 4, 5};
-//     vector<int> v2(v1.begin(), v1.end());
+    s.erase(0, 1);
 
-//     REQUIRE(v2.size() == 5);
-//     REQUIRE(containerToStr(v2) == "{1, 2, 3, 4, 5}");
-// }
+    REQUIRE(s == "est");
 
-// TEST_CASE("the work of std::reverse algorithm with std::vector")
-// {
-//     vector<int> v = {1, 2, 3, 4, 5};
+    s.erase(1, 1);
 
-//     reverse(v.begin(), v.end());
+    REQUIRE(s == "et");
+}
 
-//     REQUIRE(containerToStr(v) == "{5, 4, 3, 2, 1}");
-// }
+TEST_CASE("constructor string(beg, end);")
+{
+    string s1("test");
 
-// TEST_CASE("the work of std::sort algorithm with std::vector")
-// {
-//     vector<int> v = {5, 1, 4, 3, 2};
+    string s2(s1.begin(), s1.end());
 
-//     sort(v.begin(), v.end());
+    REQUIRE(s2 == "test");
+}
 
-//     REQUIRE(containerToStr(v) == "{1, 2, 3, 4, 5}");
-// }
+TEST_CASE("the work of std::reverse algorithm with std::string")
+{
+    string s("test");
 
-// TEST_CASE("the work of std::binary_search algorithm with std::vector")
-// {
-//     vector<int> v = {1, 2, 3, 4, 5};
+    reverse(s.begin(), s.end());
 
-//     REQUIRE(binary_search(v.begin(), v.end(), 1) == true);
+    REQUIRE(s == "tset");
+}
 
-//     REQUIRE(binary_search(v.begin(), v.end(), 6) == false);
-// }
+TEST_CASE("the work of std::sort algorithm with std::string")
+{
+    string s("test");
 
-// TEST_CASE("the work of std::min_element algorithm with std::vector")
-// {
-//     vector<int> v = {1, 2, 3, 4, 5};
+    sort(s.begin(), s.end());
 
-//     int a = *min_element(v.begin(), v.end());
+    REQUIRE(s == "estt");
+}
 
-//     REQUIRE(a == 1);
-// }
+TEST_CASE("the work of std::binary_search algorithm with std::string")
+{
+    string s("estt");
 
-// TEST_CASE("the work of std::max_element algorithm with std::vector")
-// {
-//     vector<int> v = {1, 2, 3, 5, 4};
+    REQUIRE(binary_search(s.begin(), s.end(), 'e') == true);
 
-//     int a = *max_element(v.begin(), v.end());
+    REQUIRE(binary_search(s.begin(), s.end(), 'a') == false);
+}
 
-//     REQUIRE(a == 5);
-// }
+TEST_CASE("the work of std::min_element algorithm with std::string")
+{
+    string s("test");
+
+    char c = *min_element(s.begin(), s.end());
+
+    REQUIRE(c == 'e');
+}
+
+TEST_CASE("the work of std::max_element algorithm with std::string")
+{
+    string s("test");
+
+    char c = *max_element(s.begin(), s.end());
+
+    REQUIRE(c == 't');
+}

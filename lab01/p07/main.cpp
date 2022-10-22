@@ -119,9 +119,17 @@ TEST_CASE("==, !=, < and other comparison operators, method compare")
 {
     string s("test");
 
-    // insert
-
     REQUIRE(s == "test");
+
+    REQUIRE(s != "tesa");
+
+    REQUIRE(s > "sest");
+
+    REQUIRE(s < "zest");
+
+    REQUIRE(s >= "test");
+
+    REQUIRE(s <= "test");
 }
 
 TEST_CASE("the work of for (auto &c : str) statement with std::string")

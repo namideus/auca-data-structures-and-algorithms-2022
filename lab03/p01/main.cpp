@@ -39,7 +39,8 @@ int main()
 
 vector<vector<int>> readShuffles()
 {
-    int n; cin >> n;
+    int n;
+    cin >> n;
     vector<vector<int>> shuffles(n, vector<int>(52));
 
     for (int i = 0; i < n; i++)
@@ -51,7 +52,7 @@ vector<vector<int>> readShuffles()
         cin.ignore(1024, '\n');
     }
 
-    return shuffles;   
+    return shuffles;
 }
 
 void applyShuffleDeck(vector<int> &deck, const vector<int> &shuffle)
@@ -60,9 +61,9 @@ void applyShuffleDeck(vector<int> &deck, const vector<int> &shuffle)
 
     for (int i = 0; i < 52; i++)
     {
-        new_deck[i] = deck[shuffle[i]-1];
+        new_deck[i] = deck[shuffle[i] - 1];
     }
-    
+
     deck = new_deck;
 }
 
@@ -82,5 +83,5 @@ void printDeck(const vector<int> &deck)
     static const vector<string> ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
 
     for (auto card : deck)
-        cout << ranks[card%13] << " of " << suits[card/13] << "\n";
+        cout << ranks[card % 13] << " of " << suits[card / 13] << "\n";
 }

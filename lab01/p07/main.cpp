@@ -182,11 +182,13 @@ TEST_CASE("methods substr(index, length), find(char ch)")
 TEST_CASE("type std::string::iterator, operators: *it, it->field , ++it, --it, it += n, it-=n, it2 – it1")
 {
     string s1("test");
+    vector<string> vs = {"test1", "test2", "test3"};
 
     string::iterator it1 = s1.begin();
     REQUIRE(*it1 == 't');
 
-    // REQUIRE(it1->size() == 1);
+    vector<string>::iterator it = vs.begin();
+    REQUIRE(it->size() == 5);
 
     ++it1;
     REQUIRE(*it1 == 'e');

@@ -11,7 +11,7 @@ bool read_puzzle(char (&)[5][5]);
 void solve_puzzle(char (&)[5][5], string &, int);
 void read_moves(string &);
 
-main()
+int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
@@ -67,25 +67,45 @@ void solve_puzzle(char (&puzzle)[5][5], string &moves, int test)
     if (test > 1)
         cout << "\n";
 
-    for (int i = 0; i < moves.size(); ++i)
+    for (int i = 0; i < sz(moves); ++i)
     {
         switch (moves[i])
         {
         case 'A':
-            swap(puzzle[e_i][e_j], puzzle[e_i - 1][e_j]);
-            --e_i;
+            if (e_i > 0)
+            {
+                swap(puzzle[e_i][e_j], puzzle[e_i - 1][e_j]);
+                --e_i;
+            }
+            else
+                is_correct = false;
             break;
         case 'B':
-            swap(puzzle[e_i][e_j], puzzle[e_i + 1][e_j]);
-            ++e_i;
+            if (e_i < 4)
+            {
+                swap(puzzle[e_i][e_j], puzzle[e_i + 1][e_j]);
+                ++e_i;
+            }
+            else
+                is_correct = false;
             break;
         case 'L':
-            swap(puzzle[e_i][e_j], puzzle[e_i][e_j - 1]);
-            --e_j;
+            if (e_j > 0)
+            {
+                swap(puzzle[e_i][e_j], puzzle[e_i][e_j - 1]);
+                --e_j;
+            }
+            else
+                is_correct = false;
             break;
         case 'R':
-            swap(puzzle[e_i][e_j], puzzle[e_i][e_j + 1]);
-            ++e_j;
+            if (e_j < 4)
+            {
+                swap(puzzle[e_i][e_j], puzzle[e_i][e_j + 1]);
+                ++e_j;
+            }
+            else
+                is_correct = false;
             break;
         default:
             is_correct = false;
@@ -107,8 +127,6 @@ void solve_puzzle(char (&puzzle)[5][5], string &moves, int test)
         }
     else
         cout << "This puzzle has no final configuration.\n";
-
-    // cout << "\n";
 }
 
 void read_moves(string &moves)

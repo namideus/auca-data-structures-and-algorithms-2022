@@ -57,6 +57,7 @@ TEST_CASE("copy constructor")
     vector<int> v = {1, 2, 3, 4, 5};
     vector<int> v2 = v; // copy constructor
 
+    REQUIRE(containerToStr(v) == containerToStr(v2));
     REQUIRE(v2.size() == 5);
     REQUIRE(v2[0] == 1);
 
@@ -73,7 +74,7 @@ TEST_CASE("assignment operator")
 
     v[0] = 100;
 
-    REQUIRE(v[0] == 100);
+    REQUIRE(containerToStr(v) == "{100, 2, 3, 4, 5}");
 }
 
 TEST_CASE("move constructor")
@@ -81,7 +82,10 @@ TEST_CASE("move constructor")
     vector<int> v = {1, 2, 3, 4, 5};
     vector<int> v1(move(v));
 
+    REQUIRE(v.size() == 0);
     REQUIRE(containerToStr(v) == "{}");
+
+    REQUIRE(v1.size() == 5);
     REQUIRE(containerToStr(v1) == "{1, 2, 3, 4, 5}");
 }
 
@@ -90,7 +94,10 @@ TEST_CASE("move assignment")
     vector<int> v = {1, 2, 3, 4, 5};
     vector<int> v1 = move(v);
 
+    REQUIRE(v.size() == 0);
     REQUIRE(containerToStr(v) == "{}");
+
+    REQUIRE(v1.size() == 5);
     REQUIRE(containerToStr(v1) == "{1, 2, 3, 4, 5}");
 }
 
@@ -98,14 +105,22 @@ TEST_CASE("subscript operator")
 {
     vector<int> v = {1, 2, 3, 4, 5};
 
-    REQUIRE(v[0] == 1);
+    int sum = 0;
+
+    for(int i = 0; i < (int)v.size(); i++)
+        sum += v[i];
+
+    REQUIRE(sum == 15);
 }
 
 TEST_CASE("method at(index), exception")
 {
     vector<int> v = {1, 2, 3, 4, 5};
 
-    REQUIRE_THROWS(v.at(100));
+    v.at(0) = 1000;
+
+    REQUIRE(v.front() == 1000);
+    REQUIRE_THROWS_AS(v.at(100), std::out_of_range);
 }
 
 TEST_CASE("push_back method")
@@ -120,6 +135,7 @@ TEST_CASE("push_back method")
 
     REQUIRE(v.size() == 5);
     REQUIRE(v.capacity() == 8);
+    REQUIRE(containerToStr(v) == "{1, 2, 3, 4, 5}");
 }
 
 TEST_CASE("pop_back method")
@@ -131,6 +147,7 @@ TEST_CASE("pop_back method")
     v.pop_back();
 
     REQUIRE(v.size() == 2);
+    REQUIRE(containerToStr(v) == "{1, 2}");
 }
 
 TEST_CASE("the work of for (auto element : container) statement with std::vector")
@@ -151,17 +168,23 @@ TEST_CASE("methods front(), back()")
 {
     vector<int> v = {1, 2, 3, 4, 5};
 
-    REQUIRE(v.front() == 1);
+    SUBCASE("front()")
+    {
+        REQUIRE(v.front() == 1);
 
-    v.front() = 66;
+        v.front() = 66;
 
-    REQUIRE(v.front() == 66);
+        REQUIRE(v.front() == 66);
+    }
 
-    REQUIRE(v.back() == 5);
+    SUBCASE("back()")
+    {
+        REQUIRE(v.back() == 5);
 
-    v.back() = 100;
+        v.back() = 100;
 
-    REQUIRE(v.back() == 100);
+        REQUIRE(v.back() == 100);
+    }
 }
 
 TEST_CASE("type std::vector<int>::iterator, operators: *it, it->field , ++it, --it, it += n, it-=n, it2 – it1;")

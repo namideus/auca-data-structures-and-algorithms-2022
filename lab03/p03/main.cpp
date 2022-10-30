@@ -32,7 +32,6 @@ bool dealDeck(vector<string> &hand1, vector<string> &hand2)
 
     for (int i = 0; i < 52; i++)
     {
-
         cin >> card;
 
         if (card == "#")
@@ -54,7 +53,7 @@ int playGame(vector<string> &hand1, vector<string> &hand2)
     vector<string> table_cards;
     string card;
 
-    int winner = 1, turn = 2, pos, cover;
+    int winner = 1, turn = 2, pos, cover = 0;
     bool covering = false;
 
     while ((!hand1.empty() && turn == 1) || (!hand2.empty() && turn == 2))

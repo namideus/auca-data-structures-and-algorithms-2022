@@ -107,7 +107,7 @@ TEST_CASE("subscript operator")
 
     int sum = 0;
 
-    for(int i = 0; i < (int)v.size(); i++)
+    for (int i = 0; i < (int)v.size(); i++)
         sum += v[i];
 
     REQUIRE(sum == 15);
@@ -191,28 +191,51 @@ TEST_CASE("type std::vector<int>::iterator, operators: *it, it->field , ++it, --
 {
     vector<int> v = {1, 2, 3, 4, 5};
     vector<string> v2 = {"aaa", "bbb", "ccc"};
-
     vector<int>::iterator it1 = v.begin();
-    REQUIRE(*it1 == 1);
+    vector<int>::iterator it2 = v.end();
 
     vector<string>::iterator it = v2.begin();
-    REQUIRE(it->size() == 3);
 
-    ++it1;
-    REQUIRE(*it1 == 2);
+    SUBCASE("*it")
+    {
+        REQUIRE(*it1 == 1);
+    }
 
-    --it1;
-    REQUIRE(*it1 == 1);
+    SUBCASE("it->field")
+    {
+        REQUIRE(it->size() == 3);
+        REQUIRE(!it->empty());
+    }
 
-    it1 += 4;
-    REQUIRE(*it1 == 5);
+    SUBCASE("++it")
+    {
+        ++it1;
+        REQUIRE(*it1 == 2);
+    }
 
-    it1 -= 4;
-    REQUIRE(*it1 == 1);
+    SUBCASE("--it")
+    {
+        --it2;
+        REQUIRE(*it2 == 5);
+    }
 
-    vector<int>::iterator it2 = v.end();
-    it2--;
-    REQUIRE(it2 - it1 == 4);
+    SUBCASE("it += n")
+    {
+        it1 += 4;
+        REQUIRE(*it1 == 5);
+    }
+
+    // SUBCASE("it -= n")
+    // {
+    //     it1 -= 1;
+    //     REQUIRE(*it1 == 1);
+    // }
+
+    SUBCASE("it2 – it1")
+    {
+        REQUIRE(it2 - it1 == 5);
+        REQUIRE(it2 - it1 != 4);
+    }
 }
 
 TEST_CASE("methods insert(it, value), insert(it, beg, end)")
@@ -220,26 +243,38 @@ TEST_CASE("methods insert(it, value), insert(it, beg, end)")
     vector<int> v = {1, 2, 3, 4, 5};
     vector<int> v2 = {6, 7, 8};
 
-    v.insert(v.begin() + 1, 7);
+    SUBCASE("insert(it, value)")
+    {
+        v.insert(v.begin() + 1, 7);
 
-    REQUIRE(containerToStr(v) == "{1, 7, 2, 3, 4, 5}");
+        REQUIRE(containerToStr(v) == "{1, 7, 2, 3, 4, 5}");
+    }
 
-    v.insert(v.begin(), v2.begin(), v2.end());
+    SUBCASE("insert(it, beg, end)")
+    {
+        v.insert(v.begin(), v2.begin(), v2.end());
 
-    REQUIRE(containerToStr(v) == "{6, 7, 8, 1, 7, 2, 3, 4, 5}");
+        REQUIRE(containerToStr(v) == "{6, 7, 8, 1, 2, 3, 4, 5}");
+    }
 }
 
 TEST_CASE("methods erase(it), erase(beg, end)")
 {
     vector<int> v = {1, 2, 3, 4, 5};
 
-    v.erase(v.begin());
+    SUBCASE("erase(it)")
+    {
+        v.erase(v.begin());
 
-    REQUIRE(containerToStr(v) == "{2, 3, 4, 5}");
+        REQUIRE(containerToStr(v) == "{2, 3, 4, 5}");
+    }
 
-    v.erase(v.begin(), v.end());
+    SUBCASE("erase(beg, end)")
+    {
+        v.erase(v.begin(), v.end());
 
-    REQUIRE(containerToStr(v) == "{}");
+        REQUIRE(containerToStr(v) == "{}");
+    }
 }
 
 TEST_CASE("constructor vector(beg, end)")
@@ -281,17 +316,23 @@ TEST_CASE("the work of std::binary_search algorithm with std::vector")
 TEST_CASE("the work of std::min_element algorithm with std::vector")
 {
     vector<int> v = {1, 2, 3, 4, 5};
+    vector<int> v2 = {};
 
     int a = *min_element(v.begin(), v.end());
 
     REQUIRE(a == 1);
+
+    REQUIRE(min_element(v2.begin(), v2.end()) == v2.end());
 }
 
 TEST_CASE("the work of std::max_element algorithm with std::vector")
 {
     vector<int> v = {1, 2, 3, 5, 4};
+    vector<int> v2 = {};
 
     int a = *max_element(v.begin(), v.end());
 
     REQUIRE(a == 5);
+
+    REQUIRE(max_element(v2.begin(), v2.end()) == v2.end());
 }

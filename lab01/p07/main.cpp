@@ -74,6 +74,7 @@ TEST_CASE("method at(index), exception")
     string s("test");
 
     REQUIRE_THROWS(s.at(5));
+    REQUIRE_THROWS_AS(s.at(5), out_of_range);
 }
 
 TEST_CASE("push_back method")
@@ -104,32 +105,56 @@ TEST_CASE("+, += operators")
 {
     string s("test");
 
-    s += "ing";
+    SUBCASE("+")
+    {
+        s += "ing";
 
-    REQUIRE(s.size() == 7);
-    REQUIRE(s == "testing");
+        REQUIRE(s.size() == 7);
+        REQUIRE(s == "testing");
+    }
 
-    s = s + "s";
+    SUBCASE("+=")
+    {
+        s = s + "s";
 
-    REQUIRE(s.size() == 8);
-    REQUIRE(s == "testings");
+        REQUIRE(s.size() == 5);
+        REQUIRE(s == "tests");
+    }
 }
 
 TEST_CASE("==, !=, < and other comparison operators, method compare")
 {
     string s("test");
 
-    REQUIRE(s == "test");
+    SUBCASE("==")
+    {
+        REQUIRE(s == "test");
+    }
 
-    REQUIRE(s != "tesa");
+    SUBCASE("!=")
+    {
+        REQUIRE(s != "tesa");
+    }
 
-    REQUIRE(s > "sest");
+    SUBCASE(">")
+    {
+        REQUIRE(s > "sest");
+    }
 
-    REQUIRE(s < "zest");
+    SUBCASE("<")
+    {
+        REQUIRE(s < "zest");
+    }
 
-    REQUIRE(s >= "test");
+    SUBCASE(">=")
+    {
+        REQUIRE(s >= "test");
+    }
 
-    REQUIRE(s <= "test");
+    SUBCASE("<=")
+    {
+        REQUIRE(s <= "test");
+    }
 }
 
 TEST_CASE("the work of for (auto &c : str) statement with std::string")
@@ -149,34 +174,46 @@ TEST_CASE("methods front(), back()")
 {
     string s("test");
 
-    REQUIRE(s.front() == 't');
+    SUBCASE("front()")
+    {
+        REQUIRE(s.front() == 't');
 
-    s.front() = 'l';
+        s.front() = 'l';
 
-    REQUIRE(s.front() == 'l');
+        REQUIRE(s.front() == 'l');
+    }
 
-    REQUIRE(s.back() == 't');
+    SUBCASE("back()")
+    {
+        REQUIRE(s.back() == 't');
 
-    s.back() = 'm';
+        s.back() = 'm';
 
-    REQUIRE(s.back() == 'm');
+        REQUIRE(s.back() == 'm');
+    }
 }
 
 TEST_CASE("methods substr(index, length), find(char ch)")
 {
     string s1("test");
 
-    string s2 = s1.substr(0, 2);
+    SUBCASE("substr(index, length)")
+    {
+        string s2 = s1.substr(0, 2);
 
-    REQUIRE(s2 == "te");
+        REQUIRE(s2 == "te");
+    }
 
-    int pos = s1.find('e');
+    SUBCASE("find(char ch)")
+    {
+        int pos = s1.find('e');
 
-    REQUIRE(pos == 1);
+        REQUIRE(pos == 1);
 
-    pos = s1.find('l');
+        pos = s1.find('l');
 
-    REQUIRE(pos == string::npos);
+        REQUIRE(pos == string::npos);
+    }
 }
 
 TEST_CASE("type std::string::iterator, operators: *it, it->field , ++it, --it, it += n, it-=n, it2 – it1")
@@ -185,25 +222,47 @@ TEST_CASE("type std::string::iterator, operators: *it, it->field , ++it, --it, i
     vector<string> vs = {"test1", "test2", "test3"};
 
     string::iterator it1 = s1.begin();
-    REQUIRE(*it1 == 't');
-
-    vector<string>::iterator it = vs.begin();
-    REQUIRE(it->size() == 5);
-
-    ++it1;
-    REQUIRE(*it1 == 'e');
-
-    --it1;
-    REQUIRE(*it1 == 't');
-
-    it1 += 3;
-    REQUIRE(*it1 == 't');
-
-    it1 -= 3;
-    REQUIRE(*it1 == 't');
-
     string::iterator it2 = s1.end();
-    REQUIRE(it2 - it1 == 4);
+    vector<string>::iterator it = vs.begin();
+
+    SUBCASE("*it")
+    {
+        REQUIRE(*it1 == 't');
+    }
+
+    SUBCASE("std::string::iterator")
+    {
+        REQUIRE(it->size() == 5);
+    }
+
+    SUBCASE("++it")
+    {
+        ++it1;
+        REQUIRE(*it1 == 'e');
+    }
+
+    SUBCASE("--it")
+    {
+        --it2;
+        REQUIRE(*it2 == 't');
+    }
+
+    SUBCASE("it += n")
+    {
+        it1 += 3;
+        REQUIRE(*it1 == 't');
+    }
+
+    SUBCASE("it -= n")
+    {
+        it2 -= 3;
+        REQUIRE(*it2 == 'e');
+    }
+
+    SUBCASE("it2 – it1")
+    {
+        REQUIRE(it2 - it1 == 4);
+    }
 }
 
 TEST_CASE("method insert(index, length, char)")
@@ -259,18 +318,20 @@ TEST_CASE("the work of std::binary_search algorithm with std::string")
 {
     string s("estt");
 
-    REQUIRE(binary_search(s.begin(), s.end(), 'e') == true);
+    REQUIRE(binary_search(s.begin(), s.end(), 'e'));
 
-    REQUIRE(binary_search(s.begin(), s.end(), 'a') == false);
+    REQUIRE(!binary_search(s.begin(), s.end(), 'a'));
 }
 
 TEST_CASE("the work of std::min_element algorithm with std::string")
 {
     string s("test");
-
     char c = *min_element(s.begin(), s.end());
 
     REQUIRE(c == 'e');
+
+    s = "";
+    REQUIRE(min_element(s.begin(), s.end()) == s.end());
 }
 
 TEST_CASE("the work of std::max_element algorithm with std::string")
@@ -280,4 +341,7 @@ TEST_CASE("the work of std::max_element algorithm with std::string")
     char c = *max_element(s.begin(), s.end());
 
     REQUIRE(c == 't');
+
+    s = "";
+    REQUIRE(max_element(s.begin(), s.end()) == s.end());
 }

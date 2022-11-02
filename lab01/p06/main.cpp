@@ -225,11 +225,11 @@ TEST_CASE("type std::vector<int>::iterator, operators: *it, it->field , ++it, --
         REQUIRE(*it1 == 5);
     }
 
-    // SUBCASE("it -= n")
-    // {
-    //     it1 -= 1;
-    //     REQUIRE(*it1 == 1);
-    // }
+    SUBCASE("it -= n")
+    {
+        it2 -= 5;
+        REQUIRE(*it2 == 1);
+    }
 
     SUBCASE("it2 – it1")
     {

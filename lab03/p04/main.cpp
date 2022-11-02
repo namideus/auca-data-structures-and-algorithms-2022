@@ -6,10 +6,10 @@ int sz(const C &c) { return static_cast<int>(c.size()); }
 using namespace std;
 
 vector<string> read_names(int &);
-vector<int> find_winner(const vector<string> &, const int &);
+vector<int> find_winner(const int &);
 void print_solution(const vector<string> &, const vector<int> &);
 
-main()
+int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
@@ -25,7 +25,7 @@ main()
 
         auto names = read_names(n);
 
-        auto ans = find_winner(names, n);
+        auto ans = find_winner(n);
 
         print_solution(names, ans);
 
@@ -43,64 +43,59 @@ inline void print_solution(const vector<string> &names, const vector<int> &ans)
 inline vector<string> read_names(int &n)
 {
     cin >> n;
-
     vector<string> v(n);
-
     cin.ignore();
-
     for (auto &x : v)
         getline(cin, x);
-
     return v;
 }
 
-inline vector<int> find_winner(const vector<string> &names, const int &n)
+inline vector<int> find_winner(const int &n)
 {
-    int a, cnt;
+    int cnt, mn = 1e9, mx = -1, id = 0;
     vector<vector<int>> v;
 
     for (string s; getline(cin, s, '\n') && isdigit(s[0]);)
     {
         istringstream iss(s);
         vector<int> votes(n);
-
         for (auto &x : votes)
             iss >> x;
-
         v.push_back(votes);
     }
 
     cnt = sz(v);
+    vector<int> x(cnt);
+    int ct[n + 1];
 
     while (true)
     {
-        vector<int> x(cnt);
+        memset(ct, 0, sizeof(ct));
 
         for (int i = 0; i < cnt; i++)
-            x[i] = v[i][0];
+            x[i] = v[i][0], ct[x[i]]++;
 
-        set<int> st(x.begin(), x.end());
-
-        if (sz(st) == cnt)
-            return vector<int>(st.begin(), st.end());
-
-        int min_count = 1e9, min_id = 0, c = 0;
-        for (auto d : x)
+        mn = 1e9, mx = -1, id = -1;
+        for (auto i : x)
         {
-            c = count(x.begin(), x.end(), d);
+            if (ct[i] > mx)
+                mx = ct[i], id = i;
 
-            if (c < min_count)
-            {
-                min_count = c;
-                min_id = d;
-            }
+            mn = min(mn, ct[i]);
         }
 
-        for (auto &x : v)
-            x.erase(find(x.begin(), x.end(), min_id));
+        if (mx * 100.0 / cnt > 50.0)
+            return {id};
 
-        for (auto id : x)
-            if ((double)count(x.begin(), x.end(), id) * 100.0 / cnt > 50.0)
-                return {id};
+        if (mx == mn)
+        {
+            set<int> st(x.begin(), x.end());
+            return vector<int>(st.begin(), st.end());
+        }
+
+        for (int i = 1; i <= n; i++)
+            for (auto &sv : v)
+                if (ct[i] == mn)
+                    sv.erase(find(sv.begin(), sv.end(), i));
     }
 }

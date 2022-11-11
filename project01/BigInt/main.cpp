@@ -7,26 +7,23 @@
 
 using namespace std;
 
-TEST_CASE("Default constructor")
+TEST_CASE("Default constructors")
 {
     BigInt x;
     ostringstream sout;
     sout << x;
     REQUIRE(sout.str() == "0");
-    // Rational<int> x;
+}
 
-    // REQUIRE(x.num() == 0);
-    // REQUIRE(x.den() == 1);
+TEST_CASE("Default constructor with a string parameter")
+{
+    BigInt x("-12765876876764764876764648484864848746448764787864");
+    ostringstream sout;
+    sout << x;
+    REQUIRE(sout.str() == "-12765876876764764876764648484864848746448764787864");
 
-    // vector<Rational<long long>> v(10);
-    // for (auto r : v)
-    // {
-    //     REQUIRE(r.num() == 0);
-    //     REQUIRE(r.den() == 1);
-    // }
-
-    // ostringstream sout;
-    // sout << x;
-
-    // REQUIRE(sout.str() == "0/1");
+    SUBCASE("throw runtime_error")
+    {
+        REQUIRE_THROWS_AS(BigInt("-123a"), runtime_error);
+    }
 }

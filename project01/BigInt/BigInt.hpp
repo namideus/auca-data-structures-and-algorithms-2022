@@ -13,8 +13,15 @@ class BigInt
         }
         BigInt(const std::string &s)
         {
-            for(auto d : s)
+            mIsNegative = (s[0]=='-');
+
+            for(int i = (mIsNegative ? 1 : 0); i < (int)s.size(); i++)
             {
+                auto d = s[i];
+
+                if(!isdigit(d))
+                    throw std::runtime_error("Non-digit character found!");
+
                 mDigits.push_back(d-'0');
             }
         }

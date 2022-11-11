@@ -25,6 +25,7 @@ class BigInt
                 mDigits.push_back(d-'0');
             }
         }
+        BigInt(int val) : BigInt(std::to_string(val)){}
 };
 
 inline std::ostream &operator<<(std::ostream& out, const BigInt &x)

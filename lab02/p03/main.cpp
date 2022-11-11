@@ -18,5 +18,5 @@ int main()
         cin >> n >> m;
 
         cout << (n / 3) * (m / 3) << "\n";
-    }
+        }
 }

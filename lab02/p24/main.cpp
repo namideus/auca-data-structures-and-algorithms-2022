@@ -20,22 +20,19 @@ int main()
 
         vector<int> v(r);
 
-        for(auto &x : v) cin >> x;
+        for (auto &x : v)
+            cin >> x;
 
         ans = 1e9;
 
         sort(v.begin(), v.end());
 
-        vito = (v[0]+v[r-1])/2;
-
-        for(i = 0; i <= v[r-1]; i++)
+        for (i = 0; i <= v[r - 1]; i++)
         {
             sum = 0;
 
-            for(j = 0; j < r; j++)
-            {
-                sum += abs(v[j]-i);
-            }
+            for (j = 0; j < r; j++)
+                sum += abs(v[j] - i);
 
             ans = min(ans, sum);
         }

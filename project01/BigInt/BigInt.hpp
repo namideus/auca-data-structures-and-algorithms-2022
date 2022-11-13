@@ -57,10 +57,17 @@ inline BigInt operator+(const BigInt &b1, const BigInt &b2)
     std::string sum = "";
     std::vector<int> a = b1.mDigits;
     std::vector<int> b = b2.mDigits;
+
     int size_a = (int)a.size();
     int size_b = (int)b.size();
+
     std::vector<int> z(std::abs(size_a - size_b), 0);
-    a.insert(a.begin(), z.begin(), z.end());
+
+    if (size_a > size_b)
+        b.insert(b.begin(), z.begin(), z.end());
+    else if (size_b > size_a)
+        a.insert(a.begin(), z.begin(), z.end());
+
     for (int i = std::max(size_a, size_b) - 1; i >= 1; i--)
     {
         b[i] += a[i];
@@ -77,24 +84,7 @@ inline BigInt operator+(const BigInt &b1, const BigInt &b2)
     }
 
     for (auto d : b)
-        sum += d;
+        sum += std::to_string(d);
 
-    return BigInt(sum); // BigInt(std::string(b.begin(), b.end()));
+    return BigInt(sum);
 }
-
-//    if (size_a > size_b)
-//     {
-//         l = size_a + 1;
-//         for (int i = 0; i < l - size_b; ++i)
-//             b.push_back(0);
-
-//         a.push_back(0);
-//     }
-//     else
-//     {
-//         l = size_b + 1;
-//         for (int i = 0; i < l - size_a; ++i)
-//             a.push_back(0);
-
-//         b.push_back(0);
-//     }

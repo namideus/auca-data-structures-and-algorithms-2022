@@ -59,40 +59,42 @@ inline BigInt operator+(const BigInt &b1, const BigInt &b2)
     std::vector<int> b = b2.mDigits;
     int size_a = (int)a.size();
     int size_b = (int)b.size();
-    int l;
-
-    if (size_a > size_b)
-    {
-        l = size_a + 1;
-        for (int i = 0; i < l - size_b; ++i)
-            b.push_back(0);
-
-        a.push_back(0);
-    }
-    else
-    {
-        l = size_b + 1;
-        for (int i = 0; i < l - size_a; ++i)
-            a.push_back(0);
-
-        b.push_back(0);
-    }
-
-    for (int i = 0; i < l; i++)
+    std::vector<int> z(std::abs(size_a - size_b), 0);
+    a.insert(a.begin(), z.begin(), z.end());
+    for (int i = std::max(size_a, size_b) - 1; i >= 1; i--)
     {
         b[i] += a[i];
-        b[i + 1] += b[i] / 10;
+        b[i - 1] += b[i] / 10;
         b[i] %= 10;
     }
 
-    if (b.back() == 0)
-        b.pop_back();
-
-    //   for (int i = (int)b.size() - 1; i >= 0; i--)
-    // sum += b[i];
+    b[0] += a[0];
+    if (b[0] / 10 != 0)
+    {
+        int tmp = b[0];
+        b[0] = tmp % 10;
+        b.insert(b.begin(), tmp / 10);
+    }
 
     for (auto d : b)
         sum += d;
 
     return BigInt(sum); // BigInt(std::string(b.begin(), b.end()));
 }
+
+//    if (size_a > size_b)
+//     {
+//         l = size_a + 1;
+//         for (int i = 0; i < l - size_b; ++i)
+//             b.push_back(0);
+
+//         a.push_back(0);
+//     }
+//     else
+//     {
+//         l = size_b + 1;
+//         for (int i = 0; i < l - size_a; ++i)
+//             a.push_back(0);
+
+//         b.push_back(0);
+//     }

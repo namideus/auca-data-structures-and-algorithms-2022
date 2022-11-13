@@ -48,7 +48,7 @@ TEST_CASE("Operators: +, -, *, /, %, += , -=, *=, /=, %=, prefix and postfix ++ 
     {
         BigInt res = a + b;
         ostringstream sout;
-        // sout << res;
-        // REQUIRE(sout.str() == "-1045549757534953498539820483");
+        sout << res;
+        REQUIRE(sout.str() == "246913578");
     }
 }

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-TEST_CASE("Default constructors")
+TEST_CASE("Default constructor")
 {
     BigInt x;
     ostringstream sout;
@@ -25,5 +25,30 @@ TEST_CASE("Default constructor with a string parameter")
     SUBCASE("throw runtime_error")
     {
         REQUIRE_THROWS_AS(BigInt("-123a"), runtime_error);
+    }
+}
+
+TEST_CASE("Input-output operators")
+{
+    BigInt x;
+    istringstream sin("-1045549757534953498539820483");
+    sin >> x;
+
+    ostringstream sout;
+    sout << x;
+    REQUIRE(sout.str() == "-1045549757534953498539820483");
+}
+
+TEST_CASE("Operators: +, -, *, /, %, += , -=, *=, /=, %=, prefix and postfix ++ and --, unary -, unary +")
+{
+    BigInt a("123456789");
+    BigInt b("123456789");
+
+    SUBCASE("+")
+    {
+        BigInt res = a + b;
+        ostringstream sout;
+        // sout << res;
+        // REQUIRE(sout.str() == "-1045549757534953498539820483");
     }
 }

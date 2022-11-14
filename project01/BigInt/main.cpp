@@ -41,14 +41,14 @@ TEST_CASE("Input-output operators")
 
 TEST_CASE("Operators: +, -, *, /, %, += , -=, *=, /=, %=, prefix and postfix ++ and --, unary -, unary +")
 {
-    BigInt a("123456789");
-    BigInt b("2123456789");
+    BigInt a("-123456789");
+    BigInt b("-2123456789");
 
     SUBCASE("operator: +")
     {
         BigInt res = a + b;
         ostringstream sout;
         sout << res;
-        REQUIRE(sout.str() == "2246913578");
+        REQUIRE(sout.str() == "-2246913578");
     }
 }

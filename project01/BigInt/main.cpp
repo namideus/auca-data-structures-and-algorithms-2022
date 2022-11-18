@@ -39,16 +39,37 @@ TEST_CASE("Input-output operators")
     REQUIRE(sout.str() == "-1045549757534953498539820483");
 }
 
-TEST_CASE("Operators: +, -, *, /, %, += , -=, *=, /=, %=, prefix and postfix ++ and --, unary -, unary +")
+TEST_CASE("Addition")
 {
-    BigInt a("-123456789");
-    BigInt b("-2123456789");
+    ostringstream sout;
 
-    SUBCASE("operator: +")
+     SUBCASE("positive + positive")
     {
-        BigInt res = a + b;
-        ostringstream sout;
-        sout << res;
+        BigInt a("999");
+        BigInt b("1");
+        BigInt c = a + b;
+        sout << c;
+        REQUIRE(sout.str() == "1000");
+    }
+
+    SUBCASE("negative + positive")
+    {
+        BigInt a("-999");
+        BigInt b("555");
+    }
+
+    SUBCASE("positive + negative")
+    {
+        BigInt a("999");
+        BigInt b("-555");
+    }
+
+    SUBCASE("negative + negative")
+    {
+        BigInt a("-123456789");
+        BigInt b("-2123456789");
+        BigInt c = a + b;
+        sout << c;
         REQUIRE(sout.str() == "-2246913578");
     }
 }

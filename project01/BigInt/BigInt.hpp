@@ -6,7 +6,6 @@
 #include <stdexcept>
 #include <algorithm>
 
-
 class BigInt
 {
     friend std::ostream &operator<<(std::ostream &, const BigInt &);
@@ -16,56 +15,68 @@ class BigInt
     std::vector<int> mDigits;
     bool mIsNegative;
 
-    public:
-        BigInt() : mIsNegative(false)
+public:
+    BigInt() : mIsNegative(false)
+    {
+        mDigits.push_back(0);
+    }
+    BigInt(const std::string &s)
+    {
+        if (s.empty())
+            throw std::runtime_error("invalid representation of BigInt value");
+
+        mIsNegative = (s[0] == '-');
+
+        for (int i = (mIsNegative ? 1 : 0); i < (int)s.size(); i++)
         {
-            mDigits.push_back(0);
+            auto d = s[i];
+
+            if (!isdigit(d))
+                throw std::runtime_error("invalid representation of BigInt value");
+
+            mDigits.push_back(d - '0');
         }
-        BigInt(const std::string &s)
+    }
+    BigInt(const int val) : BigInt(std::to_string(val)) {}
+
+    static BigInt addAbsValues(const BigInt &a, const BigInt &b)
+    {
+        auto itA = a.mDigits.rbegin();
+        auto itB = b.mDigits.rbegin();
+
+        BigInt z;
+        z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()) + 1);
+        auto itZ = z.mDigits.rbegin();
+
+        int carry = 0;
+        while (itA != a.mDigits.rend() || itB != b.mDigits.rend())
         {
-            mIsNegative = (s[0] == '-');
+            int s = carry;
 
-            for (int i = (mIsNegative ? 1 : 0); i < (int)s.size(); i++)
+            if (itA != a.mDigits.rend())
             {
-                auto d = s[i];
-
-                if (!isdigit(d))
-                    throw std::runtime_error("invalid representation of BigInt value");
-
-                mDigits.push_back(d - '0');
-            }
-        }
-        BigInt(int val) : BigInt(std::to_string(val)) {}
-
-        static BigInt addAbsValues(const BigInt &a, const BigInt &b)
-        {
-            auto itA = a.mDigits.rbegin();
-            auto itB = b.mDigits.rbegin();
-
-            BigInt z;
-            z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size())+1);
-            auto itZ = z.mDigits.rbegin();
-
-            int carry = 0;
-            while(itA != a.mDigits.rend() || itB != b.mDigits.rend())
-            {
-                int s = carry;
-
-                if(itA != a.mDigits.rend())
-                {
-                    s += *itA;
-                }
-
-                if(itB != b.mDigits.rend())
-                { 
-                    s += *itB;
-                }
-                *itZ = s % 10;
-                carry = (s > 9) ? 1 : 0;
+                s += *itA;
+                ++itA;
             }
 
-            return z;
+            if (itB != b.mDigits.rend())
+            {
+                s += *itB;
+                ++itB;
+            }
+            *itZ = s % 10;
+            carry = (s > 9) ? 1 : 0;
+            ++itZ;
         }
+        if (carry != 0)
+        {
+            *itZ = carry;
+        }
+        if (z.mDigits.size() > 1 && z.mDigits.front() == 0)
+            z.mDigits.erase(z.mDigits.begin());
+
+        return z;
+    }
 };
 
 inline std::ostream &operator<<(std::ostream &out, const BigInt &x)
@@ -91,14 +102,19 @@ inline std::istream &operator>>(std::istream &in, BigInt &x)
 
 inline BigInt operator+(const BigInt &a, const BigInt &b)
 {
-    if(!a.mIsNegative && !b.mIsNegative)
+    if (!a.mIsNegative && !b.mIsNegative)
     {
         return BigInt::addAbsValues(a, b);
+    }
+    else if (a.mIsNegative && b.mIsNegative)
+    {
+        BigInt c = BigInt::addAbsValues(a, b);
+        c.mIsNegative = true;
+        return c;
     }
 
     throw std::runtime_error("not implemented yet");
 }
-
 
 // std::string sum = "";
 //     std::vector<int> a = b1.mDigits;
@@ -138,4 +154,3 @@ inline BigInt operator+(const BigInt &a, const BigInt &b)
 //         res.mIsNegative = true;
 
 //     return res;
-

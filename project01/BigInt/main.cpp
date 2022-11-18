@@ -22,9 +22,14 @@ TEST_CASE("Default constructor with a string parameter")
     sout << x;
     REQUIRE(sout.str() == "-12765876876764764876764648484864848746448764787864");
 
-    SUBCASE("throw runtime_error")
+    SUBCASE("non-digit character in string")
     {
         REQUIRE_THROWS_AS(BigInt("-123a"), runtime_error);
+    }
+
+    SUBCASE("empty string")
+    {
+        REQUIRE_THROWS_AS(BigInt(""), runtime_error);
     }
 }
 
@@ -43,33 +48,66 @@ TEST_CASE("Addition")
 {
     ostringstream sout;
 
-     SUBCASE("positive + positive")
+    SUBCASE("positive + positive #1")
+    {
+        BigInt a("193");
+        BigInt b("52");
+        sout << a + b;
+        REQUIRE(sout.str() == "245");
+    }
+
+    SUBCASE("positive + positive #2")
     {
         BigInt a("999");
         BigInt b("1");
-        BigInt c = a + b;
-        sout << c;
+        sout << a + b;
         REQUIRE(sout.str() == "1000");
+    }
+
+    SUBCASE("positive + positive #3")
+    {
+        for (int x = 0; x <= 1000; x++)
+        {
+            for (int y = 0; y <= 1000; y++)
+            {
+                BigInt a(std::to_string(x));
+                BigInt b(std::to_string(y));
+                sout << a + b;
+                REQUIRE(sout.str() == std::to_string(x + y));
+                sout.str("");
+            }
+        }
     }
 
     SUBCASE("negative + positive")
     {
-        BigInt a("-999");
-        BigInt b("555");
     }
 
     SUBCASE("positive + negative")
     {
-        BigInt a("999");
-        BigInt b("-555");
     }
 
-    SUBCASE("negative + negative")
+    SUBCASE("negative + negative #1")
     {
-        BigInt a("-123456789");
-        BigInt b("-2123456789");
-        BigInt c = a + b;
-        sout << c;
-        REQUIRE(sout.str() == "-2246913578");
+        BigInt a("-1");
+        BigInt b("-999");
+        sout << a + b;
+        REQUIRE(sout.str() == "-1000");
     }
+
+    SUBCASE("negative + negative #2")
+    {
+        BigInt a("-193");
+        BigInt b("-52");
+        sout << a + b;
+        REQUIRE(sout.str() == "-245");
+    }
+
+    // SUBCASE("negative + negative #2")
+    // {
+    //     BigInt a("-1");
+    //     BigInt b("-999");
+    //     sout << a + b;
+    //     REQUIRE(sout.str() == "-1000");
+    // }
 }

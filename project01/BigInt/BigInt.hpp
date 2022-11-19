@@ -156,7 +156,8 @@ inline bool operator<(const BigInt &a, const BigInt &b)
     if (a.mDigits.size() > b.mDigits.size() && a.mIsNegative && b.mIsNegative)
         return true;
 
-    std::string a_str = "", b_str = "";
+    std::string a_str = "";
+    std::string b_str = "";
     auto itA = a.mDigits.begin();
     auto itB = b.mDigits.begin();
     while (itA != a.mDigits.end() && itB != b.mDigits.end())

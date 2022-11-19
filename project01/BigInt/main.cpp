@@ -66,17 +66,17 @@ TEST_CASE("Addition")
 
     SUBCASE("positive + positive #3")
     {
-        // for (int x = 0; x <= 1000; x++)
-        // {
-        //     for (int y = 0; y <= 1000; y++)
-        //     {
-        //         BigInt a(std::to_string(x));
-        //         BigInt b(std::to_string(y));
-        //         sout << a + b;
-        //         REQUIRE(sout.str() == std::to_string(x + y));
-        //         sout.str("");
-        //     }
-        // }
+        for (int x = 0; x <= 1000; x++)
+        {
+            for (int y = 0; y <= 1000; y++)
+            {
+                BigInt a(std::to_string(x));
+                BigInt b(std::to_string(y));
+                sout << a + b;
+                REQUIRE(sout.str() == std::to_string(x + y));
+                sout.str("");
+            }
+        }
     }
 
     SUBCASE("negative + positive")

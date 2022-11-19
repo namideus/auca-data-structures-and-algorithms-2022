@@ -157,16 +157,16 @@ TEST_CASE("Comparison operators")
 
     SUBCASE("> operator #1")
     {
-        BigInt a("19");
-        BigInt b("193");
-        REQUIRE(b > a);
+        BigInt a("193");
+        BigInt b("19");
+        REQUIRE(a > b);
     }
 
     SUBCASE("> operator #2")
     {
-        BigInt a("-100");
-        BigInt b("-99");
-        REQUIRE(b > a);
+        BigInt a("-99");
+        BigInt b("-100");
+        REQUIRE(a > b);
     }
 
     SUBCASE("<= operator #1")

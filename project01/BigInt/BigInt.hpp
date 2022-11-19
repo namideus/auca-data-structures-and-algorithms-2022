@@ -163,11 +163,6 @@ inline bool operator<(const BigInt &a, const BigInt &b)
     {
         a_str += std::to_string(*itA);
         b_str += std::to_string(*itB);
-        // if (*itA > *itB && (!a.mIsNegative && !b.mIsNegative))
-        //     return false;
-
-        // if (*itA > *itB && (a.mIsNegative && b.mIsNegative))
-        //     return true;
         itA++;
         itB++;
     }
@@ -175,8 +170,10 @@ inline bool operator<(const BigInt &a, const BigInt &b)
     if (!a.mIsNegative && !b.mIsNegative && a_str < b_str)
         return true;
 
-    if (a.mIsNegative && b.mIsNegative && a_str < b_str)
-        return false;
+    if (a.mIsNegative && b.mIsNegative && a_str > b_str)
+        return true;
+
+    return false;
 }
 
 inline bool operator>(const BigInt &a, const BigInt &b)

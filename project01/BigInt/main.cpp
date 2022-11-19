@@ -66,17 +66,17 @@ TEST_CASE("Addition")
 
     SUBCASE("positive + positive #3")
     {
-        for (int x = 0; x <= 1000; x++)
-        {
-            for (int y = 0; y <= 1000; y++)
-            {
-                BigInt a(std::to_string(x));
-                BigInt b(std::to_string(y));
-                sout << a + b;
-                REQUIRE(sout.str() == std::to_string(x + y));
-                sout.str("");
-            }
-        }
+        // for (int x = 0; x <= 1000; x++)
+        // {
+        //     for (int y = 0; y <= 1000; y++)
+        //     {
+        //         BigInt a(std::to_string(x));
+        //         BigInt b(std::to_string(y));
+        //         sout << a + b;
+        //         REQUIRE(sout.str() == std::to_string(x + y));
+        //         sout.str("");
+        //     }
+        // }
     }
 
     SUBCASE("negative + positive")
@@ -102,12 +102,49 @@ TEST_CASE("Addition")
         sout << a + b;
         REQUIRE(sout.str() == "-245");
     }
+}
 
-    // SUBCASE("negative + negative #2")
-    // {
-    //     BigInt a("-1");
-    //     BigInt b("-999");
-    //     sout << a + b;
-    //     REQUIRE(sout.str() == "-1000");
-    // }
+TEST_CASE("Equality operators")
+{
+    ostringstream sout;
+
+    SUBCASE("equality operator #1")
+    {
+        BigInt a("193");
+        BigInt b("193");
+        REQUIRE(a == b);
+    }
+
+    SUBCASE("equality operator #2")
+    {
+        BigInt a("-193");
+        BigInt b("-193");
+        REQUIRE(a == b);
+    }
+
+    SUBCASE("non-equality operator #1")
+    {
+        BigInt a("193");
+        BigInt b("-193");
+        REQUIRE(a != b);
+    }
+
+    SUBCASE("non-equality operator #2")
+    {
+        BigInt a("19333");
+        BigInt b("193");
+        REQUIRE(a != b);
+    }
+}
+
+TEST_CASE("Comparison operators")
+{
+    ostringstream sout;
+
+    SUBCASE("less than operator #1")
+    {
+        BigInt a("193");
+        BigInt b("-193");
+        REQUIRE(a < b);
+    }
 }

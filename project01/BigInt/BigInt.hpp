@@ -111,6 +111,9 @@ inline bool operator==(const BigInt &a, const BigInt &b)
     if (a.mDigits.size() != b.mDigits.size())
         return false;
 
+    if (a.mIsNegative != b.mIsNegative)
+        return false;
+
     auto itA = a.mDigits.begin();
     auto itB = b.mDigits.begin();
     while (itA != a.mDigits.end() && itB != b.mDigits.end())
@@ -122,12 +125,61 @@ inline bool operator==(const BigInt &a, const BigInt &b)
         itB++;
     }
 
-    return a.mIsNegative == b.mIsNegative;
+    return true;
 }
 
 inline bool operator!=(const BigInt &a, const BigInt &b)
 {
     return !(a == b);
+}
+
+inline bool operator<(const BigInt &a, const BigInt &b)
+{
+    if (a.mIsNegative && !b.mIsNegative)
+        return true;
+
+    if (!a.mIsNegative && b.mIsNegative)
+        return false;
+
+    if (a == b && a.mIsNegative == b.mIsNegative)
+        return false;
+
+    if (a.mDigits.size() < b.mDigits.size() && (!a.mIsNegative && !b.mIsNegative))
+        return true;
+
+    if (a.mDigits.size() < b.mDigits.size() && a.mIsNegative && b.mIsNegative)
+        return false;
+
+    auto itA = a.mDigits.begin();
+    auto itB = b.mDigits.begin();
+    while (itA != a.mDigits.end() && itB != b.mDigits.end())
+    {
+        if (*itA > *itB && (!a.mIsNegative && !b.mIsNegative))
+            return false;
+
+        if (*itA > *itB && (a.mIsNegative && b.mIsNegative))
+            return true;
+
+        itA++;
+        itB++;
+    }
+
+    return true;
+}
+
+inline bool operator>(const BigInt &a, const BigInt &b)
+{
+    return b < a;
+}
+
+inline bool operator>=(const BigInt &a, const BigInt &b)
+{
+    return !(a < b);
+}
+
+inline bool operator<=(const BigInt &a, const BigInt &b)
+{
+    return !(b < a);
 }
 
 inline BigInt operator+(const BigInt &a, const BigInt &b)

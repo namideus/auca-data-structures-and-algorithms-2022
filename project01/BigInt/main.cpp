@@ -141,10 +141,45 @@ TEST_CASE("Comparison operators")
 {
     ostringstream sout;
 
-    SUBCASE("less than operator #1")
+    SUBCASE("< operator #1")
     {
-        BigInt a("193");
+        BigInt a("19");
+        BigInt b("193");
+        REQUIRE(a < b);
+    }
+
+    SUBCASE("< operator #2")
+    {
+        BigInt a("-194");
         BigInt b("-193");
         REQUIRE(a < b);
+    }
+
+    SUBCASE("> operator #1")
+    {
+        BigInt a("19");
+        BigInt b("193");
+        REQUIRE(b > a);
+    }
+
+    SUBCASE("> operator #2")
+    {
+        BigInt a("-100");
+        BigInt b("-99");
+        REQUIRE(b > a);
+    }
+
+    SUBCASE("<= operator #1")
+    {
+        BigInt a("19");
+        BigInt b("193");
+        REQUIRE(a <= b);
+    }
+
+    SUBCASE("<= operator #2")
+    {
+        BigInt a("-100");
+        BigInt b("-100");
+        REQUIRE(b <= a);
     }
 }

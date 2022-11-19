@@ -156,21 +156,27 @@ inline bool operator<(const BigInt &a, const BigInt &b)
     if (a.mDigits.size() > b.mDigits.size() && a.mIsNegative && b.mIsNegative)
         return true;
 
+    std::string a_str = "", b_str = "";
     auto itA = a.mDigits.begin();
     auto itB = b.mDigits.begin();
     while (itA != a.mDigits.end() && itB != b.mDigits.end())
     {
-        if (*itA > *itB && (!a.mIsNegative && !b.mIsNegative))
-            return false;
+        a_str += std::to_string(*itA);
+        b_str += std::to_string(*itB);
+        // if (*itA > *itB && (!a.mIsNegative && !b.mIsNegative))
+        //     return false;
 
-        if (*itA > *itB && (a.mIsNegative && b.mIsNegative))
-            return true;
-
+        // if (*itA > *itB && (a.mIsNegative && b.mIsNegative))
+        //     return true;
         itA++;
         itB++;
     }
 
-    return true;
+    if (!a.mIsNegative && !b.mIsNegative && a_str < b_str)
+        return true;
+
+    if (a.mIsNegative && b.mIsNegative && a_str < b_str)
+        return false;
 }
 
 inline bool operator>(const BigInt &a, const BigInt &b)

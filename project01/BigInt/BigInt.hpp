@@ -141,7 +141,7 @@ inline bool operator<(const BigInt &a, const BigInt &b)
     if (!a.mIsNegative && b.mIsNegative)
         return false;
 
-    if (a == b && a.mIsNegative == b.mIsNegative)
+    if (a == b)
         return false;
 
     if (a.mDigits.size() < b.mDigits.size() && (!a.mIsNegative && !b.mIsNegative))
@@ -149,6 +149,12 @@ inline bool operator<(const BigInt &a, const BigInt &b)
 
     if (a.mDigits.size() < b.mDigits.size() && a.mIsNegative && b.mIsNegative)
         return false;
+
+    if (a.mDigits.size() > b.mDigits.size() && (!a.mIsNegative && !b.mIsNegative))
+        return false;
+
+    if (a.mDigits.size() > b.mDigits.size() && a.mIsNegative && b.mIsNegative)
+        return true;
 
     auto itA = a.mDigits.begin();
     auto itB = b.mDigits.begin();

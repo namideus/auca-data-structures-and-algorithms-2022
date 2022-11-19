@@ -180,6 +180,20 @@ TEST_CASE("Comparison operators")
     {
         BigInt a("-100");
         BigInt b("-100");
-        REQUIRE(b <= a);
+        REQUIRE(a <= b);
+    }
+
+    SUBCASE(">= operator #1")
+    {
+        BigInt a("200");
+        BigInt b("200");
+        REQUIRE(a >= b);
+    }
+
+    SUBCASE(">= operator #2")
+    {
+        BigInt a("-199");
+        BigInt b("-200");
+        REQUIRE(a >= b);
     }
 }

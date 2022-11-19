@@ -10,6 +10,12 @@ class BigInt
 {
     friend std::ostream &operator<<(std::ostream &, const BigInt &);
     friend std::istream &operator>>(std::istream &, const BigInt &);
+    friend bool operator==(const BigInt &, const BigInt &);
+    friend bool operator!=(const BigInt &, const BigInt &);
+    friend bool operator<(const BigInt &, const BigInt &);
+    friend bool operator>(const BigInt &, const BigInt &);
+    friend bool operator>=(const BigInt &, const BigInt &);
+    friend bool operator<=(const BigInt &, const BigInt &);
     friend BigInt operator+(const BigInt &, const BigInt &);
 
     std::vector<int> mDigits;
@@ -100,6 +106,30 @@ inline std::istream &operator>>(std::istream &in, BigInt &x)
     return in;
 }
 
+inline bool operator==(const BigInt &a, const BigInt &b)
+{
+    if (a.mDigits.size() != b.mDigits.size())
+        return false;
+
+    auto itA = a.mDigits.begin();
+    auto itB = b.mDigits.begin();
+    while (itA != a.mDigits.end() && itB != b.mDigits.end())
+    {
+        if (*itA != *itB)
+            return false;
+
+        itA++;
+        itB++;
+    }
+
+    return a.mIsNegative == b.mIsNegative;
+}
+
+inline bool operator!=(const BigInt &a, const BigInt &b)
+{
+    return !(a == b);
+}
+
 inline BigInt operator+(const BigInt &a, const BigInt &b)
 {
     if (!a.mIsNegative && !b.mIsNegative)
@@ -115,42 +145,3 @@ inline BigInt operator+(const BigInt &a, const BigInt &b)
 
     throw std::runtime_error("not implemented yet");
 }
-
-// std::string sum = "";
-//     std::vector<int> a = b1.mDigits;
-//     std::vector<int> b = b2.mDigits;
-
-//     int size_a = (int)a.size();
-//     int size_b = (int)b.size();
-
-//     std::vector<int> z(std::abs(size_a - size_b), 0);
-
-//     if (size_a > size_b)
-//         b.insert(b.begin(), z.begin(), z.end());
-//     else if (size_b > size_a)
-//         a.insert(a.begin(), z.begin(), z.end());
-
-//     for (int i = std::max(size_a, size_b) - 1; i >= 1; i--)
-//     {
-//         b[i] += a[i];
-//         b[i - 1] += b[i] / 10;
-//         b[i] %= 10;
-//     }
-
-//     b[0] += a[0];
-//     if (b[0] / 10 != 0)
-//     {
-//         int tmp = b[0];
-//         b[0] = tmp % 10;
-//         b.insert(b.begin(), tmp / 10);
-//     }
-
-//     BigInt res;
-//     res.mDigits.pop_back();
-//     for (auto d : b)
-//         res.mDigits.push_back(d);
-
-//     if (b1.mIsNegative && b2.mIsNegative)
-//         res.mIsNegative = true;
-
-//     return res;

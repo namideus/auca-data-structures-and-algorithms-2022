@@ -17,8 +17,8 @@ class BigInt
     friend bool operator>=(const BigInt &, const BigInt &);
     friend bool operator<=(const BigInt &, const BigInt &);
     friend BigInt operator+(const BigInt &, const BigInt &);
-    friend BigInt operator++(BigInt &, int);
-    //  friend BigInt &operator++(const BigInt &);
+    friend BigInt operator++(const BigInt &, int);
+    friend BigInt &operator++(const BigInt &);
     friend BigInt operator--(const BigInt &, int);
     //    friend BigInt &operator--(const BigInt &);
 
@@ -213,6 +213,12 @@ inline BigInt operator+(const BigInt &a, const BigInt &b)
 }
 
 inline BigInt operator++(BigInt &x, int)
+{
+    x = x + BigInt("1");
+    return x;
+}
+
+inline BigInt &operator++(BigInt &x)
 {
     x = x + BigInt("1");
     return x;

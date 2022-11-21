@@ -202,11 +202,19 @@ TEST_CASE("Prefix and postfix increment and decrement")
 {
     ostringstream sout;
 
-    SUBCASE("Increment")
+    SUBCASE("Postfix increment")
     {
         BigInt a("100");
         a++;
         sout << a;
         REQUIRE(sout.str() == "101");
+    }
+
+    SUBCASE("Prefix increment")
+    {
+        BigInt a("101");
+        ++a;
+        sout << a;
+        REQUIRE(sout.str() == "102");
     }
 }

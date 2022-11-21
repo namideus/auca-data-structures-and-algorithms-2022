@@ -220,6 +220,6 @@ inline BigInt operator++(BigInt &x, int)
 
 inline BigInt &operator++(BigInt &x)
 {
-    x = x + BigInt("1");
+    x++;
     return x;
 }

@@ -232,17 +232,18 @@ inline BigInt operator-(const BigInt &a, const BigInt &b)
     auto itB = b.mDigits.rbegin();
 
     BigInt z;
-    z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()) + 1);
+    z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()));
     auto itZ = z.mDigits.rbegin();
 
     int carry = 0;
     while (itA != a.mDigits.rend() || itB != b.mDigits.rend())
     {
-        int s = 0;
+        int a_val, b_val, s = 0;
 
         if (itA != a.mDigits.rend())
         {
             s += *itA;
+            a_val = *itA;
             ++itA;
         }
 
@@ -252,12 +253,13 @@ inline BigInt operator-(const BigInt &a, const BigInt &b)
         if (itB != b.mDigits.rend())
         {
             s -= *itB;
+            b_val = *itB;
             ++itB;
         }
 
         carry = (s < 0) ? 1 : 0;
 
-        s = (s < 0) ? 10 + *itA - *itB : s;
+        s = (s < 0) ? (10 + a_val) - b_val : s;
 
         *itZ = s;
         ++itZ;

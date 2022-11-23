@@ -110,10 +110,10 @@ TEST_CASE("Subtraction")
 
     SUBCASE("positive - positive #1")
     {
-        BigInt a("193");
+        BigInt a("191");
         BigInt b("52");
         sout << a - b;
-        REQUIRE(sout.str() == "141");
+        REQUIRE(sout.str() == "139");
     }
 }
 

@@ -17,6 +17,7 @@ class BigInt
     friend bool operator>=(const BigInt &, const BigInt &);
     friend bool operator<=(const BigInt &, const BigInt &);
     friend BigInt operator+(const BigInt &, const BigInt &);
+    friend BigInt operator-(const BigInt &, const BigInt &);
     friend BigInt operator++(const BigInt &, int);
     friend BigInt &operator++(const BigInt &);
     friend BigInt operator--(const BigInt &, int);
@@ -222,4 +223,51 @@ inline BigInt &operator++(BigInt &x)
 {
     x++;
     return x;
+}
+
+// Testing subtraction
+inline BigInt operator-(const BigInt &a, const BigInt &b)
+{
+    auto itA = a.mDigits.rbegin();
+    auto itB = b.mDigits.rbegin();
+
+    BigInt z;
+    z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()) + 1);
+    auto itZ = z.mDigits.rbegin();
+
+    int carry = 0;
+    while (itA != a.mDigits.rend() || itB != b.mDigits.rend())
+    {
+        int s = 0;
+
+        if (itA != a.mDigits.rend())
+        {
+            s += *itA;
+            ++itA;
+        }
+
+        s = (s > 0 && carry) ? s - 1 : s;
+        s = (s == 0 && carry) ? 9 : s;
+
+        if (itB != b.mDigits.rend())
+        {
+            s -= *itB;
+            ++itB;
+        }
+
+        carry = (s < 0) ? 1 : 0;
+
+        s = (s < 0) ? 10 + *itA - *itB : s;
+
+        *itZ = s;
+        ++itZ;
+    }
+    if (carry != 0)
+    {
+        *itZ = carry;
+    }
+    if (z.mDigits.size() > 1 && z.mDigits.front() == 0)
+        z.mDigits.erase(z.mDigits.begin());
+
+    return z;
 }

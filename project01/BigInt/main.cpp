@@ -104,6 +104,19 @@ TEST_CASE("Addition")
     }
 }
 
+TEST_CASE("Subtraction")
+{
+    ostringstream sout;
+
+    SUBCASE("positive - positive #1")
+    {
+        BigInt a("193");
+        BigInt b("52");
+        sout << a - b;
+        REQUIRE(sout.str() == "141");
+    }
+}
+
 TEST_CASE("Equality operators")
 {
     ostringstream sout;

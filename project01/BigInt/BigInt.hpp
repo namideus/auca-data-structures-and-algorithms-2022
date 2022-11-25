@@ -145,24 +145,7 @@ inline std::istream &operator>>(std::istream &in, BigInt &x)
 
 inline bool operator==(const BigInt &a, const BigInt &b)
 {
-    if (a.mDigits.size() != b.mDigits.size())
-        return false;
-
-    if (a.mIsNegative != b.mIsNegative)
-        return false;
-
-    auto itA = a.mDigits.begin();
-    auto itB = b.mDigits.begin();
-    while (itA != a.mDigits.end() && itB != b.mDigits.end())
-    {
-        if (*itA != *itB)
-            return false;
-
-        itA++;
-        itB++;
-    }
-
-    return true;
+    return a.mIsNegative == b.mIsNegative && a.mDigits == b.mDigits;
 }
 
 inline bool operator!=(const BigInt &a, const BigInt &b)

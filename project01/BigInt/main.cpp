@@ -125,7 +125,7 @@ TEST_CASE("Input operator")
     SUBCASE("incorrect input #4")
     {
         istringstream sinp("");
-        int x;
+        BigInt x;
         sinp >> x;
         REQUIRE(sinp.fail());
         REQUIRE(sinp.eof());

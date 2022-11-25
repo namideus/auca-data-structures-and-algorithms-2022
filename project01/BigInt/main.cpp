@@ -35,10 +35,11 @@ TEST_CASE("Default constructor with a string parameter")
 
 TEST_CASE("Default constructor with an integer parameter")
 {
+    ostringstream sout;
+    
     SUBCASE("positive integer")
     {
         BigInt x(123456789);
-        ostringstream sout;
         sout << x;
         REQUIRE(sout.str() == "123456789");
     }
@@ -46,7 +47,6 @@ TEST_CASE("Default constructor with an integer parameter")
     SUBCASE("negative integer")
     {
         BigInt x(-123456789);
-        ostringstream sout;
         sout << x;
         REQUIRE(sout.str() == "-123456789");
     }

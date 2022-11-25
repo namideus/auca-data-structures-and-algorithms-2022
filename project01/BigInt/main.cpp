@@ -52,18 +52,88 @@ TEST_CASE("Default constructor with an integer parameter")
     }
 }
 
-TEST_CASE("Input-output operators")
+TEST_CASE("Input operator")
 {
-    BigInt x;
-    istringstream sin("100x200");
-    sin >> x;
-
-    // ostringstream sout;
-    // sout << x;
-    // REQUIRE(sout.str() == "-1045549757534953498539820483");
+    ostringstream sout;
+    SUBCASE("correct input #1")
+    {
+        istringstream sinp("123");
+        int x;
+        sinp >> x;
+        REQUIRE(sinp.eof());
+        REQUIRE(x == 123);
+    }
+    SUBCASE("correct input #2")
+    {
+        istringstream sinp("  123");
+        int x;
+        sinp >> x;
+        REQUIRE(sinp.eof());
+        REQUIRE(x == 123);
+    }
+    SUBCASE("correct input #3")
+    {
+        istringstream sinp("123x123");
+        int x;
+        sinp >> x;
+        REQUIRE(sinp.good());
+        REQUIRE(x == 123);
+        char ch;
+        sinp >> ch;
+        REQUIRE(ch == 'x');
+    }
+    SUBCASE("correct input #4")
+    {
+        istringstream sinp("   -123");
+        int x;
+        sinp >> x;
+        REQUIRE(sinp.eof());
+        REQUIRE(x == -123);
+    }
+    SUBCASE("correct input #5")
+    {
+        istringstream sinp("   +123");
+        int x;
+        sinp >> x;
+        REQUIRE(sinp.eof());
+        REQUIRE(x == 123);
+    }
+    SUBCASE("incorrect input #1")
+    {
+        istringstream sinp("+ 123");
+        int x;
+        sinp >> x;
+        REQUIRE(sinp.fail());
+        REQUIRE(x == 0);
+    }
+    SUBCASE("incorrect input #2")
+    {
+        istringstream sinp("++123");
+        int x;
+        sinp >> x;
+        REQUIRE(sinp.fail());
+        REQUIRE(x == 0);
+    }
+    SUBCASE("incorrect input #3")
+    {
+        istringstream sinp("hello");
+        int x;
+        sinp >> x;
+        REQUIRE(sinp.fail());
+        REQUIRE(x == 0);
+    }
+    SUBCASE("incorrect input #4")
+    {
+        istringstream sinp("");
+        int x;
+        sinp >> x;
+        REQUIRE(sinp.fail());
+        REQUIRE(sinp.eof());
+        REQUIRE(x == 0);
+    }
 }
 
-TEST_CASE("Addition")
+TEST_CASE("Addition operator")
 {
     ostringstream sout;
 
@@ -222,6 +292,22 @@ TEST_CASE("Comparison operators")
         BigInt a("-99");
         BigInt b("-100");
         REQUIRE(a > b);
+    }
+
+    SUBCASE("greater than operator #3")
+    {
+        for (int i = -100; i <= 100; i++)
+        {
+            for (int j = -100; j <= 100; j++)
+            {
+                if (i > j)
+                {
+                    BigInt a(std::to_string(i));
+                    BigInt b(std::to_string(j));
+                    REQUIRE(a > b);
+                }
+            }
+        }
     }
 
     SUBCASE("less than or equal operator #1")

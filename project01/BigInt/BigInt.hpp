@@ -48,7 +48,7 @@ public:
             mDigits.push_back(d - '0');
         }
     }
-    BigInt(const int val) : BigInt(std::to_string(val)) {}
+    BigInt(const long long val) : BigInt(std::to_string(val)) {}
 
     static BigInt addAbsValues(const BigInt &a, const BigInt &b)
     {

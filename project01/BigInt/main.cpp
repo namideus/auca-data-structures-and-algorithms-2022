@@ -173,56 +173,79 @@ TEST_CASE("Comparison operators")
 {
     ostringstream sout;
 
-    SUBCASE("< operator #1")
+    SUBCASE("less than operator #1")
     {
         BigInt a("19");
         BigInt b("193");
         REQUIRE(a < b);
     }
 
-    SUBCASE("< operator #2")
+    SUBCASE("less than operator #2")
     {
         BigInt a("-194");
         BigInt b("-193");
         REQUIRE(a < b);
     }
 
-    SUBCASE("> operator #1")
+    SUBCASE("less than operator #3")
+    {
+        BigInt a("-192");
+        BigInt b("-193");
+        REQUIRE_FALSE(a < b);
+    }
+
+    SUBCASE("less than operator #4")
+    {
+        for (int i = -100; i <= 100; i++)
+        {
+            for (int j = -100; j <= 100; j++)
+            {
+                if (i < j)
+                {
+                    BigInt a(std::to_string(i));
+                    BigInt b(std::to_string(j));
+                    REQUIRE(a < b);
+                }
+            }
+        }
+    }
+
+    SUBCASE("greater than operator #1")
     {
         BigInt a("193");
         BigInt b("19");
         REQUIRE(a > b);
     }
 
-    SUBCASE("> operator #2")
+    SUBCASE("greater than operator #2")
     {
         BigInt a("-99");
         BigInt b("-100");
         REQUIRE(a > b);
     }
 
-    SUBCASE("<= operator #1")
+    SUBCASE("less than or equal operator #1")
     {
         BigInt a("19");
         BigInt b("193");
         REQUIRE(a <= b);
     }
 
-    SUBCASE("<= operator #2")
+    SUBCASE("less than or equal operator #2")
     {
         BigInt a("-100");
         BigInt b("-100");
         REQUIRE(a <= b);
     }
 
-    SUBCASE(">= operator #1")
+    SUBCASE("greater than or equal operator #1")
     {
         BigInt a("200");
         BigInt b("200");
         REQUIRE(a >= b);
     }
 
-    SUBCASE(">= operator #2")
+    SUBCASE("greater than or equal operator #2")
     {
         BigInt a("-199");
         BigInt b("-200");

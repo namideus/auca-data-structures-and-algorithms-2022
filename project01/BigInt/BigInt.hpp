@@ -36,9 +36,9 @@ public:
         if (s.empty())
             throw std::runtime_error("invalid representation of BigInt value");
 
-        if(s[0]=='+' || std::isdigit(s[0]))
+        if (s[0] == '+' || std::isdigit(s[0]))
             mIsNegative = false;
-        else if(s[0]=='-')
+        else if (s[0] == '-')
             mIsNegative = true;
 
         for (int i = (mIsNegative ? 1 : 0); i < (int)s.size(); i++)
@@ -109,12 +109,12 @@ inline std::ostream &operator<<(std::ostream &out, const BigInt &x)
 inline std::istream &operator>>(std::istream &in, BigInt &x)
 {
     char ch;
-    if(!(in >> ch))
+    if (!(in >> ch))
     {
         return in;
     }
 
-    if(!(std::isdigit(ch) || ch == '+' || ch == '-'))
+    if (!(std::isdigit(ch) || ch == '+' || ch == '-'))
     {
         in.putback(ch);
         in.setstate(std::ios_base::failbit);
@@ -122,17 +122,17 @@ inline std::istream &operator>>(std::istream &in, BigInt &x)
     }
 
     std::string d;
-    if(std::isdigit(ch))
+    if (std::isdigit(ch))
     {
         d += ch;
     }
 
-    while(in.get(ch) && std::isdigit(ch))
+    while (in.get(ch) && std::isdigit(ch))
     {
         d += ch;
     }
 
-    if(!std::isdigit(ch))
+    if (!std::isdigit(ch))
     {
         in.putback(ch);
         return in;
@@ -141,7 +141,7 @@ inline std::istream &operator>>(std::istream &in, BigInt &x)
     x = BigInt(d);
 
     return in;
-}   
+}
 
 inline bool operator==(const BigInt &a, const BigInt &b)
 {
@@ -175,44 +175,17 @@ inline bool operator<(const BigInt &a, const BigInt &b)
     if (a.mIsNegative && !b.mIsNegative)
         return true;
 
-    if (!a.mIsNegative && b.mIsNegative)
-        return false;
-
-    if (a.mDigits.size() < b.mDigits.size() && (!a.mIsNegative && !b.mIsNegative))
+    if (!(a.mIsNegative || b.mIsNegative) && a.mDigits.size() < b.mDigits.size())
         return true;
 
-    if (a.mDigits.size() < b.mDigits.size() && a.mIsNegative && b.mIsNegative)
-        return false;
-
-    if (a.mDigits.size() > b.mDigits.size() && (!a.mIsNegative && !b.mIsNegative))
-        return false;
-
-    if (a.mDigits.size() > b.mDigits.size() && a.mIsNegative && b.mIsNegative)
+    if (a.mIsNegative && b.mIsNegative && a.mDigits.size() > b.mDigits.size())
         return true;
 
-    if(a.mIsNegative && b.mIsNegative && a.mDigits > b.mDigits)
+    if (a.mIsNegative && b.mIsNegative && a.mDigits > b.mDigits)
         return true;
-        
-    if(!a.mIsNegative && !b.mIsNegative && a.mDigits < b.mDigits)
+
+    if (!(a.mIsNegative || b.mIsNegative) && a.mDigits < b.mDigits)
         return true;
-        
-    // std::string a_str = "";
-    // std::string b_str = "";
-    // auto itA = a.mDigits.begin();
-    // auto itB = b.mDigits.begin();
-    // while (itA != a.mDigits.end() && itB != b.mDigits.end())
-    // {
-    //     a_str += std::to_string(*itA);
-    //     b_str += std::to_string(*itB);
-    //     itA++;
-    //     itB++;
-    // }
-
-    // if (!a.mIsNegative && !b.mIsNegative && a_str < b_str)
-    //     return true;
-
-    // if (a.mIsNegative && b.mIsNegative && a_str > b_str)
-    //     return true;
 
     return false;
 }

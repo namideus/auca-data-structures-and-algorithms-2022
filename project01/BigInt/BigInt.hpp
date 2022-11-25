@@ -36,7 +36,10 @@ public:
         if (s.empty())
             throw std::runtime_error("invalid representation of BigInt value");
 
-        mIsNegative = (s[0] == '-');
+        if(s[0]=='+' || std::isdigit(s[0]))
+            mIsNegative = false;
+        else if(s[0]=='-')
+            mIsNegative = true;
 
         for (int i = (mIsNegative ? 1 : 0); i < (int)s.size(); i++)
         {
@@ -105,11 +108,40 @@ inline std::ostream &operator<<(std::ostream &out, const BigInt &x)
 
 inline std::istream &operator>>(std::istream &in, BigInt &x)
 {
+    char ch;
+    if(!(in >> ch))
+    {
+        return in;
+    }
+
+    if(!(std::isdigit(ch) || ch == '+' || ch == '-'))
+    {
+        in.putback(ch);
+        in.setstate(std::ios_base::failbit);
+        return in;
+    }
+
     std::string d;
-    in >> d;
+    if(std::isdigit(ch))
+    {
+        d += ch;
+    }
+
+    while(in.get(ch) && std::isdigit(ch))
+    {
+        d += ch;
+    }
+
+    if(!std::isdigit(ch))
+    {
+        in.putback(ch);
+        return in;
+    }
+
     x = BigInt(d);
+
     return in;
-}
+}   
 
 inline bool operator==(const BigInt &a, const BigInt &b)
 {
@@ -144,9 +176,6 @@ inline bool operator<(const BigInt &a, const BigInt &b)
         return true;
 
     if (!a.mIsNegative && b.mIsNegative)
-        return false;
-
-    if (a == b)
         return false;
 
     if (a.mDigits.size() < b.mDigits.size() && (!a.mIsNegative && !b.mIsNegative))

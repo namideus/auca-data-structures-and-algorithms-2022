@@ -190,23 +190,29 @@ inline bool operator<(const BigInt &a, const BigInt &b)
     if (a.mDigits.size() > b.mDigits.size() && a.mIsNegative && b.mIsNegative)
         return true;
 
-    std::string a_str = "";
-    std::string b_str = "";
-    auto itA = a.mDigits.begin();
-    auto itB = b.mDigits.begin();
-    while (itA != a.mDigits.end() && itB != b.mDigits.end())
-    {
-        a_str += std::to_string(*itA);
-        b_str += std::to_string(*itB);
-        itA++;
-        itB++;
-    }
-
-    if (!a.mIsNegative && !b.mIsNegative && a_str < b_str)
+    if(a.mIsNegative && b.mIsNegative && a.mDigits > b.mDigits)
         return true;
-
-    if (a.mIsNegative && b.mIsNegative && a_str > b_str)
+        
+    if(!a.mIsNegative && !b.mIsNegative && a.mDigits < b.mDigits)
         return true;
+        
+    // std::string a_str = "";
+    // std::string b_str = "";
+    // auto itA = a.mDigits.begin();
+    // auto itB = b.mDigits.begin();
+    // while (itA != a.mDigits.end() && itB != b.mDigits.end())
+    // {
+    //     a_str += std::to_string(*itA);
+    //     b_str += std::to_string(*itB);
+    //     itA++;
+    //     itB++;
+    // }
+
+    // if (!a.mIsNegative && !b.mIsNegative && a_str < b_str)
+    //     return true;
+
+    // if (a.mIsNegative && b.mIsNegative && a_str > b_str)
+    //     return true;
 
     return false;
 }

@@ -31,21 +31,19 @@ public:
     {
         mDigits.push_back(0);
     }
-    BigInt(const std::string &s)
+    BigInt(const std::string &s) : mIsNegative(false)
     {
         if (s.empty())
-            throw std::runtime_error("invalid representation of BigInt value");
+            throw std::runtime_error("empty representation of BigInt value");
+        // mDigits.push_back(0);
 
-        if (s[0] == '+' || std::isdigit(s[0]))
-            mIsNegative = false;
-        else if (s[0] == '-')
-            mIsNegative = true;
+        mIsNegative = (s[0] == '-');
 
         for (int i = (mIsNegative ? 1 : 0); i < (int)s.size(); i++)
         {
             auto d = s[i];
 
-            if (!isdigit(d))
+            if (!std::isdigit(d))
                 throw std::runtime_error("invalid representation of BigInt value");
 
             mDigits.push_back(d - '0');
@@ -122,7 +120,7 @@ inline std::istream &operator>>(std::istream &in, BigInt &x)
     }
 
     std::string s;
-    if (std::isdigit(ch))
+    if (std::isdigit(ch) || ch == '-')
     {
         s += ch;
     }

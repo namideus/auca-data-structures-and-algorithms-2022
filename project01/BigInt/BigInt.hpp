@@ -37,7 +37,9 @@ public:
     BigInt(const std::string &s) : mIsNegative(false)
     {
         if (s.empty())
+        {
             mDigits.push_back(0);
+        }
         else
         {
             mIsNegative = (s[0] == '-');
@@ -118,13 +120,10 @@ inline std::istream &operator>>(std::istream &in, BigInt &x)
         return in;
     }
 
-    if (ch == '+' || ch == '-')
+    if ((ch == '+' || ch == '-') && !std::isdigit(in.peek()))
     {
-        if (!std::isdigit(in.peek()))
-        {
-            in.setstate(std::ios_base::failbit);
-            return in;
-        }
+        in.setstate(std::ios_base::failbit);
+        return in;
     }
 
     if (!(std::isdigit(ch) || ch == '+' || ch == '-'))

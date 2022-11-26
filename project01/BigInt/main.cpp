@@ -270,18 +270,18 @@ TEST_CASE("Comparison operators")
 
     SUBCASE("less than operator #4")
     {
-        // for (int i = -100; i <= 100; i++)
-        // {
-        //     for (int j = -100; j <= 100; j++)
-        //     {
-        //         if (i < j)
-        //         {
-        //             BigInt a(std::to_string(i));
-        //             BigInt b(std::to_string(j));
-        //             REQUIRE(a < b);
-        //         }
-        //     }
-        // }
+        for (int i = -100; i <= 100; i++)
+        {
+            for (int j = -100; j <= 100; j++)
+            {
+                if (i < j)
+                {
+                    BigInt a(std::to_string(i));
+                    BigInt b(std::to_string(j));
+                    REQUIRE(a < b);
+                }
+            }
+        }
     }
 
     SUBCASE("greater than operator #1")
@@ -300,18 +300,18 @@ TEST_CASE("Comparison operators")
 
     SUBCASE("greater than operator #3")
     {
-        // for (int i = -100; i <= 100; i++)
-        // {
-        //     for (int j = -100; j <= 100; j++)
-        //     {
-        //         if (i > j)
-        //         {
-        //             BigInt a(std::to_string(i));
-        //             BigInt b(std::to_string(j));
-        //             REQUIRE(a > b);
-        //         }
-        //     }
-        // }
+        for (int i = -100; i <= 100; i++)
+        {
+            for (int j = -100; j <= 100; j++)
+            {
+                if (i > j)
+                {
+                    BigInt a(std::to_string(i));
+                    BigInt b(std::to_string(j));
+                    REQUIRE(a > b);
+                }
+            }
+        }
     }
 
     SUBCASE("less than or equal operator #1")
@@ -347,7 +347,7 @@ TEST_CASE("Prefix and postfix increment and decrement")
 {
     ostringstream sout;
 
-    /*SUBCASE("Postfix increment")
+    SUBCASE("Postfix increment")
     {
         BigInt a("100");
         a++;
@@ -361,7 +361,7 @@ TEST_CASE("Prefix and postfix increment and decrement")
         ++a;
         sout << a;
         REQUIRE(sout.str() == "102");
-    }*/
+    }
 }
 
 TEST_CASE("Abs() function")

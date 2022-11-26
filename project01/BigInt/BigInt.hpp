@@ -31,24 +31,28 @@ public:
     {
         mDigits.push_back(0);
     }
+
     BigInt(const std::string &s) : mIsNegative(false)
     {
         if (s.empty())
-            throw std::runtime_error("empty representation of BigInt value");
-        // mDigits.push_back(0);
-
-        mIsNegative = (s[0] == '-');
-
-        for (int i = (mIsNegative ? 1 : 0); i < (int)s.size(); i++)
+            // throw std::runtime_error("empty representation of BigInt value");
+            mDigits.push_back(0);
+        else
         {
-            auto d = s[i];
+            mIsNegative = (s[0] == '-');
 
-            if (!std::isdigit(d))
-                throw std::runtime_error("invalid representation of BigInt value");
+            for (int i = (mIsNegative ? 1 : 0); i < (int)s.size(); i++)
+            {
+                auto d = s[i];
 
-            mDigits.push_back(d - '0');
+                if (!std::isdigit(d))
+                    throw std::runtime_error("invalid representation of BigInt value");
+
+                mDigits.push_back(d - '0');
+            }
         }
     }
+
     BigInt(const long long val) : BigInt(std::to_string(val)) {}
 
     static BigInt addAbsValues(const BigInt &a, const BigInt &b)
@@ -107,6 +111,7 @@ inline std::ostream &operator<<(std::ostream &out, const BigInt &x)
 inline std::istream &operator>>(std::istream &in, BigInt &x)
 {
     char ch;
+
     if (!(in >> ch))
     {
         return in;
@@ -120,6 +125,7 @@ inline std::istream &operator>>(std::istream &in, BigInt &x)
     }
 
     std::string s;
+
     if (std::isdigit(ch) || ch == '-')
     {
         s += ch;

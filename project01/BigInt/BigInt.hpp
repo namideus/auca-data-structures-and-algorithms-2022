@@ -37,7 +37,6 @@ public:
     BigInt(const std::string &s) : mIsNegative(false)
     {
         if (s.empty())
-            // throw std::runtime_error("empty representation of BigInt value");
             mDigits.push_back(0);
         else
         {
@@ -222,7 +221,7 @@ inline BigInt &operator++(BigInt &x)
     return x;
 }
 
-BigInt BigInt::abs(const BigInt &x)
+inline BigInt BigInt::abs(const BigInt &x)
 {
     BigInt r = x;
     if (r.mIsNegative)

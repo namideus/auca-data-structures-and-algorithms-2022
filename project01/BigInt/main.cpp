@@ -103,15 +103,16 @@ TEST_CASE("Input operator")
         istringstream sinp("+ 123");
         BigInt x;
         sinp >> x;
+        sinp.clear();
         REQUIRE(!sinp.fail());
         REQUIRE(x == 0);
     }
     SUBCASE("incorrect input #2")
     {
         istringstream sinp("++123");
-        int x;
+        BigInt x;
         sinp >> x;
-        REQUIRE(sinp.fail());
+        REQUIRE(!sinp.fail());
         REQUIRE(x == 0);
     }
     SUBCASE("incorrect input #3")
@@ -129,8 +130,7 @@ TEST_CASE("Input operator")
     SUBCASE("incorrect input #4")
     {
         istringstream sinp("");
-        // BigInt x;
-        int x;
+        BigInt x;
         sinp >> x;
         REQUIRE(sinp.fail());
         REQUIRE(sinp.eof());
@@ -365,7 +365,7 @@ TEST_CASE("Prefix and postfix increment and decrement")
     }*/
 }
 
-TEST_CASE("Abs function")
+TEST_CASE("Abs() function")
 {
     ostringstream sout;
 

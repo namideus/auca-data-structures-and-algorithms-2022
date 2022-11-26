@@ -27,6 +27,8 @@ class BigInt
     bool mIsNegative;
 
 public:
+    static BigInt abs(const BigInt &);
+
     BigInt() : mIsNegative(false)
     {
         mDigits.push_back(0);
@@ -218,6 +220,14 @@ inline BigInt &operator++(BigInt &x)
 {
     x++;
     return x;
+}
+
+BigInt BigInt::abs(const BigInt &x)
+{
+    BigInt r = x;
+    if (r.mIsNegative)
+        r.mIsNegative = false;
+    return r;
 }
 
 // Testing subtraction

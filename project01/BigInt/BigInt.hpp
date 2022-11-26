@@ -219,7 +219,7 @@ inline BigInt operator+(const BigInt &a, const BigInt &b)
 
 inline BigInt operator++(BigInt &x, int)
 {
-    x = x + BigInt("1");
+    x = x + 1;
     return x;
 }
 

@@ -118,6 +118,15 @@ inline std::istream &operator>>(std::istream &in, BigInt &x)
         return in;
     }
 
+    if (ch == '+' || ch == '-')
+    {
+        if (!std::isdigit(in.peek()))
+        {
+            in.setstate(std::ios_base::failbit);
+            return in;
+        }
+    }
+
     if (!(std::isdigit(ch) || ch == '+' || ch == '-'))
     {
         in.putback(ch);

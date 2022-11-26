@@ -103,8 +103,7 @@ TEST_CASE("Input operator")
         istringstream sinp("+ 123");
         BigInt x;
         sinp >> x;
-        sinp.clear();
-        REQUIRE(!sinp.fail());
+        REQUIRE(sinp.fail());
         REQUIRE(x == 0);
     }
     SUBCASE("incorrect input #2")
@@ -112,7 +111,7 @@ TEST_CASE("Input operator")
         istringstream sinp("++123");
         BigInt x;
         sinp >> x;
-        REQUIRE(!sinp.fail());
+        REQUIRE(sinp.fail());
         REQUIRE(x == 0);
     }
     SUBCASE("incorrect input #3")

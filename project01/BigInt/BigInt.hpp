@@ -103,6 +103,11 @@ public:
 
     BigInt(const long long val) : BigInt(std::to_string(val)) {}
 
+    static BigInt subAbsValues(const BigInt &a, const BigInt &b)
+    {
+        return BigInt("0");
+    }
+
     static BigInt addAbsValues(const BigInt &a, const BigInt &b)
     {
         auto itA = a.mDigits.rbegin();

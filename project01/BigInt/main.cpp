@@ -413,3 +413,32 @@ TEST_CASE("Abs() function")
         REQUIRE(r == 123);
     }
 }
+
+TEST_CASE("Subtraction operator")
+{
+    ostringstream sout;
+
+    SUBCASE("positive - positive #1")
+    {
+        BigInt a("193");
+        BigInt b("52");
+        sout << a - b;
+        REQUIRE(sout.str() == "141");
+    }
+
+    SUBCASE("positive - positive #2")
+    {
+        BigInt a("100");
+        BigInt b("100");
+        sout << a - b;
+        REQUIRE(sout.str() == "00");
+    }
+
+    SUBCASE("positive - positive #3")
+    {
+        BigInt a("100");
+        BigInt b("1");
+        sout << a - b;
+        REQUIRE(sout.str() == "99");
+    }
+}

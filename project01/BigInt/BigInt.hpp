@@ -36,25 +36,6 @@ public:
 
     BigInt(const std::string &s) : mIsNegative(false)
     {
-        // if (s.empty())
-        // {
-        //     mDigits.push_back(0);
-        // }
-        // else
-        // {
-        //     mIsNegative = (s[0] == '-');
-
-        //     for (int i = (mIsNegative ? 1 : 0); i < (int)s.size(); i++)
-        //     {
-        //         auto d = s[i];
-
-        //         if (!std::isdigit(d))
-        //             throw std::runtime_error("invalid representation of BigInt value");
-
-        //         mDigits.push_back(d - '0');
-        //     }
-        // }
-
         if (s.empty())
         {
             mDigits.push_back(0);
@@ -66,6 +47,7 @@ public:
 
             while (!(in >> ch))
             {
+                continue;
             }
 
             in.putback(ch);
@@ -77,14 +59,14 @@ public:
                 if ((ch == '+' || ch == '-') && !std::isdigit(in.peek()))
                 {
                     mDigits.push_back(0);
-                    break;
+                    throw std::runtime_error("invalid representation of BigInt value");
                 }
 
                 if (!(std::isdigit(ch) || ch == '+' || ch == '-'))
                 {
                     mDigits.push_back(0);
                     in.putback(ch);
-                    break;
+                    throw std::runtime_error("invalid representation of BigInt value");
                 }
 
                 if (std::isdigit(ch) || ch == '-')
@@ -104,7 +86,7 @@ public:
                 }
             }
 
-            bool mIsNegative = (n[0] == '-');
+            mIsNegative = (n[0] == '-');
 
             for (int i = (mIsNegative ? 1 : 0); i < (int)n.size(); i++)
             {

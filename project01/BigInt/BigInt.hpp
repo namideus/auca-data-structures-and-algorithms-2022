@@ -177,10 +177,10 @@ inline bool operator<(const BigInt &a, const BigInt &b)
     if (a.mIsNegative && b.mIsNegative && a.mDigits.size() > b.mDigits.size())
         return true;
 
-    if (a.mIsNegative && b.mIsNegative && a.mDigits > b.mDigits)
+    if (a.mIsNegative && b.mIsNegative && a.mDigits > b.mDigits && a.mDigits.size() == b.mDigits.size())
         return true;
 
-    if (!(a.mIsNegative || b.mIsNegative) && a.mDigits < b.mDigits)
+    if (!(a.mIsNegative || b.mIsNegative) && a.mDigits < b.mDigits && a.mDigits.size() == b.mDigits.size())
         return true;
 
     return false;

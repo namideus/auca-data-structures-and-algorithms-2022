@@ -304,11 +304,11 @@ TEST_CASE("Comparison operators")
         {
             for (int j = -100; j <= 100; j++)
             {
-                if (i > j)
+                if (i >= j)
                 {
                     BigInt a(std::to_string(i));
                     BigInt b(std::to_string(j));
-                    REQUIRE(a > b);
+                    REQUIRE(a >= b);
                 }
             }
         }

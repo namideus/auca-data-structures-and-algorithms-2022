@@ -105,7 +105,50 @@ public:
 
     static BigInt subAbsValues(const BigInt &a, const BigInt &b)
     {
-        return BigInt("0");
+        auto itA = a.mDigits.rbegin();
+        auto itB = b.mDigits.rbegin();
+
+        BigInt z;
+        z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()));
+        auto itZ = z.mDigits.rbegin();
+
+        int carry = 0;
+        while (itA != a.mDigits.rend() || itB != b.mDigits.rend())
+        {
+            int a_val, b_val, s = 0;
+
+            if (itA != a.mDigits.rend())
+            {
+                s += *itA;
+                a_val = *itA;
+                ++itA;
+            }
+
+            s = (s > 0 && carry) ? s - 1 : s;
+            s = (s == 0 && carry) ? 9 : s;
+
+            if (itB != b.mDigits.rend())
+            {
+                s -= *itB;
+                b_val = *itB;
+                ++itB;
+            }
+
+            carry = (s < 0) ? 1 : 0;
+
+            s = (s < 0) ? (10 + a_val) - b_val : s;
+
+            *itZ = s;
+            ++itZ;
+        }
+        if (carry != 0)
+        {
+            *itZ = carry;
+        }
+        if (z.mDigits.size() > 1 && z.mDigits.front() == 0)
+            z.mDigits.erase(z.mDigits.begin());
+
+        return z;
     }
 
     static BigInt addAbsValues(const BigInt &a, const BigInt &b)
@@ -290,48 +333,19 @@ inline BigInt BigInt::abs(const BigInt &x)
 // Testing subtraction
 inline BigInt operator-(const BigInt &a, const BigInt &b)
 {
-    auto itA = a.mDigits.rbegin();
-    auto itB = b.mDigits.rbegin();
-
-    BigInt z;
-    z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()));
-    auto itZ = z.mDigits.rbegin();
-
-    int carry = 0;
-    while (itA != a.mDigits.rend() || itB != b.mDigits.rend())
+    if (!a.mIsNegative && !b.mIsNegative)
     {
-        int a_val, b_val, s = 0;
-
-        if (itA != a.mDigits.rend())
-        {
-            s += *itA;
-            a_val = *itA;
-            ++itA;
-        }
-
-        s = (s > 0 && carry) ? s - 1 : s;
-        s = (s == 0 && carry) ? 9 : s;
-
-        if (itB != b.mDigits.rend())
-        {
-            s -= *itB;
-            b_val = *itB;
-            ++itB;
-        }
-
-        carry = (s < 0) ? 1 : 0;
-
-        s = (s < 0) ? (10 + a_val) - b_val : s;
-
-        *itZ = s;
-        ++itZ;
+        return BigInt::subAbsValues(a, b);
     }
-    if (carry != 0)
+    else if (a.mIsNegative && b.mIsNegative)
     {
-        *itZ = carry;
+        BigInt c;
+        if (b.mDigits.size() >= a.mDigits.size())
+        {
+            BigInt c = b;
+            c.mIsNegative = false;
+            return BigInt::subAbsValues(c, a);
+        }
+        return c;
     }
-    if (z.mDigits.size() > 1 && z.mDigits.front() == 0)
-        z.mDigits.erase(z.mDigits.begin());
-
-    return z;
 }

@@ -36,17 +36,79 @@ public:
 
     BigInt(const std::string &s) : mIsNegative(false)
     {
+        // if (s.empty())
+        // {
+        //     mDigits.push_back(0);
+        // }
+        // else
+        // {
+        //     mIsNegative = (s[0] == '-');
+
+        //     for (int i = (mIsNegative ? 1 : 0); i < (int)s.size(); i++)
+        //     {
+        //         auto d = s[i];
+
+        //         if (!std::isdigit(d))
+        //             throw std::runtime_error("invalid representation of BigInt value");
+
+        //         mDigits.push_back(d - '0');
+        //     }
+        // }
+
         if (s.empty())
         {
             mDigits.push_back(0);
         }
         else
         {
-            mIsNegative = (s[0] == '-');
+            std::istringstream in(s);
+            char ch;
 
-            for (int i = (mIsNegative ? 1 : 0); i < (int)s.size(); i++)
+            while (!(in >> ch))
             {
-                auto d = s[i];
+            }
+
+            in.putback(ch);
+
+            std::string n;
+
+            while (in >> ch)
+            {
+                if ((ch == '+' || ch == '-') && !std::isdigit(in.peek()))
+                {
+                    mDigits.push_back(0);
+                    break;
+                }
+
+                if (!(std::isdigit(ch) || ch == '+' || ch == '-'))
+                {
+                    mDigits.push_back(0);
+                    in.putback(ch);
+                    break;
+                }
+
+                if (std::isdigit(ch) || ch == '-')
+                {
+                    n += ch;
+                }
+
+                while (in.get(ch) && std::isdigit(ch))
+                {
+                    n += ch;
+                }
+
+                if (!std::isdigit(ch))
+                {
+                    in.putback(ch);
+                    break;
+                }
+            }
+
+            bool mIsNegative = (n[0] == '-');
+
+            for (int i = (mIsNegative ? 1 : 0); i < (int)n.size(); i++)
+            {
+                auto d = n[i];
 
                 if (!std::isdigit(d))
                     throw std::runtime_error("invalid representation of BigInt value");

@@ -17,17 +17,44 @@ TEST_CASE("Default constructor")
 
 TEST_CASE("Default constructor with a string parameter")
 {
-    BigInt x("-12765876876764764876764648484864848746448764787864");
-    ostringstream sout;
-    sout << x;
-    REQUIRE(sout.str() == "-12765876876764764876764648484864848746448764787864");
-
-    SUBCASE("non-digit character in string")
+    SUBCASE("correct parameter #1")
     {
-        REQUIRE_THROWS_AS(BigInt("--123"), runtime_error);
+        BigInt x("123");
+        REQUIRE(x == 123);
     }
-
-    SUBCASE("empty string")
+    SUBCASE("correct parameter #2")
+    {
+        BigInt x("     123");
+        REQUIRE(x == 123);
+    }
+    SUBCASE("correct parameter #3")
+    {
+        BigInt x("123x123");
+        REQUIRE(x == 123);
+    }
+    SUBCASE("correct parameter #4")
+    {
+        BigInt x("   -123");
+        REQUIRE(x == -123);
+    }
+    SUBCASE("correct parameter #5")
+    {
+        BigInt x("   +123");
+        REQUIRE(x == 123);
+    }
+    SUBCASE("incorrect input #1")
+    {
+        REQUIRE_THROWS_AS(BigInt("+ 123"), runtime_error);
+    }
+    SUBCASE("incorrect input #2")
+    {
+        REQUIRE_THROWS_AS(BigInt("++123"), runtime_error);
+    }
+    SUBCASE("incorrect input #3")
+    {
+        REQUIRE_THROWS_AS(BigInt("hello"), runtime_error);
+    }
+    SUBCASE("incorrect input #4")
     {
         REQUIRE_THROWS_AS(BigInt(""), runtime_error);
     }

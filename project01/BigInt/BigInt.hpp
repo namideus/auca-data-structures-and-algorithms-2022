@@ -39,6 +39,7 @@ public:
         if (s.empty())
         {
             mDigits.push_back(0);
+            throw std::runtime_error("invalid representation of BigInt value");
         }
         else
         {

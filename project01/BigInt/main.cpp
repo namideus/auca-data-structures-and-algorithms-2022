@@ -29,7 +29,7 @@ TEST_CASE("Default constructor with a string parameter")
 
     SUBCASE("empty string")
     {
-        // REQUIRE_THROWS_AS(BigInt(""), runtime_error);
+        REQUIRE_THROWS_AS(BigInt(""), runtime_error);
     }
 }
 

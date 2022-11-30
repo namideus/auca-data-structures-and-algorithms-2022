@@ -426,13 +426,37 @@ TEST_CASE("Subtraction operator")
         REQUIRE(sout.str() == "141");
     }
 
-    // SUBCASE("positive - positive #2")
+    SUBCASE("positive - positive (equal) #2")
+    {
+        BigInt a("88");
+        BigInt b("88");
+        sout << a - b;
+        REQUIRE(sout.str() == "0");
+    }
+
+    // SUBCASE("positive - positive #3")
     // {
     //     BigInt a("100");
-    //     BigInt b("100");
+    //     BigInt b("1");
     //     sout << a - b;
-    //     REQUIRE(sout.str() == "0");
+    //     REQUIRE(sout.str() == "99");
     // }
+
+    SUBCASE("negative - negative (equal) #1")
+    {
+        BigInt a("-100");
+        BigInt b("-100");
+        sout << a - b;
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("negative - positive #1")
+    {
+        BigInt a("-100");
+        BigInt b("23");
+        sout << a - b;
+        REQUIRE(sout.str() == "-123");
+    }
 
     // SUBCASE("positive - positive #3")
     // {

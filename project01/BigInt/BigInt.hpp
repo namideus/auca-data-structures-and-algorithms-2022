@@ -342,32 +342,51 @@ inline BigInt BigInt::abs(const BigInt &x)
     return r;
 }
 
-// Testing subtraction
 inline BigInt operator-(const BigInt &a, const BigInt &b)
 {
-    if (a == b)
+    BigInt r(0);
+
+    if (!(a.mIsNegative || b.mIsNegative))
     {
-        return BigInt(0);
+        if (a < b)
+        {
+            r = BigInt::subAbsValues(b, a);
+            r.mIsNegative = true;
+            return r;
+        }
+
+        if (a > b)
+        {
+            return BigInt::subAbsValues(a, b);
+        }
     }
-    if (!a.mIsNegative && !b.mIsNegative)
-    {
-        return BigInt::subAbsValues(a, b);
-    }
+
     if (a.mIsNegative && b.mIsNegative)
     {
-        BigInt c;
-        if (b.mDigits.size() >= a.mDigits.size())
+        if (a.mDigits.size() > b.mDigits.size())
         {
-            BigInt c = b;
-            c.mIsNegative = false;
-            return BigInt::subAbsValues(c, a);
+            r = BigInt::subAbsValues(a, b);
+            r.mIsNegative = true;
+            return r;
         }
-        return c;
+
+        if (a.mDigits.size() < b.mDigits.size())
+        {
+            return BigInt::subAbsValues(b, a);
+        }
     }
+
     if (a.mIsNegative && !b.mIsNegative)
     {
-        BigInt c = BigInt::addAbsValues(a, b);
-        c.mIsNegative = true;
-        return c;
+        r = BigInt::addAbsValues(a, b);
+        r.mIsNegative = true;
+        return r;
     }
+
+    if (!a.mIsNegative && b.mIsNegative)
+    {
+        return BigInt::addAbsValues(a, b);
+    }
+
+    return r;
 }

@@ -21,6 +21,8 @@ class BigInt
     friend BigInt operator++(const BigInt &, int);
     friend BigInt &operator++(const BigInt &);
     friend BigInt operator--(const BigInt &, int);
+    friend BigInt operator*(const BigInt &, const BigInt &);
+    friend BigInt operator/(const BigInt &, const BigInt &);
     //    friend BigInt &operator--(const BigInt &);
 
     std::vector<int> mDigits;
@@ -158,13 +160,21 @@ public:
 
             if (itA != a.mDigits.rend())
             {
-                s += *itA;
+                s = *itA;
                 a_val = *itA;
                 ++itA;
             }
 
-            s = (s > 0 && carry) ? s - 1 : s;
-            s = (s == 0 && carry) ? 9 : s;
+            if (s > 0 && carry)
+            {
+                s = s - 1;
+                carry = 0;
+            }
+
+            if (s == 0 && carry)
+            {
+                s = 9;
+            }
 
             if (itB != b.mDigits.rend())
             {
@@ -173,17 +183,22 @@ public:
                 ++itB;
             }
 
-            carry = (s < 0) ? 1 : 0;
+            if (s < 0)
+                carry = 1;
+            else
+                carry = 0;
 
-            s = (s < 0) ? (10 + a_val) - b_val : s;
+            if (carry)
+                s = 10 + a_val - b_val;
 
             *itZ = s;
+
             ++itZ;
         }
-        if (carry != 0)
-        {
-            *itZ = carry;
-        }
+        // if (carry != 0)
+        // {
+        //     *itZ = carry;
+        // }
         if (z.mDigits.size() > 1 && z.mDigits.front() == 0)
             z.mDigits.erase(z.mDigits.begin());
 

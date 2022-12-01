@@ -21,6 +21,7 @@ class BigInt
     friend BigInt operator++(const BigInt &, int);
     friend BigInt &operator++(const BigInt &);
     friend BigInt operator--(const BigInt &, int);
+    friend BigInt &operator--(const BigInt &);
     friend BigInt operator*(const BigInt &, const BigInt &);
     friend BigInt operator/(const BigInt &, const BigInt &);
     //    friend BigInt &operator--(const BigInt &);
@@ -322,26 +323,6 @@ inline BigInt operator+(const BigInt &a, const BigInt &b)
     throw std::runtime_error("not implemented yet");
 }
 
-inline BigInt operator++(BigInt &x, int)
-{
-    x = x + 1;
-    return x;
-}
-
-inline BigInt &operator++(BigInt &x)
-{
-    x++;
-    return x;
-}
-
-inline BigInt BigInt::abs(const BigInt &x)
-{
-    BigInt r = x;
-    if (r.mIsNegative)
-        r.mIsNegative = false;
-    return r;
-}
-
 inline BigInt operator-(const BigInt &a, const BigInt &b)
 {
     BigInt r(0);
@@ -388,5 +369,37 @@ inline BigInt operator-(const BigInt &a, const BigInt &b)
         return BigInt::addAbsValues(a, b);
     }
 
+    return r;
+}
+
+inline BigInt operator++(BigInt &x, int)
+{
+    x = x + 1;
+    return x;
+}
+
+inline BigInt &operator++(BigInt &x)
+{
+    x++;
+    return x;
+}
+
+inline BigInt operator--(BigInt &x, int)
+{
+    x = x - 1;
+    return x;
+}
+
+inline BigInt &operator--(BigInt &x)
+{
+    x--;
+    return x;
+}
+
+inline BigInt BigInt::abs(const BigInt &x)
+{
+    BigInt r = x;
+    if (r.mIsNegative)
+        r.mIsNegative = false;
     return r;
 }

@@ -165,15 +165,18 @@ public:
                 ++itA;
             }
 
-            if (s > 0 && carry)
+            if (carry)
             {
-                s = s - 1;
-                carry = 0;
-            }
-
-            if (s == 0 && carry)
-            {
-                s = 9;
+                if (s > 0)
+                {
+                    s = s - 1;
+                    carry = 0;
+                }
+                else if (s == 0)
+                {
+                    s = 9;
+                    carry = 1;
+                }
             }
 
             if (itB != b.mDigits.rend())
@@ -184,21 +187,15 @@ public:
             }
 
             if (s < 0)
+            {
                 carry = 1;
-            else
-                carry = 0;
-
-            if (carry)
                 s = 10 + a_val - b_val;
+            }
 
             *itZ = s;
-
             ++itZ;
         }
-        // if (carry != 0)
-        // {
-        //     *itZ = carry;
-        // }
+
         if (z.mDigits.size() > 1 && z.mDigits.front() == 0)
             z.mDigits.erase(z.mDigits.begin());
 

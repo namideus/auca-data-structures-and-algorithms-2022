@@ -426,7 +426,7 @@ TEST_CASE("Subtraction operator")
         REQUIRE(sout.str() == "141");
     }
 
-    SUBCASE("positive - positive (equal) #2")
+    SUBCASE("positive - positive #2")
     {
         BigInt a("88");
         BigInt b("88");
@@ -437,12 +437,12 @@ TEST_CASE("Subtraction operator")
     SUBCASE("positive - positive #3")
     {
         BigInt a("100");
-        BigInt b("1");
+        BigInt b("2");
         sout << a - b;
-        REQUIRE(sout.str() == "99");
+        REQUIRE(sout.str() == "98");
     }
 
-    SUBCASE("negative - negative (equal) #1")
+    SUBCASE("negative - negative #1")
     {
         BigInt a("-100");
         BigInt b("-100");

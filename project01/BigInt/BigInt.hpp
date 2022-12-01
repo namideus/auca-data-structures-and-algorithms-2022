@@ -307,20 +307,60 @@ inline bool operator<=(const BigInt &a, const BigInt &b)
     return !(b < a);
 }
 
+inline BigInt BigInt::abs(const BigInt &x)
+{
+    BigInt r = x;
+    if (r.mIsNegative)
+        r.mIsNegative = false;
+    return r;
+}
+
 inline BigInt operator+(const BigInt &a, const BigInt &b)
 {
+    BigInt r(0);
+
     if (!a.mIsNegative && !b.mIsNegative)
     {
         return BigInt::addAbsValues(a, b);
     }
+
     if (a.mIsNegative && b.mIsNegative)
     {
-        BigInt c = BigInt::addAbsValues(a, b);
-        c.mIsNegative = true;
-        return c;
+        r = BigInt::addAbsValues(a, b);
+        r.mIsNegative = true;
+        return r;
     }
 
-    throw std::runtime_error("not implemented yet");
+    if (a.mIsNegative && !b.mIsNegative)
+    {
+        if (BigInt::abs(a) > b)
+        {
+            r = BigInt::subAbsValues(a, b);
+            r.mIsNegative = true;
+            return r;
+        }
+        if (BigInt::abs(a) < b)
+        {
+            return BigInt::subAbsValues(b, a);
+        }
+    }
+
+    if (!a.mIsNegative && b.mIsNegative)
+    {
+        if (a > BigInt::abs(b))
+        {
+            return BigInt::subAbsValues(a, b);
+        }
+
+        if (a < BigInt::abs(b))
+        {
+            r = BigInt::subAbsValues(b, a);
+            r.mIsNegative = true;
+            return r;
+        }
+    }
+
+    return r;
 }
 
 inline BigInt operator-(const BigInt &a, const BigInt &b)
@@ -394,12 +434,4 @@ inline BigInt &operator--(BigInt &x)
 {
     x--;
     return x;
-}
-
-inline BigInt BigInt::abs(const BigInt &x)
-{
-    BigInt r = x;
-    if (r.mIsNegative)
-        r.mIsNegative = false;
-    return r;
 }

@@ -199,12 +199,36 @@ TEST_CASE("Addition operator")
         // }
     }
 
-    SUBCASE("negative + positive")
+    SUBCASE("negative + positive #1")
     {
+        BigInt a("-100");
+        BigInt b("200");
+        sout << a + b;
+        REQUIRE(sout.str() == "100");
     }
 
-    SUBCASE("positive + negative")
+    SUBCASE("negative + positive #2")
     {
+        BigInt a("-300");
+        BigInt b("200");
+        sout << a + b;
+        REQUIRE(sout.str() == "-100");
+    }
+
+    SUBCASE("positive + negative #1")
+    {
+        BigInt a("300");
+        BigInt b("-200");
+        sout << a + b;
+        REQUIRE(sout.str() == "100");
+    }
+
+    SUBCASE("positive + negative #2")
+    {
+        BigInt a("200");
+        BigInt b("-400");
+        sout << a + b;
+        REQUIRE(sout.str() == "-200");
     }
 
     SUBCASE("negative + negative #1")
@@ -221,19 +245,6 @@ TEST_CASE("Addition operator")
         BigInt b("-52");
         sout << a + b;
         REQUIRE(sout.str() == "-245");
-    }
-}
-
-TEST_CASE("Subtraction")
-{
-    ostringstream sout;
-
-    SUBCASE("positive - positive #1")
-    {
-        BigInt a("191");
-        BigInt b("52");
-        sout << a - b;
-        REQUIRE(sout.str() == "139");
     }
 }
 
@@ -370,27 +381,6 @@ TEST_CASE("Comparison operators")
     }
 }
 
-TEST_CASE("Prefix and postfix increment and decrement")
-{
-    ostringstream sout;
-
-    SUBCASE("Postfix increment")
-    {
-        BigInt a("100");
-        a++;
-        sout << a;
-        REQUIRE(sout.str() == "101");
-    }
-
-    SUBCASE("Prefix increment")
-    {
-        BigInt a("101");
-        ++a;
-        sout << a;
-        REQUIRE(sout.str() == "102");
-    }
-}
-
 TEST_CASE("Abs() function")
 {
     ostringstream sout;
@@ -488,5 +478,47 @@ TEST_CASE("Subtraction operator")
         BigInt b("-23");
         sout << a - b;
         REQUIRE(sout.str() == "123");
+    }
+}
+
+TEST_CASE("Prefix and postfix increment and decrement")
+{
+    ostringstream sout;
+
+    SUBCASE("Postfix increment")
+    {
+        BigInt a("99");
+        a++;
+        sout << a;
+        REQUIRE(sout.str() == "100");
+    }
+
+    SUBCASE("Prefix increment")
+    {
+        BigInt a("101");
+        ++a;
+        sout << a;
+        REQUIRE(sout.str() == "102");
+    }
+
+    SUBCASE("Postfix decrement")
+    {
+        BigInt a("0");
+        a--;
+        a--;
+        a--;
+        sout << a;
+        REQUIRE(sout.str() == "-3");
+    }
+
+    SUBCASE("Prefix decrement")
+    {
+        BigInt a("0");
+        --a;
+        --a;
+        --a;
+        --a;
+        sout << a;
+        REQUIRE(sout.str() == "-4");
     }
 }

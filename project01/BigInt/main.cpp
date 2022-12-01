@@ -487,10 +487,11 @@ TEST_CASE("Prefix and postfix increment and decrement")
 
     SUBCASE("Postfix increment")
     {
-        BigInt a("99");
+        BigInt a("-3");
+        a++;
         a++;
         sout << a;
-        REQUIRE(sout.str() == "100");
+        REQUIRE(sout.str() == "-1");
     }
 
     SUBCASE("Prefix increment")

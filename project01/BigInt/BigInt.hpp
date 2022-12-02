@@ -516,9 +516,16 @@ inline BigInt &operator-=(BigInt &a, const BigInt &b)
 
 inline BigInt operator*(const BigInt &a, const BigInt &b)
 {
+    BigInt r(0);
+
     if (!a.mIsNegative && !b.mIsNegative)
     {
         if (a.mDigits.size() >= b.mDigits.size())
             return BigInt::multiplyAbsValues(a, b);
+
+        if (a.mDigits.size() < b.mDigits.size())
+            return BigInt::multiplyAbsValues(b, a);
     }
+
+    return r;
 }

@@ -723,11 +723,27 @@ TEST_CASE("Multpiplication operator")
         REQUIRE(sout.str() == "1998");
     }
 
-    SUBCASE("positive * positive #1")
+    SUBCASE("positive * positive #2")
     {
         BigInt a("989");
         BigInt b("21");
         sout << a * b;
         REQUIRE(sout.str() == "20769");
+    }
+
+    SUBCASE("positive * positive #3")
+    {
+        BigInt a("21");
+        BigInt b("989");
+        sout << a * b;
+        REQUIRE(sout.str() == "20769");
+    }
+
+    SUBCASE("positive * positive #4")
+    {
+        BigInt a("11");
+        BigInt b("230");
+        sout << a * b;
+        REQUIRE(sout.str() == "2530");
     }
 }

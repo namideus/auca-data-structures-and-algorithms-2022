@@ -204,6 +204,79 @@ public:
 
         return z;
     }
+
+    static BigInt multiplyAbsValues(const BigInt &a, const BigInt &b)
+    {
+        auto itB = b.mDigits.rbegin();
+
+        BigInt z;
+        // z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()) + 1);
+        // auto itZ = z.mDigits.rbegin();
+
+        int carry = 0, a_val, b_val, s;
+        while (itB != b.mDigits.rend())
+        {
+            s = 0;
+
+            z.mDigits.resize(a.mDigits.size() + 1);
+            auto itZ = z.mDigits.rbegin();
+
+            if (itB != b.mDigits.rend())
+            {
+                b_val = *itB;
+                // s = b_val;
+                ++itB;
+            }
+
+            auto itA = a.mDigits.rbegin();
+
+            while (itA != a.mDigits.rend())
+            {
+                if (itA != a.mDigits.rend())
+                {
+                    a_val = *itA;
+                    s = a_val;
+                    ++itA;
+                }
+
+                s = a_val * b_val;
+
+                if (s >= 10)
+                    carry = s / 10;
+
+                *itZ = s % 10;
+                carry = (s > 9) ? 1 : 0;
+                ++itZ;
+            }
+
+            // if (itA != a.mDigits.rend())
+            // {
+            //     a_val = *itA;
+            //     s = a_val;
+            //     ++itA;
+            // }
+
+            // if (carry)
+            // {
+            //     s = s + carry;
+            // }
+
+            // if (s >= 10)
+            //     carry = s / 10;
+
+            // *itZ = s % 10;
+            // carry = (s > 9) ? 1 : 0;
+            // ++itZ;
+        }
+        // if (carry != 0)
+        // {
+        //     *itZ = carry;
+        // }
+        if (z.mDigits.size() > 1 && z.mDigits.front() == 0)
+            z.mDigits.erase(z.mDigits.begin());
+
+        return z;
+    }
 };
 
 inline std::ostream &operator<<(std::ostream &out, const BigInt &x)

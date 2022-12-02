@@ -710,3 +710,16 @@ TEST_CASE("Subtract and assignment")
         REQUIRE(sout.str() == "123");
     }
 }
+
+TEST_CASE("Multpiplication operator")
+{
+    ostringstream sout;
+
+    SUBCASE("positive * positive #1")
+    {
+        // BigInt a("193");
+        // BigInt b("52");
+        // sout << a * b;
+        // REQUIRE(sout.str() == "141");
+    }
+}

@@ -523,3 +523,190 @@ TEST_CASE("Prefix and postfix increment and decrement")
         REQUIRE(sout.str() == "-4");
     }
 }
+
+TEST_CASE("Add and assignment")
+{
+    ostringstream sout;
+
+    SUBCASE("positive += positive #1")
+    {
+        BigInt a("1");
+        BigInt b("99");
+        a += b;
+        sout << a;
+        REQUIRE(sout.str() == "100");
+    }
+
+    SUBCASE("positive += positive #1")
+    {
+        BigInt a("1");
+        BigInt b("99");
+        a += b;
+        sout << a;
+        REQUIRE(sout.str() == "100");
+    }
+
+    SUBCASE("positive += positive #2")
+    {
+        BigInt a("999");
+        BigInt b("1");
+        a += b;
+        sout << a;
+        REQUIRE(sout.str() == "1000");
+    }
+
+    SUBCASE("positive += positive #3")
+    {
+        // for (int x = 0; x <= 1000; x++)
+        // {
+        //     for (int y = 0; y <= 1000; y++)
+        //     {
+        //         BigInt a(std::to_string(x));
+        //         BigInt b(std::to_string(y));
+        //         sout << a + b;
+        //         REQUIRE(sout.str() == std::to_string(x + y));
+        //         sout.str("");
+        //     }
+        // }
+    }
+
+    SUBCASE("negative += positive #1")
+    {
+        BigInt a("-100");
+        BigInt b("200");
+        a += b;
+        sout << a;
+        REQUIRE(sout.str() == "100");
+    }
+
+    SUBCASE("negative += positive #2")
+    {
+        BigInt a("-300");
+        BigInt b("200");
+        a += b;
+        sout << a;
+        REQUIRE(sout.str() == "-100");
+    }
+
+    SUBCASE("positive += negative #1")
+    {
+        BigInt a("300");
+        BigInt b("-200");
+        a += b;
+        sout << a;
+        REQUIRE(sout.str() == "100");
+    }
+
+    SUBCASE("positive += negative #2")
+    {
+        BigInt a("200");
+        BigInt b("-400");
+        a += b;
+        sout << a;
+        REQUIRE(sout.str() == "-200");
+    }
+
+    SUBCASE("negative += negative #1")
+    {
+        BigInt a("-1");
+        BigInt b("-999");
+        a += b;
+        sout << a;
+        REQUIRE(sout.str() == "-1000");
+    }
+
+    SUBCASE("negative += negative #2")
+    {
+        BigInt a("-193");
+        BigInt b("-52");
+        a += b;
+        sout << a;
+        REQUIRE(sout.str() == "-245");
+    }
+}
+
+TEST_CASE("Subtract and assignment")
+{
+    ostringstream sout;
+
+    SUBCASE("positive -= positive #1")
+    {
+        BigInt a("193");
+        BigInt b("52");
+        a -= b;
+        sout << a;
+        REQUIRE(sout.str() == "141");
+    }
+
+    SUBCASE("positive -= positive #2")
+    {
+        BigInt a("88");
+        BigInt b("88");
+        a -= b;
+        sout << a;
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("positive -= positive #3")
+    {
+        BigInt a("100");
+        BigInt b("2");
+        a -= b;
+        sout << a;
+        REQUIRE(sout.str() == "98");
+    }
+
+    SUBCASE("positive -= positive #4")
+    {
+        BigInt a("2");
+        BigInt b("100");
+        a -= b;
+        sout << a;
+        REQUIRE(sout.str() == "-98");
+    }
+
+    SUBCASE("negative -= negative #1")
+    {
+        BigInt a("-100");
+        BigInt b("-100");
+        a -= b;
+        sout << a;
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("negative -= negative #2")
+    {
+        BigInt a("-100");
+        BigInt b("-1");
+        a -= b;
+        sout << a;
+        REQUIRE(sout.str() == "-99");
+    }
+
+    SUBCASE("negative -= negative #3")
+    {
+        BigInt a("-1");
+        BigInt b("-100");
+        a -= b;
+        sout << a;
+        REQUIRE(sout.str() == "99");
+    }
+
+    SUBCASE("negative -= positive #1")
+    {
+        BigInt a("-100");
+        BigInt b("23");
+        a -= b;
+        sout << a;
+        REQUIRE(sout.str() == "-123");
+    }
+
+    SUBCASE("positive -= negative #1")
+    {
+        BigInt a("100");
+        BigInt b("-23");
+        a -= b;
+        sout << a;
+        REQUIRE(sout.str() == "123");
+    }
+}

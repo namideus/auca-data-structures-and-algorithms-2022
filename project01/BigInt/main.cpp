@@ -741,9 +741,9 @@ TEST_CASE("Multpiplication operator")
 
     SUBCASE("positive * positive #4")
     {
-        BigInt a("11");
-        BigInt b("230");
+        BigInt a("13");
+        BigInt b("12");
         sout << a * b;
-        REQUIRE(sout.str() == "2530");
+        REQUIRE(sout.str() == "156");
     }
 }

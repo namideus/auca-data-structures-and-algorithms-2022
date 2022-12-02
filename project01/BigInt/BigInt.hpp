@@ -208,36 +208,38 @@ public:
     static BigInt multiplyAbsValues(const BigInt &a, const BigInt &b)
     {
         auto itB = b.mDigits.rbegin();
+        auto itA = a.mDigits.rbegin();
 
         BigInt z, r(0);
 
         int carry = 0, a_val, b_val, s, cnt = 0;
 
-        while (itB != b.mDigits.rend())
+        while (itB != b.mDigits.rend() || itA != a.mDigits.rend())
         {
-            s = 0;
-            carry = 0;
-
             if (itB != b.mDigits.rend())
             {
                 b_val = *itB;
                 ++itB;
             }
 
-            z.mDigits.resize(a.mDigits.size() + 1);
+            z.mDigits.resize((a.mDigits.size() == b.mDigits.size() ? a.mDigits.size() : a.mDigits.size() + 1));
+            // z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()) + 1);
+
             auto itZ = z.mDigits.rbegin();
-            auto itA = a.mDigits.rbegin();
+            itA = a.mDigits.rbegin();
+
+            s = 0;
+            carry = 0;
 
             while (itA != a.mDigits.rend())
             {
                 if (itA != a.mDigits.rend())
                 {
                     a_val = *itA;
-                    s = a_val;
                     ++itA;
                 }
 
-                s = s * b_val + carry;
+                s = a_val * b_val + carry;
 
                 if (s >= 10)
                     carry = s / 10;

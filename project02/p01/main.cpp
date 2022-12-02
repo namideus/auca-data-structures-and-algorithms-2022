@@ -33,7 +33,7 @@ struct CompByMod
 
         if(a % 2 == 0 && b % 2 != 0)
         {
-            return false;
+            return  false;
         }
 
         return a < b;

@@ -40,7 +40,6 @@ struct CompByMod
     }
 };
 
-
 int main()
 {
     iostream::sync_with_stdio(false);
@@ -54,7 +53,7 @@ int main()
         for(auto & x : v)
             cin >> x;
 
-        sort(begin(v), end(v), [m](int a, int b)]);
+        sort(begin(v), end(v), CompByMod(m));
 
         cout << n << " " << m << "\n";
 

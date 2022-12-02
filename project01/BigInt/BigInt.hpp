@@ -207,29 +207,28 @@ public:
 
     static BigInt multiplyAbsValues(const BigInt &a, const BigInt &b)
     {
-        auto itZ, itA, itB = b.mDigits.rbegin();
+        auto itB = b.mDigits.rbegin();
 
-        BigInt z;
+        BigInt z, r;
         // z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()) + 1);
         // auto itZ = z.mDigits.rbegin();
 
         int carry = 0, a_val, b_val, s;
+
         while (itB != b.mDigits.rend())
         {
             s = 0;
             carry = 0;
 
-            z.mDigits.resize(a.mDigits.size() + 1);
-            itZ = z.mDigits.rbegin();
-
             if (itB != b.mDigits.rend())
             {
                 b_val = *itB;
-                // s = b_val;
                 ++itB;
             }
 
-            itA = a.mDigits.rbegin();
+            z.mDigits.resize(a.mDigits.size() + 1);
+            auto itZ = z.mDigits.rbegin();
+            auto itA = a.mDigits.rbegin();
 
             while (itA != a.mDigits.rend())
             {
@@ -240,7 +239,7 @@ public:
                     ++itA;
                 }
 
-                s *= b_val + carry;
+                s = s * b_val + carry;
 
                 if (s >= 10)
                     carry = s / 10;
@@ -250,10 +249,10 @@ public:
                 *itZ = s % 10;
                 ++itZ;
             }
-        }
 
-        if (z.mDigits.size() > 1 && z.mDigits.front() == 0)
-            z.mDigits.erase(z.mDigits.begin());
+            if (z.mDigits.size() > 1 && z.mDigits.front() == 0)
+                z.mDigits.erase(z.mDigits.begin());
+        }
 
         return z;
     }
@@ -501,4 +500,13 @@ inline BigInt &operator-=(BigInt &a, const BigInt &b)
 {
     a = a - b;
     return a;
+}
+
+inline BigInt operator*(const BigInt &a, const BigInt &b)
+{
+    if (!a.mIsNegative && !b.mIsNegative)
+    {
+        if (a.mDigits.size() >= b.mDigits.size())
+            return BigInt::multiplyAbsValues(a, b);
+    }
 }

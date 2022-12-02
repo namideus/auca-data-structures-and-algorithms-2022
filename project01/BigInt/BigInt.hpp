@@ -222,8 +222,7 @@ public:
                 ++itB;
             }
 
-            z.mDigits.resize((a.mDigits.size() == b.mDigits.size() ? a.mDigits.size() : a.mDigits.size() + 1));
-            // z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()) + 1);
+            z.mDigits.resize(a.mDigits.size());
 
             auto itZ = z.mDigits.rbegin();
             itA = a.mDigits.rbegin();
@@ -262,7 +261,6 @@ public:
             {
                 z.mDigits.insert(z.mDigits.end(), 0);
             }
-
             r = BigInt::addAbsValues(z, r);
 
             cnt++;
@@ -520,13 +518,28 @@ inline BigInt operator*(const BigInt &a, const BigInt &b)
 {
     BigInt r(0);
 
-    if (!a.mIsNegative && !b.mIsNegative)
+    if (a == 0 || b == 0)
+        return r;
+
+    if (a == 1)
+        return b;
+
+    if (b == 1)
+        return a;
+
+    if ((!a.mIsNegative && !b.mIsNegative) || (a.mIsNegative && b.mIsNegative))
     {
-        if (a.mDigits.size() >= b.mDigits.size())
+        if (a >= b)
             return BigInt::multiplyAbsValues(a, b);
 
-        if (a.mDigits.size() < b.mDigits.size())
+        if (a < b)
             return BigInt::multiplyAbsValues(b, a);
+    }
+
+    if ((!a.mIsNegative && b.mIsNegative) || (a.mIsNegative && !b.mIsNegative))
+    {
+        r = BigInt::multiplyAbsValues(a, b);
+        r.mIsNegative = true;
     }
 
     return r;

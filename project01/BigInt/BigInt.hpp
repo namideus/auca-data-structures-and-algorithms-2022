@@ -209,11 +209,9 @@ public:
     {
         auto itB = b.mDigits.rbegin();
 
-        BigInt z, r;
-        // z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()) + 1);
-        // auto itZ = z.mDigits.rbegin();
+        BigInt z, r(0);
 
-        int carry = 0, a_val, b_val, s;
+        int carry = 0, a_val, b_val, s, cnt = 0;
 
         while (itB != b.mDigits.rend())
         {
@@ -250,11 +248,25 @@ public:
                 ++itZ;
             }
 
+            if (carry != 0)
+            {
+                *itZ = carry;
+            }
             if (z.mDigits.size() > 1 && z.mDigits.front() == 0)
+            {
                 z.mDigits.erase(z.mDigits.begin());
+            }
+            for (int i = 0; i < cnt; i++)
+            {
+                z.mDigits.insert(z.mDigits.end(), 0);
+            }
+
+            r = BigInt::addAbsValues(z, r);
+
+            cnt++;
         }
 
-        return z;
+        return r;
     }
 };
 

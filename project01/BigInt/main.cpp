@@ -770,4 +770,44 @@ TEST_CASE("Multpiplication operator")
         sout << a * b;
         REQUIRE(sout.str() == "2808");
     }
+
+    SUBCASE("negative * negative #7")
+    {
+        BigInt a("-12");
+        BigInt b("-234");
+        sout << a * b;
+        REQUIRE(sout.str() == "2808");
+    }
+
+    SUBCASE("negative * positive #8")
+    {
+        BigInt a("-12");
+        BigInt b("234");
+        sout << a * b;
+        REQUIRE(sout.str() == "-2808");
+    }
+
+    SUBCASE("negative * positive #9")
+    {
+        BigInt a("12");
+        BigInt b("-234");
+        sout << a * b;
+        REQUIRE(sout.str() == "-2808");
+    }
+
+    SUBCASE("zero * positive #10")
+    {
+        BigInt a("0");
+        BigInt b("-234");
+        sout << a * b;
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("zero * zero #11")
+    {
+        BigInt a("0");
+        BigInt b("0");
+        sout << a * b;
+        REQUIRE(sout.str() == "0");
+    }
 }

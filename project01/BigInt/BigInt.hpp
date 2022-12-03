@@ -530,11 +530,7 @@ inline BigInt operator*(const BigInt &a, const BigInt &b)
 
     if ((!a.mIsNegative && !b.mIsNegative) || (a.mIsNegative && b.mIsNegative))
     {
-        // if (a >= b)
         return BigInt::multiplyAbsValues(a, b);
-
-        // if (a < b)
-        //   return BigInt::multiplyAbsValues(b, a);
     }
 
     if ((!a.mIsNegative && b.mIsNegative) || (a.mIsNegative && !b.mIsNegative))

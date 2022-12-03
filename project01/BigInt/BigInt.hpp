@@ -210,8 +210,8 @@ public:
 
     static BigInt multiplyAbsValues(const BigInt &a, const BigInt &b)
     {
-        auto itB = b.mDigits.rbegin();
         auto itA = a.mDigits.rbegin();
+        auto itB = b.mDigits.rbegin();
 
         BigInt z, r(0);
 
@@ -273,67 +273,67 @@ public:
         return r;
     }
 
+    // Working area
     static BigInt divideAbsValues(const BigInt &a, const BigInt &b)
     {
-        auto itB = b.mDigits.rbegin();
-        auto itA = a.mDigits.rbegin();
+        auto itA = a.mDigits.begin();
+        auto itB = b.mDigits.begin();
 
         BigInt z, r(0);
 
-        int carry = 0, a_val, b_val, s, cnt = 0;
+        // int carry = 0, a_val, b_val, s, cnt = 0;
 
-        while (itB != b.mDigits.rend() || itA != a.mDigits.rend())
-        {
-            if (itB != b.mDigits.rend())
-            {
-                b_val = *itB;
-                ++itB;
-            }
+        // while (itB != b.mDigits.end() || itA != a.mDigits.end())
+        // {
+        //     if (itB != b.mDigits.end())
+        //     {
+        //         b_val = *itB;
+        //         ++itB;
+        //     }
 
-            z.mDigits.clear();
-            z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()) + 1);
+        //     z.mDigits.resize(b.mDigits.size());
 
-            auto itZ = z.mDigits.rbegin();
-            itA = a.mDigits.rbegin();
+        //     auto itZ = z.mDigits.begin();
+        //     itA = a.mDigits.begin();
 
-            s = 0;
-            carry = 0;
+        //     s = 0;
+        //     carry = 0;
 
-            while (itA != a.mDigits.rend())
-            {
-                if (itA != a.mDigits.rend())
-                {
-                    a_val = *itA;
-                    ++itA;
-                }
+        //     while (itA != a.mDigits.rend())
+        //     {
+        //         if (itA != a.mDigits.rend())
+        //         {
+        //             a_val = *itA;
+        //             ++itA;
+        //         }
 
-                s = a_val * b_val + carry;
+        //         s = a_val * b_val + carry;
 
-                if (s >= 10)
-                    carry = s / 10;
-                else
-                    carry = 0;
+        //         if (s >= 10)
+        //             carry = s / 10;
+        //         else
+        //             carry = 0;
 
-                *itZ = s % 10;
-                ++itZ;
-            }
+        //         *itZ = s % 10;
+        //         ++itZ;
+        //     }
 
-            if (carry != 0)
-            {
-                *itZ = carry;
-            }
-            while (z.mDigits.size() > 1 && z.mDigits.front() == 0)
-            {
-                z.mDigits.erase(z.mDigits.begin());
-            }
-            for (int i = 0; i < cnt; i++)
-            {
-                z.mDigits.insert(z.mDigits.end(), 0);
-            }
-            r = BigInt::addAbsValues(z, r);
+        //     if (carry != 0)
+        //     {
+        //         *itZ = carry;
+        //     }
+        //     while (z.mDigits.size() > 1 && z.mDigits.front() == 0)
+        //     {
+        //         z.mDigits.erase(z.mDigits.begin());
+        //     }
+        //     for (int i = 0; i < cnt; i++)
+        //     {
+        //         z.mDigits.insert(z.mDigits.end(), 0);
+        //     }
+        //     r = BigInt::addAbsValues(z, r);
 
-            cnt++;
-        }
+        //     cnt++;
+        // }
 
         return r;
     }

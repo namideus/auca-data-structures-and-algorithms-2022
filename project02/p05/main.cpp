@@ -17,22 +17,26 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
+    int n;
     char c;
     string s;
     bool f = false;
 
-    while (cin >> s)
+    while (getline(cin, s))
     {
         if (f)
             cout << "\n";
 
+        f = true;
+
+        n = sz(s);
+
         vector<Pair> v;
         map<int, int> cnt;
 
-        for (int i = 0; i < sz(s); i++)
+        for (int i = 0; i < n; i++)
         {
-            c = s[i];
-            cnt[(int)c]++;
+            cnt[(int)s[i]]++;
         }
 
         for (auto d : cnt)
@@ -47,7 +51,5 @@ int main()
 
         for (auto d : v)
             cout << d.ascii << " " << d.value << "\n";
-
-        f = true;
     }
 }

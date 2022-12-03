@@ -715,59 +715,59 @@ TEST_CASE("Multpiplication operator")
 {
     ostringstream sout;
 
-    // SUBCASE("positive * positive #1")
-    // {
-    //     BigInt a("999");
-    //     BigInt b("2");
-    //     sout << a * b;
-    //     REQUIRE(sout.str() == "1998");
-    // }
+    SUBCASE("positive * positive #1")
+    {
+        BigInt a("999");
+        BigInt b("2");
+        sout << a * b;
+        REQUIRE(sout.str() == "1998");
+    }
 
-    // SUBCASE("positive * positive #2")
-    // {
-    //     BigInt a("989");
-    //     BigInt b("21");
-    //     sout << a * b;
-    //     REQUIRE(sout.str() == "20769");
-    // }
+    SUBCASE("positive * positive #2")
+    {
+        BigInt a("989");
+        BigInt b("21");
+        sout << a * b;
+        REQUIRE(sout.str() == "20769");
+    }
 
-    // SUBCASE("positive * positive #3")
-    // {
-    //     BigInt a("21");
-    //     BigInt b("98900");
-    //     sout << a * b;
-    //     REQUIRE(sout.str() == "2076900");
-    // }
+    SUBCASE("positive * positive #3")
+    {
+        BigInt a("21");
+        BigInt b("98900");
+        sout << a * b;
+        REQUIRE(sout.str() == "2076900");
+    }
 
-    // SUBCASE("positive * positive #4")
-    // {
-    //     BigInt a("13");
-    //     BigInt b("12");
-    //     sout << a * b;
-    //     REQUIRE(sout.str() == "156");
-    // }
+    SUBCASE("positive * positive #4")
+    {
+        BigInt a("13");
+        BigInt b("12");
+        sout << a * b;
+        REQUIRE(sout.str() == "156");
+    }
 
-    // SUBCASE("positive * positive #5")
-    // {
-    //     BigInt a("1");
-    //     BigInt b("134563");
-    //     sout << a * b;
-    //     REQUIRE(sout.str() == "134563");
-    // }
+    SUBCASE("positive * positive #5")
+    {
+        BigInt a("1");
+        BigInt b("134563");
+        sout << a * b;
+        REQUIRE(sout.str() == "134563");
+    }
 
-    // SUBCASE("zero * positive #6")
-    // {
-    //     BigInt a("0");
-    //     BigInt b("134563");
-    //     sout << a * b;
-    //     REQUIRE(sout.str() == "0");
-    // }
+    SUBCASE("zero * positive #6")
+    {
+        BigInt a("0");
+        BigInt b("134563");
+        sout << a * b;
+        REQUIRE(sout.str() == "0");
+    }
 
     SUBCASE("negative * negative #6")
     {
-        BigInt a("234");
-        BigInt b("21");
+        BigInt a("-234");
+        BigInt b("-12");
         sout << a * b;
-        REQUIRE(sout.str() == "4914");
+        REQUIRE(sout.str() == "2808");
     }
 }

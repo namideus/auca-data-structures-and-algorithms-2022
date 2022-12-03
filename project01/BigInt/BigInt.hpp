@@ -222,7 +222,8 @@ public:
                 ++itB;
             }
 
-            z.mDigits.resize(a.mDigits.size());
+            z.mDigits.clear();
+            z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()) + 1);
 
             auto itZ = z.mDigits.rbegin();
             itA = a.mDigits.rbegin();
@@ -253,7 +254,7 @@ public:
             {
                 *itZ = carry;
             }
-            if (z.mDigits.size() > 1 && z.mDigits.front() == 0)
+            while (z.mDigits.size() > 1 && z.mDigits.front() == 0)
             {
                 z.mDigits.erase(z.mDigits.begin());
             }
@@ -529,11 +530,11 @@ inline BigInt operator*(const BigInt &a, const BigInt &b)
 
     if ((!a.mIsNegative && !b.mIsNegative) || (a.mIsNegative && b.mIsNegative))
     {
-        if (a >= b)
-            return BigInt::multiplyAbsValues(a, b);
+        // if (a >= b)
+        return BigInt::multiplyAbsValues(a, b);
 
-        if (a < b)
-            return BigInt::multiplyAbsValues(b, a);
+        // if (a < b)
+        //   return BigInt::multiplyAbsValues(b, a);
     }
 
     if ((!a.mIsNegative && b.mIsNegative) || (a.mIsNegative && !b.mIsNegative))

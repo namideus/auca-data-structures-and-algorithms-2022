@@ -816,7 +816,7 @@ TEST_CASE("Multpiply and assignment operator")
 {
     ostringstream sout;
 
-    SUBCASE("positive * positive #1")
+    SUBCASE("positive *= positive #1")
     {
         BigInt a("999");
         BigInt b("2");
@@ -825,7 +825,7 @@ TEST_CASE("Multpiply and assignment operator")
         REQUIRE(sout.str() == "1998");
     }
 
-    SUBCASE("positive * positive #2")
+    SUBCASE("positive *= positive #2")
     {
         BigInt a("989");
         BigInt b("21");
@@ -834,7 +834,7 @@ TEST_CASE("Multpiply and assignment operator")
         REQUIRE(sout.str() == "20769");
     }
 
-    SUBCASE("positive * positive #3")
+    SUBCASE("positive *= positive #3")
     {
         BigInt a("21");
         BigInt b("98900");
@@ -843,7 +843,7 @@ TEST_CASE("Multpiply and assignment operator")
         REQUIRE(sout.str() == "2076900");
     }
 
-    SUBCASE("positive * positive #4")
+    SUBCASE("positive *= positive #4")
     {
         BigInt a("13");
         BigInt b("12");
@@ -852,7 +852,7 @@ TEST_CASE("Multpiply and assignment operator")
         REQUIRE(sout.str() == "156");
     }
 
-    SUBCASE("positive * positive #5")
+    SUBCASE("positive *= positive #5")
     {
         BigInt a("1");
         BigInt b("134563");
@@ -861,7 +861,7 @@ TEST_CASE("Multpiply and assignment operator")
         REQUIRE(sout.str() == "134563");
     }
 
-    SUBCASE("zero * positive #6")
+    SUBCASE("zero *= positive #6")
     {
         BigInt a("0");
         BigInt b("134563");
@@ -870,7 +870,7 @@ TEST_CASE("Multpiply and assignment operator")
         REQUIRE(sout.str() == "0");
     }
 
-    SUBCASE("negative * negative #6")
+    SUBCASE("negative *= negative #6")
     {
         BigInt a("-234");
         BigInt b("-12");
@@ -879,7 +879,7 @@ TEST_CASE("Multpiply and assignment operator")
         REQUIRE(sout.str() == "2808");
     }
 
-    SUBCASE("negative * negative #7")
+    SUBCASE("negative *= negative #7")
     {
         BigInt a("-12");
         BigInt b("-234");
@@ -888,7 +888,7 @@ TEST_CASE("Multpiply and assignment operator")
         REQUIRE(sout.str() == "2808");
     }
 
-    SUBCASE("negative * positive #8")
+    SUBCASE("negative *= positive #8")
     {
         BigInt a("-12");
         BigInt b("234");
@@ -897,7 +897,7 @@ TEST_CASE("Multpiply and assignment operator")
         REQUIRE(sout.str() == "-2808");
     }
 
-    SUBCASE("negative * positive #9")
+    SUBCASE("negative *= positive #9")
     {
         BigInt a("12");
         BigInt b("-234");
@@ -906,7 +906,7 @@ TEST_CASE("Multpiply and assignment operator")
         REQUIRE(sout.str() == "-2808");
     }
 
-    SUBCASE("zero * positive #10")
+    SUBCASE("zero *= positive #10")
     {
         BigInt a("0");
         BigInt b("-234");
@@ -915,7 +915,7 @@ TEST_CASE("Multpiply and assignment operator")
         REQUIRE(sout.str() == "0");
     }
 
-    SUBCASE("zero * zero #11")
+    SUBCASE("zero *= zero #11")
     {
         BigInt a("0");
         BigInt b("0");

@@ -17,7 +17,7 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
-    int x, r, c, m, n, ans;
+    int x, r, c, m, n, ans, ct;
 
     cin >> x;
 
@@ -28,6 +28,7 @@ int main()
         map<char, int> cnt;
 
         ans = 0;
+        ct = 0;
 
         string l;
 

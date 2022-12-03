@@ -5,61 +5,54 @@ int sz(const C &c) { return static_cast<int>(c.size()); }
 
 using namespace std;
 
-struct CompByMod
+struct Freq
 {
-    int m;
-
-    CompByMod(int aM) : m(aM) {}
-
-    bool operator()(const int a, const int b) const
-    {
-        int rA = a % m;
-        int rB = b % m;
-
-        if (rA != rB)
-        {
-            return rA < rB;
-        }
-
-        if (a % 2 != 0 && b % 2 != 0)
-        {
-            return a > b;
-        }
-
-        if (a % 2 != 0 && b % 2 == 0)
-        {
-            return true;
-        }
-
-        if (a % 2 == 0 && b % 2 != 0)
-        {
-            return false;
-        }
-
-        return a < b;
-    }
+    char letter;
+    int count;
 };
 
 int main()
 {
-    iostream::sync_with_stdio(false);
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
 
-    int n, m;
+    int x, r, c, m, n, ans;
 
-    while (cin >> n >> m && n + m > 0)
+    cin >> x;
+
+    for (int t = 1; t <= x; t++)
     {
-        vector<int> v(n);
+        cin >> r >> c >> m >> n;
 
-        for (auto &x : v)
-            cin >> x;
+        map<char, int> cnt;
 
-        sort(begin(v), end(v), CompByMod(m));
+        ans = 0;
 
-        cout << n << " " << m << "\n";
+        string l;
+
+        for (int i = 0; i < r; i++)
+        {
+            cin >> l;
+
+            for (int j = 0; j < c; j++)
+                cnt[l[j]]++;
+        }
+
+        vector<Freq> v;
+
+        for (auto d : cnt)
+            v.push_back({d.first, d.second});
+
+        sort(begin(v), end(v), [](Freq a, Freq b)
+             { return a.count > b.count; });
 
         for (auto d : v)
-            cout << d << "\n";
-    }
+            if (v[0].count == d.count)
+                ans += d.count * m;
+            else
+                ans += d.count * n;
 
-    cout << "0 0\n";
+        cout << "Case " << t << ": " << ans << "\n";
+    }
 }

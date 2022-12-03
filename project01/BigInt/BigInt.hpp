@@ -17,16 +17,19 @@ class BigInt
     friend bool operator>=(const BigInt &, const BigInt &);
     friend bool operator<=(const BigInt &, const BigInt &);
     friend BigInt operator+(const BigInt &, const BigInt &);
-    friend BigInt &operator+=(BigInt &, const BigInt &);
-    friend BigInt &operator-=(BigInt &, const BigInt &);
     friend BigInt operator-(const BigInt &, const BigInt &);
+    friend BigInt operator*(const BigInt &, const BigInt &);
+    friend BigInt operator/(const BigInt &, const BigInt &);
+    friend BigInt operator%(const BigInt &, const BigInt &);
     friend BigInt operator++(const BigInt &, int);
     friend BigInt &operator++(const BigInt &);
     friend BigInt operator--(const BigInt &, int);
     friend BigInt &operator--(const BigInt &);
-    friend BigInt operator*(const BigInt &, const BigInt &);
-    friend BigInt operator/(const BigInt &, const BigInt &);
-    //    friend BigInt &operator--(const BigInt &);
+    friend BigInt &operator+=(BigInt &, const BigInt &);
+    friend BigInt &operator-=(BigInt &, const BigInt &);
+    friend BigInt &operator*=(BigInt &, const BigInt &);
+    friend BigInt &operator/=(BigInt &, const BigInt &);
+    friend BigInt &operator%=(BigInt &, const BigInt &);
 
     std::vector<int> mDigits;
     bool mIsNegative;
@@ -479,6 +482,33 @@ inline BigInt operator-(const BigInt &a, const BigInt &b)
     return r;
 }
 
+inline BigInt operator*(const BigInt &a, const BigInt &b)
+{
+    BigInt r(0);
+
+    if (a == 0 || b == 0)
+        return r;
+
+    if (a == 1)
+        return b;
+
+    if (b == 1)
+        return a;
+
+    if ((!a.mIsNegative && !b.mIsNegative) || (a.mIsNegative && b.mIsNegative))
+    {
+        return BigInt::multiplyAbsValues(a, b);
+    }
+
+    if ((!a.mIsNegative && b.mIsNegative) || (a.mIsNegative && !b.mIsNegative))
+    {
+        r = BigInt::multiplyAbsValues(a, b);
+        r.mIsNegative = true;
+    }
+
+    return r;
+}
+
 inline BigInt operator++(BigInt &x, int)
 {
     x = x + 1;
@@ -515,29 +545,8 @@ inline BigInt &operator-=(BigInt &a, const BigInt &b)
     return a;
 }
 
-inline BigInt operator*(const BigInt &a, const BigInt &b)
+inline BigInt &operator*=(BigInt &a, const BigInt &b)
 {
-    BigInt r(0);
-
-    if (a == 0 || b == 0)
-        return r;
-
-    if (a == 1)
-        return b;
-
-    if (b == 1)
-        return a;
-
-    if ((!a.mIsNegative && !b.mIsNegative) || (a.mIsNegative && b.mIsNegative))
-    {
-        return BigInt::multiplyAbsValues(a, b);
-    }
-
-    if ((!a.mIsNegative && b.mIsNegative) || (a.mIsNegative && !b.mIsNegative))
-    {
-        r = BigInt::multiplyAbsValues(a, b);
-        r.mIsNegative = true;
-    }
-
-    return r;
+    a = a * b;
+    return a;
 }

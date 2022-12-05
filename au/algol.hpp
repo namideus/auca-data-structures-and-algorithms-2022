@@ -13,12 +13,12 @@ ForwardIter auFind(ForwardIter beg, ForwardIter end, const Key &key)
     return beg;
 }
 
-template <typename ForwardIter, typename Key>
-ForwardIter auFindIf(ForwardIter beg, ForwardIter end, const Key &key)
+template <typename ForwardIter, typename UnaryPredicate>
+ForwardIter auFindIf(ForwardIter beg, ForwardIter end, UnaryPredicate pred)
 {
     for (; beg != end; ++beg)
     {
-        if (*beg == key)
+        if (pred(*beg))
         {
             return beg;
         }

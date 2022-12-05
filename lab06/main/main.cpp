@@ -354,6 +354,59 @@ void p09()
     }
 }
 
+void p1001()
+{
+    vector<int> v = {0, 4, 5, 10, 12, 20, 25, 40};
+
+    for (int x; cin >> x;)
+    {
+        cout << (binary_search(begin(v), end(v), x) ? "Yes\n" : "No\n");
+    }
+}
+
+void p11()
+{
+    vector<int> v = {0, 4, 5, 10, 12, 20, 25, 40};
+
+    for (int x; cin >> x;)
+    {
+        auto it = lower_bound(begin(v), end(v), x);
+        // no elements equal or greater  than x
+        if (it == end(v))
+        {
+            cout << "no elements equal or greater than " << x << endl;
+        }
+        // there is an element equal to x
+        else if (*it == x)
+        {
+            cout << "first element equal to " << x << " has index: " << it - begin(v) << endl;
+        }
+        else
+        {
+            cout << "there are no elements equal to " << x << endl;
+            cout << "first element greater than " << x << " has index: " << it - begin(v) << endl;
+        }
+    }
+}
+
+void p12()
+{
+    vector<int> v = {0, 0, 4, 5, 10, 10, 10, 12, 20, 25, 35, 25, 25, 40};
+
+    for (int x; cin >> x;)
+    {
+        auto p = equal_range(begin(v), end(v), x);
+        if (p.first == p.second)
+        {
+            cout << "there are no elements equal to " << x << endl;
+        }
+        else
+        {
+            cout << "number of elements equal to x is: " << p.second - p.first << endl;
+        }
+    }
+}
+
 int main()
 {
     // p0101();
@@ -372,5 +425,11 @@ int main()
 
     // p08();
 
-    p09();
+    // p09();
+
+    // p1001();
+
+    // p11();
+
+    p12();
 }

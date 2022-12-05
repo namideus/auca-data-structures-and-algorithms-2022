@@ -331,19 +331,46 @@ void p08()
     }
 }
 
+void p09()
+{
+    vector<tuple<string, int, double>> employees;
+    string name;
+    int age;
+    double salary;
+    while (cin >> name >> age >> salary)
+    {
+        employees.emplace_back(name, age, salary);
+    }
+
+    sort(begin(employees), end(employees), [](const auto &e1, const auto &e2)
+         { return get<1>(e1) < get<1>(e2); });
+
+    cout << "---" << endl;
+    cout << fixed << showpoint << setprecision(2);
+
+    for (const auto &e : employees)
+    {
+        cout << get<0>(e) << ", " << get<1>(e) << ", " << get<2>(e) << endl;
+    }
+}
+
 int main()
 {
     // p0101();
+
     // p0102();
 
     // p0201();
+
     // p0202();
 
-    // p0206();
+    // p06();
 
     // p03();
 
     // p07();
 
-    p08();
+    // p08();
+
+    p09();
 }

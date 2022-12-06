@@ -12,7 +12,6 @@ int main()
     cout.tie(0);
 
     int N, t;
-    bool f = false;
 
     cin >> N >> t;
 
@@ -25,20 +24,18 @@ int main()
 
     if (t == 1)
     {
-        for (auto x : v)
+        for (int i = 1; i <= 7777; i++)
         {
-            for (auto y : v)
+            auto lo = lower_bound(begin(v), end(v), i);
+            auto up = lower_bound(begin(v), end(v), 7777 - i);
+
+            if (lo != end(v) && up != end(v) && *lo + *up == 7777)
             {
-                if (x != y && x + y == 7777)
-                {
-                    f = true;
-                    break;
-                }
+                cout << "Yes";
+                return 0;
             }
-            if (f)
-                break;
         }
-        cout << (f ? "Yes" : "No");
+        cout << "No";
     }
 
     if (t == 2)
@@ -50,11 +47,11 @@ int main()
 
             if (up - lo > 1)
             {
-                f = true;
-                break;
+                cout << "Contains duplicate";
+                return 0;
             }
         }
-        cout << (f ? "Contains duplicate" : "Unique");
+        cout << "Unique";
     }
 
     if (t == 3)
@@ -67,12 +64,10 @@ int main()
             if (up - lo > N / 2)
             {
                 cout << *lo;
-                f = true;
-                break;
+                return 0;
             }
         }
-        if (!f)
-            cout << "-1";
+        cout << "-1";
     }
 
     if (t == 4)
@@ -94,7 +89,7 @@ int main()
 
         for (int i = lo - begin(v); i < up - begin(v); i++)
         {
-            cout << v[i] << " ";
+            cout << v[i] << (i < up - begin(v) - 1 ? " " : "");
         }
     }
 }

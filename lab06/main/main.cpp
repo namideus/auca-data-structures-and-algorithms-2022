@@ -114,21 +114,31 @@ void p0102()
 void p0201()
 {
     vector<int> a = {3, 1, 20, 4, 7, 0, 5};
-
-    // IsEven pred;
-    // cout << boolalpha;
-    // cout << pred(5) << endl;
-    // cout << string(40, '-') << endl;
-
-    auto it = find_if(begin(a), end(a), IsEven());
-
-    if (it != end(a))
     {
-        cout << *it << " found. Its index is " << it - begin(a) << "\n";
+        auto it = find_if(begin(a), end(a), IsEven());
+
+        if (it != end(a))
+        {
+            cout << *it << " found. Its index is " << it - begin(a) << "\n";
+        }
+        else
+        {
+            cout << "No even numbers are found\n";
+        }
     }
-    else
+
     {
-        cout << "No even numbers are found\n";
+        auto it = find_if(begin(a), end(a), [](const int n)
+                          { return n % 2 == 0; });
+
+        if (it != end(a))
+        {
+            cout << *it << " found. Its index is " << it - begin(a) << "\n";
+        }
+        else
+        {
+            cout << "No even numbers are found\n";
+        }
     }
 }
 
@@ -136,8 +146,8 @@ void p0202()
 {
     vector<int> a = {3, 1, 20, 4, 7, 0, 5};
 
-    auto it = find_if(begin(a), end(a), [](int n)
-                      { return n % 2 == 0; });
+    auto it = auFindIf(begin(a), end(a), [](int n)
+                       { return n % 2 == 0; });
 
     if (it != end(a))
     {
@@ -176,7 +186,7 @@ void p03()
     }
     else
     {
-        cout << "No even numbers are found\n";
+        cout << "No greater numbers are found\n";
     }
 
     auto it2 = find_if(begin(a), end(a), GreaterThan(x));
@@ -187,7 +197,57 @@ void p03()
     }
     else
     {
-        cout << "No even numbers are found\n";
+        cout << "No greater numbers are found\n";
+    }
+}
+
+void p0401()
+{
+    vector<int> a;
+
+    int x;
+
+    cout << "Enter arbitrary number of integer values: ";
+
+    while (cin >> x)
+    {
+        a.push_back(x);
+    }
+
+    auto it = min_element(begin(a), end(a));
+
+    if (it != end(a))
+    {
+        cout << "Index of minimum value is " << it - begin(a) << "\n";
+    }
+    else
+    {
+        cout << "Minimum value not found\n";
+    }
+}
+
+void p0402()
+{
+    vector<int> a;
+
+    int x;
+
+    cout << "Enter arbitrary number of integer values: ";
+
+    while (cin >> x)
+    {
+        a.push_back(x);
+    }
+
+    auto it = auMinElement(begin(a), end(a));
+
+    if (it != end(a))
+    {
+        cout << "Index of minimum value is " << it - begin(a) << "\n";
+    }
+    else
+    {
+        cout << "Minimum value not found\n";
     }
 }
 
@@ -417,9 +477,13 @@ int main()
 
     // p0202();
 
-    // p06();
-
     // p03();
+
+    // p0401();
+
+    p0402();
+
+    // p06();
 
     // p07();
 
@@ -431,5 +495,5 @@ int main()
 
     // p11();
 
-    p12();
+    // p12();
 }

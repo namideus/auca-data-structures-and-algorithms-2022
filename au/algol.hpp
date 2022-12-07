@@ -1,4 +1,3 @@
-
 template <typename ForwardIter, typename Key>
 ForwardIter auFind(ForwardIter beg, ForwardIter end, const Key &key)
 {
@@ -25,4 +24,24 @@ ForwardIter auFindIf(ForwardIter beg, ForwardIter end, UnaryPredicate pred)
     }
 
     return beg;
+}
+
+template <typename ForwardIter>
+ForwardIter auMinElement(ForwardIter beg, ForwardIter end)
+{
+    if (beg == end)
+        return end;
+
+    ForwardIter min = beg;
+    ++beg;
+
+    for (; beg != end; ++beg)
+    {
+        if (*beg < *min)
+        {
+            min = beg;
+        }
+    }
+
+    return min;
 }

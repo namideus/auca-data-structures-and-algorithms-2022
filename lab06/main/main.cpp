@@ -292,6 +292,47 @@ void p0501()
     }
 }
 
+void p0502()
+{
+    vector<Student> students;
+
+    string name;
+    double gpa;
+
+    while (cin >> name >> gpa)
+    {
+        students.emplace_back(name, gpa);
+    }
+
+    {
+        auto it = auMinElement(begin(students), end(students), [](Student a, Student b)
+                               { return a.mGpa < b.mGpa; });
+
+        if (it != end(students))
+        {
+            cout << "Index of a student with minimum gpa is " << it - begin(students) << "\n";
+        }
+        else
+        {
+            cout << "Student with minimum gpa not found\n";
+        }
+    }
+
+    {
+        auto it = auMinElement(begin(students), end(students), [](Student a, Student b)
+                               { return a.mName < b.mName; });
+
+        if (it != end(students))
+        {
+            cout << "Index of a student with minimum name (lexicographically) is " << it - begin(students) << "\n";
+        }
+        else
+        {
+            cout << "Student with minimum name (lexicographically) not found\n";
+        }
+    }
+}
+
 void p06()
 {
     vector<Student> students;
@@ -524,7 +565,9 @@ int main()
 
     // p0402();
 
-    p0501();
+    // p0501();
+
+    p0502();
 
     // p06();
 

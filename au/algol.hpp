@@ -45,3 +45,23 @@ ForwardIter auMinElement(ForwardIter beg, ForwardIter end)
 
     return min;
 }
+
+template <typename ForwardIter, class Compare>
+ForwardIter auMinElement(ForwardIter beg, ForwardIter end, Compare comp)
+{
+    if (beg == end)
+        return end;
+
+    ForwardIter min = beg;
+    ++beg;
+
+    for (; beg != end; ++beg)
+    {
+        if (comp(*beg, *min))
+        {
+            min = beg;
+        }
+    }
+
+    return min;
+}

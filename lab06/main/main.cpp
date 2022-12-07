@@ -264,8 +264,8 @@ void p0501()
     }
 
     {
-        auto it = min_element(begin(students), end(students), [](Student a, Student b)
-                              { return a.mGpa < b.mGpa; });
+        auto it = min_element(begin(students), end(students), [](const Student &s1, const Student s2)
+                              { return s1.mGpa < s2.mGpa; });
 
         if (it != end(students))
         {
@@ -278,8 +278,8 @@ void p0501()
     }
 
     {
-        auto it = min_element(begin(students), end(students), [](Student a, Student b)
-                              { return a.mName < b.mName; });
+        auto it = min_element(begin(students), end(students), [](const Student &s1, const Student s2)
+                              { return s1.mName < s2.mName; });
 
         if (it != end(students))
         {
@@ -305,8 +305,8 @@ void p0502()
     }
 
     {
-        auto it = auMinElement(begin(students), end(students), [](Student a, Student b)
-                               { return a.mGpa < b.mGpa; });
+        auto it = auMinElement(begin(students), end(students), [](const Student &s1, const Student s2)
+                               { return s1.mGpa < s2.mGpa; });
 
         if (it != end(students))
         {
@@ -319,8 +319,8 @@ void p0502()
     }
 
     {
-        auto it = auMinElement(begin(students), end(students), [](Student a, Student b)
-                               { return a.mName < b.mName; });
+        auto it = auMinElement(begin(students), end(students), [](const Student &s1, const Student &s2)
+                               { return s1.mName < s2.mName; });
 
         if (it != end(students))
         {
@@ -343,11 +343,8 @@ void p06()
         students.emplace_back(name, gpa);
     }
 
-    sort(begin(students), end(students),
-         [](const Student &s1, const Student &s2)
-         {
-             return s1.mName < s2.mName;
-         });
+    sort(begin(students), end(students), [](const Student &s1, const Student &s2)
+         { return s1.mName < s2.mName; });
 
     cout << "---" << endl;
     cout << fixed << showpoint << setprecision(2);
@@ -357,11 +354,8 @@ void p06()
         cout << s.mName << ", " << s.mGpa << endl;
     }
 
-    sort(begin(students), end(students),
-         [](const Student &s1, const Student &s2)
-         {
-             return s1.mGpa > s2.mGpa;
-         });
+    sort(begin(students), end(students), [](const Student &s1, const Student &s2)
+         { return s1.mGpa > s2.mGpa; });
 
     cout << "---" << endl;
 
@@ -399,11 +393,8 @@ void p07()
 
     cout << "--- regular sort by name ---" << endl;
 
-    sort(begin(students), end(students),
-         [](const Student &s1, const Student &s2)
-         {
-             return s1.mName < s2.mName;
-         });
+    sort(begin(students), end(students), [](const Student &s1, const Student &s2)
+         { return s1.mName < s2.mName; });
 
     for (const auto &s : students)
     {
@@ -412,11 +403,8 @@ void p07()
 
     cout << "--- regular sort by gpa ---" << endl;
 
-    sort(begin(students), end(students),
-         [](const Student &s1, const Student &s2)
-         {
-             return s1.mGpa > s2.mGpa;
-         });
+    sort(begin(students), end(students), [](const Student &s1, const Student &s2)
+         { return s1.mGpa > s2.mGpa; });
 
     for (const auto &s : students)
     {
@@ -425,11 +413,8 @@ void p07()
 
     cout << "--- stable sort by name ---" << endl;
 
-    stable_sort(begin(students), end(students),
-                [](const Student &s1, const Student &s2)
-                {
-                    return s1.mName < s2.mName;
-                });
+    stable_sort(begin(students), end(students), [](const Student &s1, const Student &s2)
+                { return s1.mName < s2.mName; });
 
     cout << fixed << showpoint << setprecision(2);
 
@@ -438,11 +423,8 @@ void p07()
         cout << s.mName << ", " << s.mGpa << endl;
     }
 
-    stable_sort(begin(students), end(students),
-                [](const Student &s1, const Student &s2)
-                {
-                    return s1.mGpa > s2.mGpa;
-                });
+    stable_sort(begin(students), end(students), [](const Student &s1, const Student &s2)
+                { return s1.mGpa > s2.mGpa; });
 
     cout << "--- stable sort by gpa ---" << endl;
 
@@ -503,6 +485,16 @@ void p1001()
     for (int x; cin >> x;)
     {
         cout << (binary_search(begin(v), end(v), x) ? "Yes\n" : "No\n");
+    }
+}
+
+void p1002()
+{
+    vector<int> v = {0, 4, 5, 10, 12, 20, 25, 40};
+
+    for (int x; cin >> x;)
+    {
+        cout << (auBinarySearch(begin(v), end(v), x) ? "Yes\n" : "No\n");
     }
 }
 
@@ -567,7 +559,7 @@ int main()
 
     // p0501();
 
-    p0502();
+    // p0502();
 
     // p06();
 
@@ -578,6 +570,8 @@ int main()
     // p09();
 
     // p1001();
+
+    p1002();
 
     // p11();
 

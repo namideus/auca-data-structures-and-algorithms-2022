@@ -65,3 +65,10 @@ ForwardIter auMinElement(ForwardIter beg, ForwardIter end, Compare comp)
 
     return min;
 }
+
+template <typename ForwardIter, class T>
+bool auBinarySearch(ForwardIter beg, ForwardIter end, const T &value)
+{
+    beg = std::lower_bound(beg, end, value);
+    return beg != end && value >= *beg;
+}

@@ -5,28 +5,22 @@ int sz(const C &c) { return static_cast<int>(c.size()); }
 
 using namespace std;
 
-inline void solve(vector<string> &v, int mx)
+inline void solve(vector<string> &v)
 {
-    sort(begin(v), end(v), [](const string &a, const string &b)
+    int mx = 0;
+
+    for (auto s : v)
+        mx = max(mx, sz(s));
+
+    sort(begin(v), end(v), [](string a, string b)
          {
-    auto itA = a.rbegin();
-    auto itB = b.rbegin();
+    reverse(begin(a), end(a));
+    reverse(begin(b), end(b));
 
-    while(itA != a.rend() || itB != b.rend())
-    {
-      if(*itA != *itB)
-        return *itA < *itB;
-
-      itA++;
-      itB++;
-    }
-
-    return sz(a) > sz(b); });
+    return a < b; });
 
     for (auto &s : v)
         cout << right << setw(mx) << s << "\n";
-
-    v.clear();
 }
 
 int main()
@@ -35,23 +29,21 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
-    int mx = 0;
     string s;
     vector<string> v;
 
     while (getline(cin, s))
     {
-        if (sz(s))
+        if (!sz(s))
         {
-            v.push_back(s);
-            mx = max(mx, sz(s));
-        }
-        else
-        {
-            solve(v, mx);
+            solve(v);
             cout << "\n";
+            v.clear();
+            continue;
         }
+
+        v.push_back(s);
     }
 
-    solve(v, mx);
+    solve(v);
 }

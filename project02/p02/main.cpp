@@ -41,9 +41,9 @@ int main()
 
         for(string txt; cin >> txt && txt != ".";)
         {   
-            auto it = lower_bound(begin(v), end(v), Skill{txt, 0}, [](const Skill &a, const Skill &b) 
+            auto it = lower_bound(begin(v), end(v), txt, [](const Skill &a, string value) 
             {
-                return a.name < b.name;
+                return a.name < value;
             });
 
             if(it != end(v) && txt == it->name)

@@ -276,10 +276,12 @@ public:
     // Working area
     static BigInt divideAbsValues(const BigInt &a, const BigInt &b)
     {
+        BigInt r(0);
+
         auto itA = a.mDigits.begin();
         auto itB = b.mDigits.begin();
 
-        int carry = 0, a_val, b_val, s, cnt = 0, len;
+        int carry = 0, s, cnt = 0, len;
 
         len = b.mDigits.size();
 
@@ -287,72 +289,17 @@ public:
 
         while (itA != a.mDigits.end())
         {
+            z.mDigits.resize(len);
             auto itZ = z.mDigits.begin();
 
-            while (z < b)
+            while (itZ != z.mDigits.end())
             {
-                z.mDigits.resize(len);
 
-                for (int i = 0; i < len; i++)
-                {
-                    *itZ = *itA;
-                    itZ++;
-                    itA++;
-                }
+                *itZ = *itA;
+                itZ++;
+                itA++;
             }
         }
-
-        // while (itB != b.mDigits.end() || itA != a.mDigits.end())
-        // {
-        //     if (itB != b.mDigits.end())
-        //     {
-        //         b_val = *itB;
-        //         ++itB;
-        //     }
-
-        //     z.mDigits.resize(b.mDigits.size());
-
-        //     auto itZ = z.mDigits.begin();
-        //     itA = a.mDigits.begin();
-
-        //     s = 0;
-        //     carry = 0;
-
-        //     while (itA != a.mDigits.rend())
-        //     {
-        //         if (itA != a.mDigits.rend())
-        //         {
-        //             a_val = *itA;
-        //             ++itA;
-        //         }
-
-        //         s = a_val * b_val + carry;
-
-        //         if (s >= 10)
-        //             carry = s / 10;
-        //         else
-        //             carry = 0;
-
-        //         *itZ = s % 10;
-        //         ++itZ;
-        //     }
-
-        //     if (carry != 0)
-        //     {
-        //         *itZ = carry;
-        //     }
-        //     while (z.mDigits.size() > 1 && z.mDigits.front() == 0)
-        //     {
-        //         z.mDigits.erase(z.mDigits.begin());
-        //     }
-        //     for (int i = 0; i < cnt; i++)
-        //     {
-        //         z.mDigits.insert(z.mDigits.end(), 0);
-        //     }
-        //     r = BigInt::addAbsValues(z, r);
-
-        //     cnt++;
-        // }
 
         return r;
     }
@@ -597,11 +544,16 @@ inline BigInt operator/(const BigInt &a, const BigInt &b)
 {
     BigInt r(0);
 
-    if ((a.mIsNegative && b.mIsNegative) || !(a.mIsNegative || b.mIsNegative))
+    if ((a.mIsNegative && b.mIsNegative) || (!a.mIsNegative && !b.mIsNegative))
     {
         if (a.mDigits.size() < b.mDigits.size())
             return r;
+
+        if (a.mDigits.size() > b.mDigits.size())
+            return BigInt::divideAbsValues(a, b);
     }
+
+    return r;
 }
 
 inline BigInt operator++(BigInt &x, int)

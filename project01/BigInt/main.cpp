@@ -924,3 +924,16 @@ TEST_CASE("Multpiply and assignment operator")
         REQUIRE(sout.str() == "0");
     }
 }
+
+TEST_CASE("Division operator")
+{
+    ostringstream sout;
+
+    SUBCASE("positive / positive #1")
+    {
+        BigInt a("124");
+        BigInt b("2");
+        sout << a / b;
+        REQUIRE(sout.str() == "62");
+    }
+}

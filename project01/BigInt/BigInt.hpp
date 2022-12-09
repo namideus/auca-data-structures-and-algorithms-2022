@@ -279,9 +279,27 @@ public:
         auto itA = a.mDigits.begin();
         auto itB = b.mDigits.begin();
 
-        BigInt z, r(0);
+        int carry = 0, a_val, b_val, s, cnt = 0, len;
 
-        // int carry = 0, a_val, b_val, s, cnt = 0;
+        BigInt z;
+
+        while (itA != a.mDigits.end())
+        {
+            len = b.mDigits.size();
+            auto itZ = z.mDigits.begin();
+
+            while (z < b)
+            {
+                z.mDigits.resize(len + 1);
+
+                for (int i = 0; i < len; i++)
+                {
+                    *itZ = *itA;
+                    itZ++;
+                    itA++;
+                }
+            }
+        }
 
         // while (itB != b.mDigits.end() || itA != a.mDigits.end())
         // {
@@ -572,6 +590,17 @@ inline BigInt operator*(const BigInt &a, const BigInt &b)
     }
 
     return r;
+}
+
+inline BigInt operator/(const BigInt &a, const BigInt &b)
+{
+    BigInt r(0);
+
+    if ((a.mIsNegative && b.mIsNegative) || !(a.mIsNegative || b.mIsNegative))
+    {
+        if (a.mDigits.size() < b.mDigits.size())
+            return r;
+    }
 }
 
 inline BigInt operator++(BigInt &x, int)

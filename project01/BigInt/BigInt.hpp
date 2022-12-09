@@ -281,16 +281,17 @@ public:
 
         int carry = 0, a_val, b_val, s, cnt = 0, len;
 
+        len = b.mDigits.size();
+
         BigInt z;
 
         while (itA != a.mDigits.end())
         {
-            len = b.mDigits.size();
             auto itZ = z.mDigits.begin();
 
             while (z < b)
             {
-                z.mDigits.resize(len + 1);
+                z.mDigits.resize(len);
 
                 for (int i = 0; i < len; i++)
                 {

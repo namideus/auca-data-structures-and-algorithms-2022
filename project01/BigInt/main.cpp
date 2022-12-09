@@ -925,15 +925,15 @@ TEST_CASE("Multpiply and assignment operator")
     }
 }
 
-TEST_CASE("Division operator")
-{
-    ostringstream sout;
+// TEST_CASE("Division operator")
+// {
+//     ostringstream sout;
 
-    SUBCASE("positive / positive #1")
-    {
-        BigInt a("124");
-        BigInt b("2");
-        sout << a / b;
-        REQUIRE(sout.str() == "62");
-    }
-}
+//     SUBCASE("positive / positive #1")
+//     {
+//         BigInt a("124");
+//         BigInt b("2");
+//         sout << a / b;
+//         REQUIRE(sout.str() == "62");
+//     }
+// }

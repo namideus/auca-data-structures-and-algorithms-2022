@@ -273,32 +273,46 @@ public:
         return r;
     }
 
-    // Working area
     static BigInt divideAbsValues(const BigInt &a, const BigInt &b)
     {
-        BigInt r(0);
+        BigInt z, r, pr;
 
         auto itA = a.mDigits.begin();
         auto itB = b.mDigits.begin();
 
-        int carry = 0, s, cnt = 0, len;
-
-        len = b.mDigits.size();
-
-        BigInt z;
-
         while (itA != a.mDigits.end())
         {
+            int len = b.mDigits.size();
+
             z.mDigits.resize(len);
             auto itZ = z.mDigits.begin();
 
             while (itZ != z.mDigits.end())
             {
-
                 *itZ = *itA;
-                itZ++;
                 itA++;
+                itZ++;
             }
+
+            while (z < b)
+            {
+                z.mDigits.push_back(*itA);
+                itA++;
+                itZ++;
+            }
+
+            long cnt = 1;
+
+            while (multiplyAbsValues(BigInt(cnt + 1), b) <= z)
+            {
+                cnt++;
+            }
+
+            pr = multiplyAbsValues(BigInt(cnt), b);
+
+            z = subAbsValues(z, pr);
+
+            r.mDigits.push_back(cnt);
         }
 
         return r;
@@ -544,7 +558,7 @@ inline BigInt operator/(const BigInt &a, const BigInt &b)
 {
     BigInt r(0);
 
-    if ((a.mIsNegative && b.mIsNegative) || (!a.mIsNegative && !b.mIsNegative))
+    if ((a.mIsNegative && b.mIsNegative) || !(a.mIsNegative || b.mIsNegative))
     {
         if (a.mDigits.size() < b.mDigits.size())
             return r;

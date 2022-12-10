@@ -945,13 +945,37 @@ TEST_CASE("Division operator")
         REQUIRE(sout.str() == "949");
     }
 
-    SUBCASE("positive / positive #2")
+    SUBCASE("positive / positive #3")
     {
-        BigInt a("145");
+        BigInt a("3600");
         BigInt b("12");
         sout << a / b;
-        REQUIRE(sout.str() == "12");
+        REQUIRE(sout.str() == "300");
     }
+
+    SUBCASE("positive / positive #4")
+    {
+        BigInt a("360036");
+        BigInt b("12");
+        sout << a / b;
+        REQUIRE(sout.str() == "30003");
+    }
+
+    SUBCASE("positive / positive #5")
+    {
+        BigInt a("9210965");
+        BigInt b("339");
+        sout << a / b;
+        REQUIRE(sout.str() == "27170");
+    }
+
+    /* SUBCASE("0 / positive #1")
+     {
+         BigInt a("1481481468");
+         BigInt b("12");
+         sout << a / b;
+         REQUIRE(sout.str() == "123456789");
+     }*/
 }
 
 TEST_CASE("Unary minus and plus")

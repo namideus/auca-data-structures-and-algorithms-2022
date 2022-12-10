@@ -178,6 +178,7 @@ public:
                 if (s > 0)
                 {
                     s = s - 1;
+                    a_val = s;
                     carry = 0;
                 }
                 else if (s == 0)
@@ -267,7 +268,7 @@ public:
             {
                 z.mDigits.insert(z.mDigits.end(), 0);
             }
-            r = BigInt::addAbsValues(z, r);
+            r += z;
 
             cnt++;
         }
@@ -292,35 +293,41 @@ public:
                 z.mDigits.push_back(*itA);
                 itA++;
             }
-
             if (z.mDigits.front() == 0)
             {
                 z.mDigits.erase(z.mDigits.begin());
             }
-
             long cnt = 0;
 
-            while (multiplyAbsValues(BigInt(cnt + 1), b) <= z)
-            {
+            while (b * (cnt + 1) <= z)
                 cnt++;
-            }
 
-            p = multiplyAbsValues(b, BigInt(cnt));
+            p = b * cnt;
 
             r.mDigits.push_back(cnt);
 
             if (p == z)
             {
-                while (itA != a.mDigits.end() && *itA == 0)
+                if (itA != a.mDigits.end() && *itA != 0)
                 {
                     r.mDigits.push_back(0);
-                    itA++;
+                }
+                else
+                {
+                    while (itA != a.mDigits.end() && *itA == 0)
+                    {
+                        r.mDigits.push_back(0);
+                        itA++;
+                    }
+                    if (itA != a.mDigits.end())
+                    {
+                        r.mDigits.push_back(0);
+                    }
                 }
             }
 
-            z = subAbsValues(z, p);
+            z -= p;
         }
-
         return r;
     }
 };

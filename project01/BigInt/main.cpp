@@ -969,13 +969,98 @@ TEST_CASE("Division operator")
         REQUIRE(sout.str() == "27170");
     }
 
-    /* SUBCASE("0 / positive #1")
-     {
-         BigInt a("1481481468");
-         BigInt b("12");
-         sout << a / b;
-         REQUIRE(sout.str() == "123456789");
-     }*/
+    SUBCASE("positive / positive #6")
+    {
+        BigInt a("921");
+        BigInt b("678");
+        sout << a / b;
+        REQUIRE(sout.str() == "1");
+    }
+
+    SUBCASE("0 / value #1")
+    {
+        BigInt a("0");
+        BigInt b("123456789");
+        sout << a / b;
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("value / 0 #2")
+    {
+        BigInt a("123456789");
+        BigInt b("0");
+        REQUIRE_THROWS_AS(a / b, runtime_error);
+    }
+
+    SUBCASE("0 / -value #3")
+    {
+        BigInt a("0");
+        BigInt b("-123456789");
+        sout << a / b;
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("-value / 0 #4")
+    {
+        BigInt a("-123456789");
+        BigInt b("0");
+        REQUIRE_THROWS_AS(a / b, runtime_error);
+    }
+
+    SUBCASE("0 / 0 #5")
+    {
+        BigInt a("0");
+        BigInt b("0");
+        REQUIRE_THROWS_AS(a / b, runtime_error);
+    }
+
+    SUBCASE("negative / negative #1")
+    {
+        BigInt a("-1481481468");
+        BigInt b("-12");
+        sout << a / b;
+        REQUIRE(sout.str() == "123456789");
+    }
+
+    SUBCASE("negative / positive #2")
+    {
+        BigInt a("-12345");
+        BigInt b("13");
+        sout << a / b;
+        REQUIRE(sout.str() == "-949");
+    }
+
+    SUBCASE("positive / negative #3")
+    {
+        BigInt a("3600");
+        BigInt b("-12");
+        sout << a / b;
+        REQUIRE(sout.str() == "-300");
+    }
+
+    SUBCASE("positive / negative #4")
+    {
+        BigInt a("3");
+        BigInt b("-2");
+        sout << a / b;
+        REQUIRE(sout.str() == "-1");
+    }
+
+    SUBCASE("negative / positive #5")
+    {
+        BigInt a("-2");
+        BigInt b("3");
+        sout << a / b;
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("negative / positive #6")
+    {
+        BigInt a("-921");
+        BigInt b("678");
+        sout << a / b;
+        REQUIRE(sout.str() == "-1");
+    }
 }
 
 TEST_CASE("Unary minus and plus")

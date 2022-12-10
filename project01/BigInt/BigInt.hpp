@@ -325,7 +325,6 @@ public:
                     }
                 }
             }
-
             z -= p;
         }
         return r;
@@ -575,30 +574,62 @@ inline BigInt operator/(const BigInt &a, const BigInt &b)
     {
         throw std::runtime_error("division by zero occurred!");
     }
-
     if (a == 0)
     {
         return BigInt(0);
     }
-
     if (a == b)
     {
         return BigInt(1);
     }
-
     if ((a.mIsNegative && b.mIsNegative) || !(a.mIsNegative || b.mIsNegative))
     {
+        if (a.mDigits.size() == b.mDigits.size())
+        {
+            if (a > b)
+            {
+                return BigInt(1);
+            }
+            if (a < b)
+            {
+                return BigInt(0);
+            }
+        }
         if (a.mDigits.size() < b.mDigits.size())
         {
-            return r;
+            return BigInt(0);
         }
-
         if (a.mDigits.size() > b.mDigits.size())
         {
-            return BigInt::divideAbsValues(a, b);
+            return BigInt::divideAbsValues(BigInt::abs(a), BigInt::abs(b));
         }
     }
-
+    if (a.mIsNegative && !b.mIsNegative)
+    {
+        if (BigInt::abs(a) < b)
+        {
+            return BigInt(0);
+        }
+        if (BigInt::abs(a) > b)
+        {
+            r = BigInt::divideAbsValues(BigInt::abs(a), BigInt::abs(b));
+            r.mIsNegative = true;
+            return r;
+        }
+    }
+    if (!a.mIsNegative && b.mIsNegative)
+    {
+        if (a < BigInt::abs(b))
+        {
+            return BigInt(0);
+        }
+        if (a > BigInt::abs(b))
+        {
+            r = BigInt::divideAbsValues(BigInt::abs(a), BigInt::abs(b));
+            r.mIsNegative = true;
+            return r;
+        }
+    }
     return r;
 }
 

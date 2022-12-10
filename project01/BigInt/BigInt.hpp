@@ -279,20 +279,18 @@ public:
     {
         BigInt z, r, p, c;
 
+        r.mDigits.clear();
+        z.mDigits.clear();
+
         auto itA = a.mDigits.begin();
         auto itB = b.mDigits.begin();
 
         while (itA != a.mDigits.end())
         {
-            while (z < b && itA != a.mDigits.end())
+            while ((z < b || z.mDigits.empty()) && itA != a.mDigits.end())
             {
                 z.mDigits.push_back(*itA);
                 itA++;
-            }
-
-            if (z.mDigits.front() == 0)
-            {
-                z.mDigits.erase(z.mDigits.begin());
             }
 
             long cnt = 0;
@@ -309,7 +307,6 @@ public:
             r.mDigits.push_back(cnt);
         }
 
-        r.mDigits.erase(r.mDigits.begin());
         return r;
     }
 };
@@ -553,13 +550,32 @@ inline BigInt operator/(const BigInt &a, const BigInt &b)
 {
     BigInt r(0);
 
+    if (b == 0)
+    {
+        throw std::runtime_error("division by zero occurred!");
+    }
+
+    if (a == 0)
+    {
+        return BigInt(0);
+    }
+
+    if (a == b)
+    {
+        return BigInt(1);
+    }
+
     if ((a.mIsNegative && b.mIsNegative) || !(a.mIsNegative || b.mIsNegative))
     {
         if (a.mDigits.size() < b.mDigits.size())
+        {
             return r;
+        }
 
         if (a.mDigits.size() > b.mDigits.size())
+        {
             return BigInt::divideAbsValues(a, b);
+        }
     }
 
     return r;

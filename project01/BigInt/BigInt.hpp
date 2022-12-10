@@ -307,9 +307,18 @@ public:
 
             p = multiplyAbsValues(b, BigInt(cnt));
 
-            z = subAbsValues(z, p);
-
             r.mDigits.push_back(cnt);
+
+            if (p == z)
+            {
+                while (itA != a.mDigits.end() && *itA == 0)
+                {
+                    r.mDigits.push_back(0);
+                    itA++;
+                }
+            }
+
+            z = subAbsValues(z, p);
         }
 
         return r;

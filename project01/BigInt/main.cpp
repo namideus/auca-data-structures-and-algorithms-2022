@@ -1194,6 +1194,74 @@ TEST_CASE("Divide and assignment operator")
     }
 }
 
+TEST_CASE("Modular division operator")
+{
+    ostringstream sout;
+
+    SUBCASE("positive % positive #1")
+    {
+        BigInt a("1");
+        BigInt b("99");
+        sout << a % b;
+        REQUIRE(sout.str() == "1");
+    }
+
+    SUBCASE("positive % positive #2")
+    {
+        BigInt a("864964064048640964086450968409864509684096840986409640986480964806409864086480468094680946098456890468456830394304234");
+        BigInt b("9747634534537423975347875479534955345935349555394559353");
+        sout << a % b;
+        REQUIRE(sout.str() == "5908537950814752622129236752714503969358368360439630375");
+    }
+
+    SUBCASE("negative % positive #1")
+    {
+        BigInt a("-5");
+        BigInt b("10");
+        sout << a % b;
+        REQUIRE(sout.str() == "-5");
+    }
+
+    SUBCASE("negative % negative #1")
+    {
+        BigInt a("-5");
+        BigInt b("-10");
+        REQUIRE_THROWS_AS(a % b, runtime_error);
+    }
+}
+
+TEST_CASE("Modular division and assignment operator")
+{
+    ostringstream sout;
+
+    SUBCASE("positive %= positive #1")
+    {
+        BigInt a("1");
+        BigInt b("99");
+        a %= b;
+        sout << a;
+        REQUIRE(sout.str() == "1");
+    }
+
+    SUBCASE("positive %= positive #2")
+    {
+        BigInt a("864964064048640964086450968409864509684096840986409640986480964806409864086480468094680946098456890468456830394304234");
+        BigInt b("9747634534537423975347875479534955345935349555394559353");
+        a %= b;
+        sout << a;
+        REQUIRE(sout.str() == "5908537950814752622129236752714503969358368360439630375");
+    }
+
+    SUBCASE("negative %= positive #1")
+    {
+        BigInt a("-5");
+        BigInt b("10");
+        a %= b;
+        sout << a;
+        REQUIRE(sout.str() == "-5");
+    }
+}
+
 TEST_CASE("Unary minus and plus")
 {
     ostringstream sout;

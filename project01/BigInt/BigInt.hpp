@@ -701,6 +701,10 @@ inline BigInt operator%(const BigInt &a, const BigInt &b)
         r.mIsNegative = true;
         return r;
     }
+    if (b.mIsNegative)
+    {
+        throw std::runtime_error("BigInt: modulus not positive");
+    }
 
     return BigInt::modDivideAbsValues(a, b);
 }

@@ -675,6 +675,12 @@ inline BigInt &operator*=(BigInt &a, const BigInt &b)
     return a;
 }
 
+inline BigInt &operator/=(BigInt &a, const BigInt &b)
+{
+    a = a / b;
+    return a;
+}
+
 inline BigInt operator-(const BigInt x)
 {
     BigInt r = x;

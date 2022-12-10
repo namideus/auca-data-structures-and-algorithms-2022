@@ -1063,6 +1063,137 @@ TEST_CASE("Division operator")
     }
 }
 
+TEST_CASE("Divide and assignment operator")
+{
+    ostringstream sout;
+
+    SUBCASE("positive /= positive #1")
+    {
+        BigInt a("1481481468");
+        BigInt b("12");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "123456789");
+    }
+
+    SUBCASE("positive /= positive #2")
+    {
+        BigInt a("12345");
+        BigInt b("13");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "949");
+    }
+
+    SUBCASE("positive /= positive #3")
+    {
+        BigInt a("3600");
+        BigInt b("12");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "300");
+    }
+
+    SUBCASE("positive /= positive #4")
+    {
+        BigInt a("360036");
+        BigInt b("12");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "30003");
+    }
+
+    SUBCASE("positive /= positive #5")
+    {
+        BigInt a("9210965");
+        BigInt b("339");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "27170");
+    }
+
+    SUBCASE("positive /= positive #6")
+    {
+        BigInt a("921");
+        BigInt b("678");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "1");
+    }
+
+    SUBCASE("0 /= value #1")
+    {
+        BigInt a("0");
+        BigInt b("123456789");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("0 /= -value #3")
+    {
+        BigInt a("0");
+        BigInt b("-123456789");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("negative /= negative #1")
+    {
+        BigInt a("-1481481468");
+        BigInt b("-12");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "123456789");
+    }
+
+    SUBCASE("negative /= positive #2")
+    {
+        BigInt a("-12345");
+        BigInt b("13");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "-949");
+    }
+
+    SUBCASE("positive /= negative #3")
+    {
+        BigInt a("3600");
+        BigInt b("-12");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "-300");
+    }
+
+    SUBCASE("positive /= negative #4")
+    {
+        BigInt a("3");
+        BigInt b("-2");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "-1");
+    }
+
+    SUBCASE("negative /= positive #5")
+    {
+        BigInt a("-2");
+        BigInt b("3");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("negative /= positive #6")
+    {
+        BigInt a("-921");
+        BigInt b("678");
+        a /= b;
+        sout << a;
+        REQUIRE(sout.str() == "-1");
+    }
+}
+
 TEST_CASE("Unary minus and plus")
 {
     ostringstream sout;

@@ -277,46 +277,39 @@ public:
 
     static BigInt divideAbsValues(const BigInt &a, const BigInt &b)
     {
-        BigInt z, r, pr;
+        BigInt z, r, p, c;
 
         auto itA = a.mDigits.begin();
         auto itB = b.mDigits.begin();
 
         while (itA != a.mDigits.end())
         {
-            int len = b.mDigits.size();
-
-            z.mDigits.resize(len);
-            auto itZ = z.mDigits.begin();
-
-            while (itZ != z.mDigits.end())
-            {
-                *itZ = *itA;
-                itA++;
-                itZ++;
-            }
-
-            while (z < b)
+            while (z < b && itA != a.mDigits.end())
             {
                 z.mDigits.push_back(*itA);
                 itA++;
-                itZ++;
             }
 
-            long cnt = 1;
+            if (z.mDigits.front() == 0)
+            {
+                z.mDigits.erase(z.mDigits.begin());
+            }
+
+            long cnt = 0;
 
             while (multiplyAbsValues(BigInt(cnt + 1), b) <= z)
             {
                 cnt++;
             }
 
-            pr = multiplyAbsValues(BigInt(cnt), b);
+            p = multiplyAbsValues(b, BigInt(cnt));
 
-            z = subAbsValues(z, pr);
+            z = subAbsValues(z, p);
 
             r.mDigits.push_back(cnt);
         }
 
+        r.mDigits.erase(r.mDigits.begin());
         return r;
     }
 };

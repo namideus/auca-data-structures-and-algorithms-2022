@@ -329,6 +329,60 @@ public:
         }
         return r;
     }
+
+    static BigInt modDivideAbsValues(const BigInt &a, const BigInt &b)
+    {
+        BigInt z, r, p, c;
+
+        r.mDigits.clear();
+        z.mDigits.clear();
+
+        auto itA = a.mDigits.begin();
+        auto itB = b.mDigits.begin();
+
+        while (itA != a.mDigits.end())
+        {
+            while (z < b && itA != a.mDigits.end())
+            {
+                z.mDigits.push_back(*itA);
+                itA++;
+            }
+            if (z.mDigits.front() == 0)
+            {
+                z.mDigits.erase(z.mDigits.begin());
+            }
+            long cnt = 0;
+
+            while (b * (cnt + 1) <= z)
+                cnt++;
+
+            p = b * cnt;
+
+            r.mDigits.push_back(cnt);
+
+            if (p == z)
+            {
+                if (itA != a.mDigits.end() && *itA != 0)
+                {
+                    r.mDigits.push_back(0);
+                }
+                else
+                {
+                    while (itA != a.mDigits.end() && *itA == 0)
+                    {
+                        r.mDigits.push_back(0);
+                        itA++;
+                    }
+                    if (itA != a.mDigits.end())
+                    {
+                        r.mDigits.push_back(0);
+                    }
+                }
+            }
+            z -= p;
+        }
+        return z;
+    }
 };
 
 inline std::ostream &operator<<(std::ostream &out, const BigInt &x)

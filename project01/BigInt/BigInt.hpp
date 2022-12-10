@@ -381,13 +381,17 @@ public:
             }
             z -= p;
         }
+        while (z.mDigits.size() > 1 && z.mDigits.front() == 0)
+        {
+            z.mDigits.erase(z.mDigits.begin());
+        }
         return z;
     }
 };
 
 inline std::ostream &operator<<(std::ostream &out, const BigInt &x)
 {
-    if (x.mIsNegative)
+    if (x.mIsNegative) /*&& x > 0)*/
     {
         out << "-";
     }
@@ -685,6 +689,20 @@ inline BigInt operator/(const BigInt &a, const BigInt &b)
         }
     }
     return r;
+}
+
+inline BigInt operator%(const BigInt &a, const BigInt &b)
+{
+    BigInt r;
+
+    if (a.mIsNegative && !b.mIsNegative)
+    {
+        r = BigInt::modDivideAbsValues(BigInt::abs(a), BigInt::abs(b));
+        r.mIsNegative = true;
+        return r;
+    }
+
+    return BigInt::modDivideAbsValues(a, b);
 }
 
 inline BigInt operator++(BigInt &x, int)

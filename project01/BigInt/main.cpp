@@ -936,6 +936,14 @@ TEST_CASE("Division operator")
         sout << a / b;
         REQUIRE(sout.str() == "123456789");
     }
+
+    SUBCASE("positive / positive #2")
+    {
+        BigInt a("12345");
+        BigInt b("13");
+        sout << a / b;
+        REQUIRE(sout.str() == "949");
+    }
 }
 
 TEST_CASE("Unary minus and plus")

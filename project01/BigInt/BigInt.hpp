@@ -287,10 +287,15 @@ public:
 
         while (itA != a.mDigits.end())
         {
-            while ((z < b || z.mDigits.empty()) && itA != a.mDigits.end())
+            while (z < b && itA != a.mDigits.end())
             {
                 z.mDigits.push_back(*itA);
                 itA++;
+            }
+
+            if (z.mDigits.front() == 0)
+            {
+                z.mDigits.erase(z.mDigits.begin());
             }
 
             long cnt = 0;

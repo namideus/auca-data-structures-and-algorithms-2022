@@ -937,3 +937,44 @@ TEST_CASE("Multpiply and assignment operator")
 //         REQUIRE(sout.str() == "62");
 //     }
 // }
+
+TEST_CASE("Unary minus and plus")
+{
+    ostringstream sout;
+
+    SUBCASE("-positive #1")
+    {
+        BigInt a("144");
+        BigInt b = -a;
+        sout << b;
+        REQUIRE(sout.str() == "-144");
+        REQUIRE(a == 144);
+    }
+
+    SUBCASE("-negative #2")
+    {
+        BigInt a("-144");
+        BigInt b = -a;
+        sout << b;
+        REQUIRE(sout.str() == "144");
+        REQUIRE(a == -144);
+    }
+
+    SUBCASE("+positive #1")
+    {
+        BigInt a("144");
+        BigInt b = +a;
+        sout << b;
+        REQUIRE(sout.str() == "144");
+        REQUIRE(a == 144);
+    }
+
+    SUBCASE("+negative #2")
+    {
+        BigInt a("-144");
+        BigInt b = +a;
+        sout << b;
+        REQUIRE(sout.str() == "-144");
+        REQUIRE(a == -144);
+    }
+}

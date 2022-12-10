@@ -30,6 +30,8 @@ class BigInt
     friend BigInt &operator*=(BigInt &, const BigInt &);
     friend BigInt &operator/=(BigInt &, const BigInt &);
     friend BigInt &operator%=(BigInt &, const BigInt &);
+    friend BigInt operator+(const BigInt);
+    friend BigInt operator-(const BigInt);
 
     std::vector<int> mDigits;
     bool mIsNegative;
@@ -610,4 +612,17 @@ inline BigInt &operator*=(BigInt &a, const BigInt &b)
 {
     a = a * b;
     return a;
+}
+
+inline BigInt operator-(const BigInt x)
+{
+    BigInt r = x;
+    r.mIsNegative = (r.mIsNegative ? false : true);
+    return r;
+}
+
+inline BigInt operator+(const BigInt x)
+{
+    BigInt r = x;
+    return r;
 }

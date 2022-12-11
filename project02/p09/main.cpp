@@ -19,11 +19,7 @@ int main()
     {
         cin >> s;
 
-        vector<string> v(s);
-        map<char, int> cnt;
-
-        vector<int> b;
-        vector<int> r;
+        vector<int> b, r;
 
         for (int i = 0; i < s; i++)
         {

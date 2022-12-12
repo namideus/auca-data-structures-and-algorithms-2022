@@ -53,7 +53,8 @@ public:
         }
         else
         {
-            string s_copy = s;
+            std::string s_copy = s;
+
             while (s_copy.size() > 1 && s_copy.front() == '0')
             {
                 s_copy.erase(s_copy.begin());
@@ -211,7 +212,7 @@ public:
             ++itZ;
         }
 
-        if (z.mDigits.size() > 1 && z.mDigits.front() == 0)
+        while (z.mDigits.size() > 1 && z.mDigits.front() == 0)
             z.mDigits.erase(z.mDigits.begin());
 
         return z;
@@ -558,7 +559,7 @@ inline BigInt operator-(const BigInt &a, const BigInt &b)
 {
     BigInt r(0);
 
-    if (!(a.mIsNegative || b.mIsNegative))
+    if (!a.mIsNegative && !b.mIsNegative)
     {
         if (a < b)
         {
@@ -567,38 +568,38 @@ inline BigInt operator-(const BigInt &a, const BigInt &b)
             return r;
         }
 
-        if (a > b)
-        {
-            return BigInt::subAbsValues(a, b);
-        }
+        return BigInt::subAbsValues(a, b);
     }
 
     if (a.mIsNegative && b.mIsNegative)
     {
-        if (a.mDigits.size() > b.mDigits.size())
+        if (BigInt::abs(a) > BigInt::abs(b))
         {
-            r = BigInt::subAbsValues(a, b);
+            r = BigInt::subAbsValues(BigInt::abs(a), BigInt::abs(b));
             r.mIsNegative = true;
             return r;
         }
 
-        if (a.mDigits.size() < b.mDigits.size())
+        if (BigInt::abs(b) > BigInt::abs(a))
         {
-            return BigInt::subAbsValues(b, a);
+            return BigInt::subAbsValues(BigInt::abs(b), BigInt::abs(a));
         }
     }
 
     if (a.mIsNegative && !b.mIsNegative)
     {
-        r = BigInt::addAbsValues(a, b);
+        r = BigInt::addAbsValues(BigInt::abs(a), b);
         r.mIsNegative = true;
         return r;
     }
 
     if (!a.mIsNegative && b.mIsNegative)
     {
-        return BigInt::addAbsValues(a, b);
+        return BigInt::addAbsValues(a, BigInt::abs(b));
     }
+
+    if (a == b)
+        return BigInt(0);
 
     return r;
 }

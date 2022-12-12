@@ -1,10 +1,11 @@
-#pragma once
+#include <bits/stdc++.h>
 
-#include <vector>
-#include <iostream>
-#include <string>
-#include <stdexcept>
-#include <algorithm>
+// #include "BigInt.hpp"
+
+template <typename C>
+int sz(const C &c) { return static_cast<int>(c.size()); }
+
+using namespace std;
 
 class BigInt
 {
@@ -54,6 +55,7 @@ public:
         else
         {
             string s_copy = s;
+
             while (s_copy.size() > 1 && s_copy.front() == '0')
             {
                 s_copy.erase(s_copy.begin());
@@ -284,13 +286,12 @@ public:
 
     static BigInt divideAbsValues(const BigInt &a, const BigInt &b)
     {
-        BigInt z, r, p, c;
+        BigInt z, r(0), p, c;
 
         r.mDigits.clear();
-        z.mDigits.clear();
+        // z.mDigits.clear();
 
         auto itA = a.mDigits.begin();
-        auto itB = b.mDigits.begin();
 
         while (itA != a.mDigits.end())
         {
@@ -310,7 +311,8 @@ public:
 
             p = b * cnt;
 
-            r.mDigits.push_back(cnt);
+            if (cnt > 0)
+                r.mDigits.push_back(cnt);
 
             if (p == z)
             {
@@ -331,6 +333,7 @@ public:
                     }
                 }
             }
+
             z -= p;
         }
         return r;
@@ -646,6 +649,10 @@ inline BigInt operator/(const BigInt &a, const BigInt &b)
     {
         return BigInt(1);
     }
+    if (b == 1)
+    {
+        return a;
+    }
     if ((a.mIsNegative && b.mIsNegative) || !(a.mIsNegative || b.mIsNegative))
     {
         if (a.mDigits.size() == b.mDigits.size())
@@ -707,10 +714,6 @@ inline BigInt operator%(const BigInt &a, const BigInt &b)
         r.mIsNegative = true;
         return r;
     }
-    if (b.mIsNegative)
-    {
-        throw std::runtime_error("BigInt: modulus not positive");
-    }
 
     return BigInt::modDivideAbsValues(a, b);
 }
@@ -763,12 +766,6 @@ inline BigInt &operator/=(BigInt &a, const BigInt &b)
     return a;
 }
 
-inline BigInt &operator%=(BigInt &a, const BigInt &b)
-{
-    a = a % b;
-    return a;
-}
-
 inline BigInt operator-(const BigInt x)
 {
     BigInt r = x;
@@ -780,4 +777,42 @@ inline BigInt operator+(const BigInt x)
 {
     BigInt r = x;
     return r;
+}
+
+//--------------------------------------usage of BigInt--------------------------------------------------------------
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
+    int n;
+
+    string a, b;
+    char op;
+
+    while (cin >> a >> op >> b)
+    {
+        cout << a << " " << op << " " << b << "\n";
+
+        if (a > BigInt("2147483647"))
+        {
+            cout << "first number too big\n";
+        }
+
+        if (b > BigInt("2147483647"))
+        {
+            cout << "second number too big\n";
+        }
+
+        if (op == '+' && (BigInt(a) + BigInt(b)) > BigInt("2147483647"))
+        {
+            cout << "result too big\n";
+        }
+
+        if (op == '*' && BigInt(a) * BigInt(b) > BigInt("2147483647"))
+        {
+            cout << "result too big\n";
+        }
+    }
 }

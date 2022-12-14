@@ -32,6 +32,12 @@ public:
         }
     }
 
+    // copy constructor
+    VecInt(const VecInt &other);
+
+    // assignment operator
+    VecInt &operator=(const VecInt &other);
+
     ~VecInt()
     {
         std::cout << "~VecInt: number of released int values: " << sz << std::endl;

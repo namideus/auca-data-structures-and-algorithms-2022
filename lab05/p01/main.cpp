@@ -14,8 +14,8 @@ int main()
 {
     try
     {
-        // p01();
-        p02();
+        p01();
+        // p02();
     }
     catch (const std::exception &e)
     {
@@ -38,7 +38,6 @@ void p01()
     }
 
     auReverse(begin(v), end(v));
-    // auReverse(v.begin(), v.end());
 
     printVecInt(v);
 }
@@ -54,7 +53,7 @@ void p02()
     }
 
     printVecInt(v);
-    auReverse(v.begin(), v.end());
+    auReverse(begin(v), end(v));
     printVecInt(v);
 }
 

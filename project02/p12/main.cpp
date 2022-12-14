@@ -37,6 +37,8 @@ int main()
             p.push_back({name, status});
         }
 
+        reverse(begin(p), end(p));
+
         stable_sort(begin(p), end(p), [](const pss &p1, const pss &p2)
                     {
             string w1, w2, c1 = p1.second + "-", c2 = p2.second + "-";
@@ -45,7 +47,7 @@ int main()
             if (c1 == c2)
                 return p1.first < p2.first;
 
-            while (!iss1.eof() && !iss2.eof())
+            while (!iss1.eof() || !iss2.eof())
             {
                 getline(iss1, w1, '-');
                 getline(iss2, w2, '-');

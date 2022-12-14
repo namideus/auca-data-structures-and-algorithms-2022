@@ -7,8 +7,6 @@ using namespace std;
 
 typedef pair<string, string> pss;
 
-// stable_sort, pair<string, string>
-
 int main()
 {
     ios::sync_with_stdio(0);
@@ -16,7 +14,6 @@ int main()
     cout.tie(0);
 
     int t, n;
-    char ch;
     string s, name, status;
 
     cin >> t;
@@ -34,47 +31,43 @@ int main()
             istringstream iss(s);
             getline(iss, name, ':');
             iss >> status;
-            p.push_back({name, status});
-        }
 
-        reverse(begin(p), end(p));
+            string w, rank = "";
+            istringstream iss2(status + "-");
+
+            while (!iss2.eof())
+            {
+                getline(iss2, w, '-');
+
+                if (w[0] == 'u')
+                    rank = "3" + rank;
+                else if (w[0] == 'm')
+                    rank = "2" + rank;
+                else if (w[0] == 'l')
+                    rank = "1" + rank;
+            }
+
+            for (int j = 0; j < 10; j++)
+            {
+                rank += "2";
+            }
+
+            p.push_back({name, rank});
+        }
 
         stable_sort(begin(p), end(p), [](const pss &p1, const pss &p2)
                     {
-            string w1, w2, c1 = p1.second + "-", c2 = p2.second + "-";
-            istringstream iss1(c1), iss2(c2);
-
-            if (c1 == c2)
-                return p1.first < p2.first;
-
-            while (!iss1.eof() || !iss2.eof())
+            for (int i = 0; i < 10; i++)
             {
-                getline(iss1, w1, '-');
-                getline(iss2, w2, '-');
+                if (p1.second[i] == p2.second[i])
+                    continue;
 
-                // cout << w1 << "   " << w2 << "\n";
-                if (w1 != w2)
-                {
-                    if (w1 == "upper")
-                        return true;
+                if (p1.second[i] > p2.second[i])
+                    return true;
 
-                    if (w2 == "upper")
-                        return false;
-
-                    if (w1 == "middle")
-                        return true;
-
-                    if (w2 == "middle")
-                        return false;
-
-                    if (w1 == "lower")
-                        return true;
-
-                    if (w2 == "lower")
-                        return false;
-                }
+                if (p1.second[i] < p2.second[i])
+                    return false;
             }
-
             return p1.first < p2.first; });
 
         for (auto d : p)

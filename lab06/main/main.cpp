@@ -264,7 +264,7 @@ void p0501()
     }
 
     {
-        auto it = min_element(begin(students), end(students), [](const Student &s1, const Student s2)
+        auto it = min_element(begin(students), end(students), [](const Student &s1, const Student &s2)
                               { return s1.mGpa < s2.mGpa; });
 
         if (it != end(students))
@@ -278,7 +278,7 @@ void p0501()
     }
 
     {
-        auto it = min_element(begin(students), end(students), [](const Student &s1, const Student s2)
+        auto it = min_element(begin(students), end(students), [](const Student &s1, const Student &s2)
                               { return s1.mName < s2.mName; });
 
         if (it != end(students))
@@ -305,7 +305,7 @@ void p0502()
     }
 
     {
-        auto it = auMinElement(begin(students), end(students), [](const Student &s1, const Student s2)
+        auto it = auMinElement(begin(students), end(students), [](const Student &s1, const Student &s2)
                                { return s1.mGpa < s2.mGpa; });
 
         if (it != end(students))
@@ -504,7 +504,7 @@ void p11()
 
     for (int x; cin >> x;)
     {
-        auto it = lower_bound(begin(v), end(v), x);
+        auto it = auLowerBound(begin(v), end(v), x); // lower_bound(begin(v), end(v), x);
         // no elements equal or greater  than x
         if (it == end(v))
         {
@@ -571,9 +571,9 @@ int main()
 
     // p1001();
 
-    // p1002();
+    //p1002();
 
-    // p11();
+   // p11();
 
     // p12();
 }

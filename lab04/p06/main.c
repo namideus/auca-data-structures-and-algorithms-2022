@@ -40,7 +40,7 @@ void p02()
     struct VecInt v;
     VecInt_createEmpty(&v);
 
-    puts("enter arbitray number of integer values:");
+    puts("enter arbitrary number of integer values:");
     int x;
     while (scanf("%d", &x) == 1)
     {

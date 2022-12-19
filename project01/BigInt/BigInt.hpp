@@ -220,67 +220,101 @@ public:
 
     static BigInt multiplyAbsValues(const BigInt &a, const BigInt &b)
     {
-        auto itA = a.mDigits.rbegin();
-        auto itB = b.mDigits.rbegin();
+        BigInt z;
+        int n = a.mDigits.size(), m = b.mDigits.size();
 
-        BigInt z, r(0);
+        std::vector<int> v(n + m, 0);
 
-        int carry = 0, a_val, b_val, s, cnt = 0;
+        int i = 0;
 
-        while (itB != b.mDigits.rend() || itA != a.mDigits.rend())
+        for (auto itA = a.mDigits.rbegin(); itA != a.mDigits.rend(); itA++, i++)
         {
-            if (itB != b.mDigits.rend())
-            {
-                b_val = *itB;
-                ++itB;
-            }
+            int j = 0;
 
-            z.mDigits.clear();
-            z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()) + 1);
-
-            auto itZ = z.mDigits.rbegin();
-            itA = a.mDigits.rbegin();
-
-            s = 0;
-            carry = 0;
-
-            while (itA != a.mDigits.rend())
-            {
-                if (itA != a.mDigits.rend())
-                {
-                    a_val = *itA;
-                    ++itA;
-                }
-
-                s = a_val * b_val + carry;
-
-                if (s >= 10)
-                    carry = s / 10;
-                else
-                    carry = 0;
-
-                *itZ = s % 10;
-                ++itZ;
-            }
-
-            if (carry != 0)
-            {
-                *itZ = carry;
-            }
-            while (z.mDigits.size() > 1 && z.mDigits.front() == 0)
-            {
-                z.mDigits.erase(z.mDigits.begin());
-            }
-            for (int i = 0; i < cnt; i++)
-            {
-                z.mDigits.insert(z.mDigits.end(), 0);
-            }
-            r += z;
-
-            cnt++;
+            for (auto itB = b.mDigits.rbegin(); itB != b.mDigits.rend(); itB++, j++)
+                v[i + j] += (*itA) * (*itB);
         }
 
-        return r;
+        n += m;
+        z.mDigits.resize(v.size());
+
+        auto itZ = z.mDigits.rbegin();
+
+        for (int s, i = 0, t = 0; i < n && itZ != z.mDigits.rend(); i++, itZ++)
+        {
+            s = t + v[i];
+            v[i] = s % 10;
+            t = s / 10;
+            *itZ = v[i];
+        }
+
+        while (z.mDigits.size() > 1 && z.mDigits.front() == 0)
+        {
+            z.mDigits.erase(z.mDigits.begin());
+        }
+
+        return z;
+        // auto itA = a.mDigits.rbegin();
+        // auto itB = b.mDigits.rbegin();
+
+        // BigInt z, r(0);
+
+        // int carry = 0, a_val, b_val, s, cnt = 0;
+
+        // while (itB != b.mDigits.rend() || itA != a.mDigits.rend())
+        // {
+        //     if (itB != b.mDigits.rend())
+        //     {
+        //         b_val = *itB;
+        //         ++itB;
+        //     }
+
+        //     z.mDigits.clear();
+        //     z.mDigits.resize(std::max(a.mDigits.size(), b.mDigits.size()) + 1);
+
+        //     auto itZ = z.mDigits.rbegin();
+        //     itA = a.mDigits.rbegin();
+
+        //     s = 0;
+        //     carry = 0;
+
+        //     while (itA != a.mDigits.rend())
+        //     {
+        //         if (itA != a.mDigits.rend())
+        //         {
+        //             a_val = *itA;
+        //             ++itA;
+        //         }
+
+        //         s = a_val * b_val + carry;
+
+        //         if (s >= 10)
+        //             carry = s / 10;
+        //         else
+        //             carry = 0;
+
+        //         *itZ = s % 10;
+        //         ++itZ;
+        //     }
+
+        //     if (carry != 0)
+        //     {
+        //         *itZ = carry;
+        //     }
+        //     while (z.mDigits.size() > 1 && z.mDigits.front() == 0)
+        //     {
+        //         z.mDigits.erase(z.mDigits.begin());
+        //     }
+        //     for (int i = 0; i < cnt; i++)
+        //     {
+        //         z.mDigits.insert(z.mDigits.end(), 0);
+        //     }
+        //     r += z;
+
+        //     cnt++;
+        // }
+
+        // return r;
     }
 
     static BigInt divideAbsValues(const BigInt &a, const BigInt &b)

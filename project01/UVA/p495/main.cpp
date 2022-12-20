@@ -692,30 +692,27 @@ inline BigInt operator+(const BigInt x)
 }
 
 //--------------------------------------usage of BigInt--------------------------------------------------------------
-BigInt fib(long n)
-{
-    BigInt a = 0;
-    BigInt b = 1;
-    while (n-- > 1)
-    {
-        BigInt t = a;
-        a = b;
-        b += t;
-    }
-    return b;
-}
-
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
 
+    map<int, BigInt> m;
+
+    m[0] = 0;
+    m[1] = 1;
+    m[2] = 1;
+
+    for (int i = 3; i <= 5000; i++)
+    {
+        m[i] = m[i - 1] + m[i - 2];
+    }
+
     long n;
 
     while (cin >> n)
     {
-        cout << "The Fibonacci number for " << n << " is " << fib(n) << "\n";
-        // cout << "The Fibonacci number for " << n << " is " << m[n] << "\n";
+        cout << "The Fibonacci number for " << n << " is " << m[n] << "\n";
     }
 }

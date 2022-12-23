@@ -12,16 +12,9 @@ int main()
     cout.tie(0);
 
     int n;
-    string s;
-    bool f = true;
 
     while (cin >> n && n)
     {
-        if (!f)
-            cout << "\n";
-
-        f = false;
-
         vector<string> v(n);
 
         for (auto &x : v)

@@ -1,1 +1,1 @@
-# auca-ds-2022
+# auca-data-structures-and-algorithms-2022 
